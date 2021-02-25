@@ -10,12 +10,21 @@ module.exports = {
       inactive:
         "0px 3px 6px rgba(0, 0, 0, 0.1), 0px 10px 20px rgba(0, 0, 0, 0.15)",
     },
-    extend: {},
+    extend: {
+      transitionProperty: {
+        height: "height",
+        spacing: "margin, padding",
+        scale: "scale",
+      },
+    },
   },
   variants: {
     extend: {
       borderStyle: ["focus", "hover"],
       borderWidth: ["focus", "hover"],
+      scale: ["active"],
+      transitionProperty: ["hover", "focus", "active"],
+      animation: ["hover", "focus", "active"],
     },
   },
   plugins: [],

@@ -6,12 +6,25 @@ export interface QuestionnaireProps {}
 
 const Questionnaire: React.SFC<QuestionnaireProps> = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [questionnaireAnswers, setQuestionnaireAnswers] = useState<
+    { questionNumber: number; answer: string | number | string[] }[]
+  >([]);
+
+  // Handles each answer from a question and puts it into the questionnaireAnswers state
+  // array and advances the questionnaire to the next question
+  const handleAnswer = (
+    questionNumber: number,
+    answer: string | number | string[]
+  ) => {
+    const newAnswer = { questionNumber, answer };
+    setQuestionnaireAnswers((prev) => [...prev, newAnswer]);
+    setCurrentStep(currentStep + 1);
+  };
+
+  console.log(questionnaireAnswers);
 
   return (
     <div className="h-screen w-2/3 flex justify-center items-center">
-      <button onClick={() => setCurrentStep(currentStep + 1)}>
-        Click to advance
-      </button>
       <ButtonQuestion
         currentStep={currentStep}
         renderOnStep={1}
@@ -20,8 +33,19 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
         }
         firstButtonText={"Yes"}
         secondButtonText={"No"}
+        handleChoice={handleAnswer}
       />
-      <RankedListQuestion currentStep={currentStep} renderOnStep={2} />
+      <ButtonQuestion
+        currentStep={currentStep}
+        renderOnStep={2}
+        question={
+          "Are you satisfied with peoples ability to stay socially distanced throughout the store?"
+        }
+        firstButtonText={"Yes"}
+        secondButtonText={"No"}
+        handleChoice={handleAnswer}
+      />
+      <RankedListQuestion currentStep={currentStep} renderOnStep={3} />
     </div>
   );
 };

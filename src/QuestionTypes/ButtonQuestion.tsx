@@ -8,12 +8,17 @@ const ButtonQuestion: React.SFC<{
   question: string;
   firstButtonText: string;
   secondButtonText: string;
+  handleChoice: (
+    questionNumber: number,
+    answer: string | number | string[]
+  ) => void;
 }> = ({
   currentStep,
   renderOnStep,
   question,
   firstButtonText,
   secondButtonText,
+  handleChoice,
 }) => {
   return (
     <>
@@ -24,12 +29,14 @@ const ButtonQuestion: React.SFC<{
           </div>
           <div className="flex justify-center mt-40">
             <button
-              className={` border-4 border-transparent shadow-inactive focus:shadow-focused focus:outline-none focus:border-4 focus:border-blue-500 focus:border-opacity-100 py-6 px-32 text-3xl rounded-xl m-4`}
+              onClick={() => handleChoice(currentStep, firstButtonText)}
+              className={`${buttonStyle}`}
             >
               {firstButtonText}
             </button>
             <button
-              className={` border-4 border-transparent shadow-inactive focus:shadow-focused focus:outline-none focus:border-4 focus:border-blue-500 focus:border-opacity-100 py-6 px-32 text-3xl rounded-xl m-4`}
+              onClick={() => handleChoice(currentStep, secondButtonText)}
+              className={`${buttonStyle}`}
             >
               {secondButtonText}
             </button>
@@ -41,3 +48,6 @@ const ButtonQuestion: React.SFC<{
 };
 
 export default ButtonQuestion;
+
+const buttonStyle =
+  "animate transition transform active:scale-90 duration-200  border-4 border-transparent shadow-inactive focus:shadow-focused focus:outline-none focus:border-4 focus:border-blue-500 focus:border-opacity-100 py-6 px-32 text-3xl rounded-xl m-4";
