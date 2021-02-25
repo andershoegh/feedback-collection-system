@@ -17,13 +17,12 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
     const { currentStep, renderOnStep, question, subText, rangeMin, rangeMax, intervals, startValue, minLabel, maxLabel } = props;
     const labelsRef = useRef<HTMLSpanElement>(null);
     const [selectedValue, setSelectedValue] = useState<number>(startValue);
-    const highlightedClasses = ['font-semibold', 'text-2xl', 'text-indigo-500'];
+    const highlightedClasses = ['font-semibold', 'scale-150', 'text-blue-700'];
+    let baseStyleClasses = ['inline-block', 'ease-in-out', 'transform', 'transition', 'scale-100'];
 
     const updateSelected = (value: number) => {
         if (intervals && labelsRef.current) {
-            if (selectedValue !== (null || undefined)) {
-                labelsRef.current.children[selectedValue].classList.remove(...highlightedClasses);
-            }
+            labelsRef.current.children[selectedValue].classList.remove(...highlightedClasses);
             labelsRef.current.children[value].classList.add(...highlightedClasses);
         } else if (labelsRef.current) {
             let scaleFactorMin = ((rangeMax - value) * 1.5) / (rangeMax - rangeMin) + 1;
@@ -42,16 +41,18 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
 
             while (label <= rangeMax) {
                 let labelText = minLabel && label === rangeMin ? minLabel : maxLabel && label === rangeMax ? maxLabel : label;
-                let classes = label === selectedValue ? highlightedClasses.join(' ') : '';
+                let styleClasses =
+                    label === selectedValue ? highlightedClasses.concat(baseStyleClasses).join(' ') : baseStyleClasses.join(' ');
 
-                labels.push(<span className={classes}>{labelText}</span>);
+                labels.push(<span className={styleClasses}>{labelText}</span>);
                 label++;
             }
             return labels;
         } else {
-            let classes = 'inline-block ease-in-out transform scale-100 transition';
-            let labels = [<span className={classes}>{minLabel}</span>, <span className={classes}>{maxLabel}</span>];
-            return labels;
+            return [
+                <span className={baseStyleClasses.join(' ')}>{minLabel}</span>,
+                <span className={baseStyleClasses.join(' ')}>{maxLabel}</span>,
+            ];
         }
     };
 
