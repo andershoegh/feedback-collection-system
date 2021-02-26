@@ -9,9 +9,9 @@ const NextButton: React.SFC<NextButtonProps> = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
-      className={`${buttonStyle} flex px-10 py-3 text-2xl items-center`}
+      className={`${buttonStyle} flex px-6 py-2 text-xl  place-items-center`}
     >
-      Next <ArrowRight className="ml-3 text-4xl" />
+      Next <ArrowRight className="ml-2 text-2xl" />
     </button>
   );
 };

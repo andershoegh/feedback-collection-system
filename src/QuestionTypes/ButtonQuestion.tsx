@@ -1,4 +1,5 @@
 import React from "react";
+import BackButton from "../BackButton";
 
 export interface ButtonQuestionProps {}
 
@@ -8,6 +9,7 @@ const ButtonQuestion: React.SFC<{
   question: string;
   firstButtonText: string;
   secondButtonText: string;
+  goBackOneStep: () => void;
   handleChoice: (question: string, answer: string | number | string[]) => void;
 }> = ({
   currentStep,
@@ -16,14 +18,19 @@ const ButtonQuestion: React.SFC<{
   firstButtonText,
   secondButtonText,
   handleChoice,
+  goBackOneStep,
 }) => {
   return (
     <>
       {currentStep !== renderOnStep ? null : (
-        <div>
-          <div className="text-3xl mx-24 leading-10 font-medium">
-            {question}
+        <div className="w-4/5">
+          <div className="mb-10 mt-4">
+            <BackButton
+              currentStep={currentStep}
+              onClick={() => goBackOneStep()}
+            />
           </div>
+          <div className="text-3xl leading-10 font-medium">{question}</div>
           <div className="flex justify-center mt-40">
             <button
               onClick={() =>
@@ -36,11 +43,7 @@ const ButtonQuestion: React.SFC<{
               {firstButtonText}
             </button>
             <button
-              onClick={() =>
-                setTimeout(() => {
-                  handleChoice(question, secondButtonText);
-                }, 200)
-              }
+              onClick={() => handleChoice(question, secondButtonText)}
               className={`${buttonStyle}`}
             >
               {secondButtonText}

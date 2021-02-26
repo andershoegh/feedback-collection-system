@@ -3,16 +3,21 @@ import React from "react";
 
 export interface BackButtonProps {
   onClick: () => void;
+  currentStep: number;
 }
 
-const BackButton: React.SFC<BackButtonProps> = ({ onClick }) => {
+const BackButton: React.SFC<BackButtonProps> = ({ onClick, currentStep }) => {
   return (
-    <button
-      onClick={onClick}
-      className={`${buttonStyle} flex px-4 py-1 text-lg items-center`}
-    >
-      <ArrowBendUpLeft className="mr-3 text-xl" /> Back
-    </button>
+    <>
+      {currentStep !== 1 ? (
+        <button
+          onClick={onClick}
+          className={`${buttonStyle} flex px-4 py-1 text-lg place-items-center`}
+        >
+          <ArrowBendUpLeft className="mr-3 text-xl" /> Back
+        </button>
+      ) : null}
+    </>
   );
 };
 
