@@ -6,25 +6,59 @@ import SliderQuestion from './QuestionTypes/SliderQuestion';
 export interface QuestionnaireProps {}
 
 const Questionnaire: React.SFC<QuestionnaireProps> = () => {
-    const [currentStep, setCurrentStep] = useState<number>(1);
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [questionnaireAnswers, setQuestionnaireAnswers] = useState<
+    { question: string; answer: string | number | string[] }[]
+  >([]);
 
-    return (
-        <div className="h-screen w-2/3 flex justify-center items-center">
-            <button onClick={() => setCurrentStep(currentStep + 1)}>Click to advance</button>
+  // Handles each answer from a question and puts it into the questionnaireAnswers state
+  // array and advances the questionnaire to the next question
+  const handleAnswer = (
+    question: string,
+    answer: string | number | string[]
+  ) => {
+    const newAnswer = { question, answer };
+    setQuestionnaireAnswers((prev) => [...prev, newAnswer]);
+    setCurrentStep(currentStep + 1);
+  };
+
+  console.log(questionnaireAnswers);
+
+  return (
+    <div className="h-screen w-2/3 flex justify-center items-center">
+      <ButtonQuestion
+        currentStep={currentStep}
+        renderOnStep={1}
+        question={
+          "Are you satisfied with peoples ability to stay socially distanced throughout the store?"
+        }
+        firstButtonText={"Yes"}
+        secondButtonText={"No"}
+        handleChoice={handleAnswer}
+      />
+      <ButtonQuestion
+        currentStep={currentStep}
+        renderOnStep={2}
+        question={"Hello?"}
+        firstButtonText={"Yes"}
+        secondButtonText={"No"}
+        handleChoice={handleAnswer}
+      />
+      <RankedListQuestion currentStep={currentStep} renderOnStep={3} />
             <SliderQuestion
                 currentStep={currentStep}
-                renderOnStep={1}
+                renderOnStep={3}
                 question={'How many people were with you while shopping today?'}
                 subText={'Swipe right or left to adjust the slider.'}
-                rangeMin={0}
                 rangeMax={8}
+                rangeMin={0}
                 intervals={1}
                 startValue={2}
                 // maxLabel={'4+'}
             />
             <SliderQuestion
                 currentStep={currentStep}
-                renderOnStep={2}
+                renderOnStep={4}
                 question={'How was your shopping trip today?'}
                 subText={'Swipe right or left to adjust the slider.'}
                 rangeMin={0}
@@ -33,16 +67,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                 minLabel={'😫'}
                 maxLabel={'😄'}
             />
-            <ButtonQuestion
-                currentStep={currentStep}
-                renderOnStep={3}
-                question={'Are you satisfied with peoples ability to stay socially distanced throughout the store?'}
-                firstButtonText={'Yes'}
-                secondButtonText={'No'}
-            />
-            <RankedListQuestion currentStep={currentStep} renderOnStep={4} />
         </div>
-    );
 };
 
 export default Questionnaire;
