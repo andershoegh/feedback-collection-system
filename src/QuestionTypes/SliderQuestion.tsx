@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import './Slider.css';
 
 export interface SliderQuestionProps {
     currentStep: number;
@@ -17,7 +18,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
     const { currentStep, renderOnStep, question, subText, rangeMin, rangeMax, intervals, startValue, minLabel, maxLabel } = props;
     const labelsRef = useRef<HTMLSpanElement>(null);
     const [selectedValue, setSelectedValue] = useState<number>(startValue);
-    const highlightedClasses = ['font-semibold', 'scale-150', 'text-blue-700'];
+    const highlightedClasses = ['font-semibold', 'scale-150', 'text-blue-600'];
     let baseStyleClasses = ['inline-block', 'ease-in-out', 'transform', 'transition', 'scale-100'];
 
     const updateSelected = (value: number) => {
@@ -25,8 +26,8 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
             labelsRef.current.children[selectedValue].classList.remove(...highlightedClasses);
             labelsRef.current.children[value].classList.add(...highlightedClasses);
         } else if (labelsRef.current) {
-            let scaleFactorMin = ((rangeMax - value) * 1.5) / (rangeMax - rangeMin) + 1;
-            let scaleFactorMax = ((value - rangeMin) * 1.5) / (rangeMax - rangeMin) + 1;
+            let scaleFactorMin = (rangeMax - value) / (rangeMax - rangeMin) + 1;
+            let scaleFactorMax = (value - rangeMin) / (rangeMax - rangeMin) + 1;
 
             labelsRef.current.children[0].setAttribute('style', `transform: scale(${scaleFactorMin});`);
             labelsRef.current.children[1].setAttribute('style', `transform: scale(${scaleFactorMax});`);
@@ -36,16 +37,23 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
 
     const setIntervalLabels = () => {
         if (intervals) {
-            let label = rangeMin;
+            let currentLabel = rangeMin;
             const labels = [];
 
-            while (label <= rangeMax) {
-                let labelText = minLabel && label === rangeMin ? minLabel : maxLabel && label === rangeMax ? maxLabel : label;
+            while (currentLabel <= rangeMax) {
+                let labelText =
+                    minLabel && currentLabel === rangeMin
+                        ? minLabel
+                        : maxLabel && currentLabel === rangeMax
+                        ? maxLabel
+                        : currentLabel;
                 let styleClasses =
-                    label === selectedValue ? highlightedClasses.concat(baseStyleClasses).join(' ') : baseStyleClasses.join(' ');
+                    currentLabel === selectedValue
+                        ? highlightedClasses.concat(baseStyleClasses).join(' ')
+                        : baseStyleClasses.join(' ');
 
                 labels.push(<span className={styleClasses}>{labelText}</span>);
-                label++;
+                currentLabel++;
             }
             return labels;
         } else {
@@ -70,9 +78,9 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                             value={selectedValue}
                             step={intervals}
                             onChange={(e) => updateSelected(parseInt(e.target.value))}
-                            className="block w-full mb-8"
+                            className="slider block w-full mb-8"
                         />
-                        <span ref={labelsRef} className="block flex justify-between font-normal text-lg text-blue-500">
+                        <span ref={labelsRef} className="block flex justify-between font-normal text-lg text-blue-500 mx-2">
                             {setIntervalLabels()}
                         </span>
                     </div>

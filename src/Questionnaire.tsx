@@ -17,9 +17,10 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                 question={'How many people were with you while shopping today?'}
                 subText={'Swipe right or left to adjust the slider.'}
                 rangeMin={0}
-                rangeMax={4}
+                rangeMax={8}
                 intervals={1}
                 startValue={2}
+                // maxLabel={'4+'}
             />
             <SliderQuestion
                 currentStep={currentStep}
