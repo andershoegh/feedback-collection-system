@@ -6,45 +6,40 @@ import SliderQuestion from './QuestionTypes/SliderQuestion';
 export interface QuestionnaireProps {}
 
 const Questionnaire: React.SFC<QuestionnaireProps> = () => {
-  const [currentStep, setCurrentStep] = useState<number>(1);
-  const [questionnaireAnswers, setQuestionnaireAnswers] = useState<
-    { question: string; answer: string | number | string[] }[]
-  >([]);
+    const [currentStep, setCurrentStep] = useState<number>(1);
+    const [questionnaireAnswers, setQuestionnaireAnswers] = useState<{ question: string; answer: string | number | string[] }[]>(
+        []
+    );
 
-  // Handles each answer from a question and puts it into the questionnaireAnswers state
-  // array and advances the questionnaire to the next question
-  const handleAnswer = (
-    question: string,
-    answer: string | number | string[]
-  ) => {
-    const newAnswer = { question, answer };
-    setQuestionnaireAnswers((prev) => [...prev, newAnswer]);
-    setCurrentStep(currentStep + 1);
-  };
+    // Handles each answer from a question and puts it into the questionnaireAnswers state
+    // array and advances the questionnaire to the next question
+    const handleAnswer = (question: string, answer: string | number | string[]) => {
+        const newAnswer = { question, answer };
+        setQuestionnaireAnswers((prev) => [...prev, newAnswer]);
+        setCurrentStep(currentStep + 1);
+    };
 
-  console.log(questionnaireAnswers);
+    console.log(questionnaireAnswers);
 
-  return (
-    <div className="h-screen w-2/3 flex justify-center items-center">
-      <ButtonQuestion
-        currentStep={currentStep}
-        renderOnStep={1}
-        question={
-          "Are you satisfied with peoples ability to stay socially distanced throughout the store?"
-        }
-        firstButtonText={"Yes"}
-        secondButtonText={"No"}
-        handleChoice={handleAnswer}
-      />
-      <ButtonQuestion
-        currentStep={currentStep}
-        renderOnStep={2}
-        question={"Hello?"}
-        firstButtonText={"Yes"}
-        secondButtonText={"No"}
-        handleChoice={handleAnswer}
-      />
-      <RankedListQuestion currentStep={currentStep} renderOnStep={3} />
+    return (
+        <div className="h-screen w-2/3 flex justify-center items-center">
+            <ButtonQuestion
+                currentStep={currentStep}
+                renderOnStep={1}
+                question={'Are you satisfied with peoples ability to stay socially distanced throughout the store?'}
+                firstButtonText={'Yes'}
+                secondButtonText={'No'}
+                handleChoice={handleAnswer}
+            />
+            <ButtonQuestion
+                currentStep={currentStep}
+                renderOnStep={2}
+                question={'Hello?'}
+                firstButtonText={'Yes'}
+                secondButtonText={'No'}
+                handleChoice={handleAnswer}
+            />
+            <RankedListQuestion currentStep={currentStep} renderOnStep={3} />
             <SliderQuestion
                 currentStep={currentStep}
                 renderOnStep={3}
@@ -68,6 +63,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                 maxLabel={'😄'}
             />
         </div>
+    );
 };
 
 export default Questionnaire;
