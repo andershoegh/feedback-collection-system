@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ButtonQuestion from './QuestionTypes/ButtonQuestion';
 import RankedListQuestion from './QuestionTypes/RankedListQuestion';
 import SliderQuestion from './QuestionTypes/SliderQuestion';
+import RankingQuestion from './QuestionTypes/RankingQuestion';
 
 export interface QuestionnaireProps {}
 
@@ -23,9 +24,16 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
 
     return (
         <div className="h-screen w-2/3 flex justify-center items-center">
-            <ButtonQuestion
+            <RankingQuestion
                 currentStep={currentStep}
                 renderOnStep={1}
+                question={'What is most important to you while shopping?'}
+                subText={'Order the list from most important to least important. Select an item and swipe to re-order it.'}
+                items={['Clothing', 'Dairy and meat', 'Sweets']}
+            />
+            <ButtonQuestion
+                currentStep={currentStep}
+                renderOnStep={5}
                 question={'Are you satisfied with peoples ability to stay socially distanced throughout the store?'}
                 firstButtonText={'Yes'}
                 secondButtonText={'No'}
