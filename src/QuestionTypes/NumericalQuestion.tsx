@@ -17,18 +17,19 @@ const NumericalQuestion: React.SFC<{
   return (
     <>
       {currentStep !== renderOnStep ? null : (
-        <div>
-          <div className="mb-10 mt-4 ml-16">
-            <BackButton onClick={() => goBackOneStep()} />
+        <div className="w-4/5 h-screen relative">
+          <div className="mb-10 mt-10">
+            <BackButton
+              currentStep={currentStep}
+              onClick={() => goBackOneStep()}
+            />
           </div>
-          <div className="text-3xl mx-24 leading-10 font-medium">
-            {question}
-          </div>
+          <div className="text-3xl leading-10 font-medium">{question}</div>
           <div className="flex justify-center mt-8 font-medium text-6xl text-blue-600">
             <span className="">{amount === "0" ? "" : amount} </span>
             <span className=" animate-pulse font-light">|</span>
           </div>
-          <div className="grid-cols-3  grid w-1/3 gap-3 mt-6 justify-items-center mx-auto text-2xl font-medium">
+          <div className="grid-cols-3  grid w-64 gap-3 mt-6 justify-items-center mx-auto text-2xl font-medium">
             <div
               onClick={() => setAmount(amount + "1")}
               className={`${buttonStyle} px-6 py-3`}
@@ -91,13 +92,13 @@ const NumericalQuestion: React.SFC<{
             </div>
             <div
               onClick={() => setAmount(amount.substring(0, amount.length - 1))}
-              className={`${buttonStyle} px-7 py-3 col-span-2 flex items-center font-normal text-2xl`}
+              className={`${buttonStyle} px-6 py-3 col-span-2 flex items-center font-normal text-2xl`}
             >
               <Backspace className="mr-2" />
               Delete
             </div>
           </div>
-          <div className="mt-10 mr-16 justify-end flex">
+          <div className="absolute bottom-10 right-0">
             <NextButton onClick={() => handleChoice(question, amount)} />
           </div>
         </div>

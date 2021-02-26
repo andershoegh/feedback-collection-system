@@ -1,24 +1,28 @@
 import React, { useState } from "react";
-import ButtonQuestion from "./QuestionTypes/ButtonQuestion";
 import NumericalQuestion from "./QuestionTypes/NumericalQuestion";
-import RankedListQuestion from "./QuestionTypes/RankedListQuestion";
+import SingleChoiceListQuestion from "./QuestionTypes/SingleChoiceListQuestion";
 import SliderQuestion from "./QuestionTypes/SliderQuestion";
 
 export interface QuestionnaireProps {}
 
 const Questionnaire: React.SFC<QuestionnaireProps> = () => {
-    const [currentStep, setCurrentStep] = useState<number>(1);
-    const [questionnaireAnswers, setQuestionnaireAnswers] = useState<{ question: string; answer: string | number | string[] }[]>(
-        []
-    );
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [questionnaireAnswers, setQuestionnaireAnswers] = useState<
+    { question: string; answer: string | number | string[] }[]
+  >([]);
 
-    // Handles each answer from a question and puts it into the questionnaireAnswers state
-    // array and advances the questionnaire to the next question
-    const handleAnswer = (question: string, answer: string | number | string[]) => {
-        const newAnswer = { question, answer };
-        setQuestionnaireAnswers((prev) => [...prev, newAnswer]);
-        setCurrentStep(currentStep + 1);
-    };
+  // Handles each answer from a question and puts it into the questionnaireAnswers state
+  // array and advances the questionnaire to the next question
+  const handleAnswer = (
+    question: string,
+    answer: string | number | string[]
+  ) => {
+    setTimeout(() => {
+      const newAnswer = { question, answer };
+      setQuestionnaireAnswers((prev) => [...prev, newAnswer]);
+      setCurrentStep(currentStep + 1);
+    }, 200);
+  };
 
   const handleGoingBackOneStep = () => {
     // Remove latest entry in questionnaireanswers array
@@ -31,13 +35,25 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
 
   return (
     <div className="h-screen w-2/3 flex justify-center items-center">
-      <NumericalQuestion
+      <SingleChoiceListQuestion
         goBackOneStep={() => handleGoingBackOneStep()}
         currentStep={currentStep}
         renderOnStep={1}
         question={"How many people did you shop with today?"}
         handleChoice={handleAnswer}
+        answersArray={[
+          "Not that many",
+          "I swear it was only me",
+          "I don't care, we were 10 people and my mom",
+        ]}
       />
+      {/* <NumericalQuestion
+        goBackOneStep={() => handleGoingBackOneStep()}
+        currentStep={currentStep}
+        renderOnStep={1}
+        question={"How many people did you shop with today?"}
+        handleChoice={handleAnswer}
+      /> */}
       <NumericalQuestion
         goBackOneStep={() => handleGoingBackOneStep()}
         currentStep={currentStep}
@@ -63,7 +79,6 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
         secondButtonText={"No"}
         handleChoice={handleAnswer}
       /> */}
-      <RankedListQuestion currentStep={currentStep} renderOnStep={3} />
       <SliderQuestion
         currentStep={currentStep}
         renderOnStep={3}
@@ -73,6 +88,8 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
         rangeMin={0}
         intervals={1}
         startValue={2}
+        handleChoice={handleAnswer}
+        goBackOneStep={handleGoingBackOneStep}
         // maxLabel={'4+'}
       />
       <SliderQuestion
@@ -85,6 +102,8 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
         startValue={50}
         minLabel={"😫"}
         maxLabel={"😄"}
+        handleChoice={handleAnswer}
+        goBackOneStep={handleGoingBackOneStep}
       />
     </div>
   );
