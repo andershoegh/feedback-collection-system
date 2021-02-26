@@ -7,16 +7,16 @@ export interface QuestionnaireProps {}
 const Questionnaire: React.SFC<QuestionnaireProps> = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [questionnaireAnswers, setQuestionnaireAnswers] = useState<
-    { questionNumber: number; answer: string | number | string[] }[]
+    { question: string; answer: string | number | string[] }[]
   >([]);
 
   // Handles each answer from a question and puts it into the questionnaireAnswers state
   // array and advances the questionnaire to the next question
   const handleAnswer = (
-    questionNumber: number,
+    question: string,
     answer: string | number | string[]
   ) => {
-    const newAnswer = { questionNumber, answer };
+    const newAnswer = { question, answer };
     setQuestionnaireAnswers((prev) => [...prev, newAnswer]);
     setCurrentStep(currentStep + 1);
   };
@@ -38,9 +38,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
       <ButtonQuestion
         currentStep={currentStep}
         renderOnStep={2}
-        question={
-          "Are you satisfied with peoples ability to stay socially distanced throughout the store?"
-        }
+        question={"Hello?"}
         firstButtonText={"Yes"}
         secondButtonText={"No"}
         handleChoice={handleAnswer}
