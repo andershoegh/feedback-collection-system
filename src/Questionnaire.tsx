@@ -24,16 +24,9 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
 
     return (
         <div className="h-screen w-2/3 flex justify-center items-center">
-            <RankingQuestion
-                currentStep={currentStep}
-                renderOnStep={1}
-                question={'What is most important to you while shopping?'}
-                subText={'Order the list from most important to least important. Select an item and swipe to re-order it.'}
-                items={['Clothing', 'Dairy and meat', 'Sweets']}
-            />
             <ButtonQuestion
                 currentStep={currentStep}
-                renderOnStep={5}
+                renderOnStep={1}
                 question={'Are you satisfied with peoples ability to stay socially distanced throughout the store?'}
                 firstButtonText={'Yes'}
                 secondButtonText={'No'}
@@ -47,21 +40,31 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                 secondButtonText={'No'}
                 handleChoice={handleAnswer}
             />
-            <RankedListQuestion currentStep={currentStep} renderOnStep={3} />
-            <SliderQuestion
+            <RankingQuestion
                 currentStep={currentStep}
                 renderOnStep={3}
-                question={'How many people were with you while shopping today?'}
-                subText={'Swipe right or left to adjust the slider.'}
-                rangeMax={8}
-                rangeMin={0}
-                intervals={1}
-                startValue={2}
-                // maxLabel={'4+'}
+                question={'What is most important to you while shopping?'}
+                subText={
+                    'Order the list from most important to least important. Left-click on an item and use the W and S keys to move.'
+                }
+                items={['Clothing', 'Dairy and meat', 'Sweets']}
+                handleChoice={handleAnswer}
             />
             <SliderQuestion
                 currentStep={currentStep}
                 renderOnStep={4}
+                question={'How many people were with you while shopping today?'}
+                subText={'Swipe right or left to adjust the slider.'}
+                rangeMax={4}
+                rangeMin={0}
+                intervals={1}
+                startValue={2}
+                // maxLabel={'4+'}
+                handleChoice={handleAnswer}
+            />
+            <SliderQuestion
+                currentStep={currentStep}
+                renderOnStep={5}
                 question={'How was your shopping trip today?'}
                 subText={'Swipe right or left to adjust the slider.'}
                 rangeMin={0}
@@ -69,6 +72,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                 startValue={50}
                 minLabel={'😫'}
                 maxLabel={'😄'}
+                handleChoice={handleAnswer}
             />
         </div>
     );

@@ -1,8 +1,60 @@
 .active-item {
-    animation: wiggle 1.8s infinite;
+    animation: wiggle 2s infinite, pulse 2s infinite;
+    border: 0.2rem solid #127fbf;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.2), 0 0 0 0 #127fbf;
+    }
+    40% {
+        box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.2), 0 0 10px 10px rgba(18, 127, 191, 0);
+    }
 }
 
 @keyframes wiggle {
+    0% {
+        transform: rotate(0);
+    }
+    10% {
+        transform: rotate(0.4deg);
+    }
+    20% {
+        transform: rotate(-0.4deg);
+    }
+    25% {
+        transform: rotate(0.4deg);
+    }
+    30% {
+        transform: rotate(-0.4deg);
+    }
+    35% {
+        transform: rotate(0.4deg);
+    }
+    40% {
+        transform: rotate(-0.4deg);
+    }
+    50% {
+        transform: rotate(0.4deg);
+    }
+    60% {
+        transform: rotate(-0.2deg);
+    }
+    70% {
+        transform: rotate(0.2deg);
+    }
+    80% {
+        transform: rotate(-0.2deg);
+    }
+    90% {
+        transform: rotate(0.2deg);
+    }
+    100% {
+        transform: rotate(0);
+    }
+}
+
+/* @keyframes wiggle {
     0% {
         transform: rotate(-0.2deg);
     }
@@ -42,4 +94,4 @@
     100% {
         transform: rotate(-0.2deg);
     }
-}
+} */

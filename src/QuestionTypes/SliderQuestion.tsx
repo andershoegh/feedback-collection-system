@@ -12,10 +12,23 @@ export interface SliderQuestionProps {
     startValue: number;
     minLabel?: string;
     maxLabel?: string;
+    handleChoice: (question: string, answer: string | number | string[]) => void;
 }
 
 const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
-    const { currentStep, renderOnStep, question, subText, rangeMin, rangeMax, intervals, startValue, minLabel, maxLabel } = props;
+    const {
+        currentStep,
+        renderOnStep,
+        question,
+        subText,
+        rangeMin,
+        rangeMax,
+        intervals,
+        startValue,
+        minLabel,
+        maxLabel,
+        handleChoice,
+    } = props;
     const labelsRef = useRef<HTMLSpanElement>(null);
     const [selectedValue, setSelectedValue] = useState<number>(startValue);
     const highlightedClasses = ['font-semibold', 'scale-150', 'text-blue-600'];
@@ -84,7 +97,14 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                             {setIntervalLabels()}
                         </span>
                     </div>
-                    <button className="border-4 border-transparent shadow-inactive focus:shadow-focused focus:outline-none focus:border-4 focus:border-blue-500 focus:border-opacity-100 py-6 px-32 text-3xl rounded-xl m-4">
+                    <button
+                        onClick={() => {
+                            setTimeout(() => {
+                                handleChoice(question, selectedValue);
+                            }, 200);
+                        }}
+                        className="border-4 border-transparent shadow-inactive focus:shadow-focused focus:outline-none focus:border-4 focus:border-blue-500 focus:border-opacity-100 py-6 px-32 text-3xl rounded-xl m-4"
+                    >
                         Next
                     </button>
                 </div>
