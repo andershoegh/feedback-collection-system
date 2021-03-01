@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import SliderQuestion from './QuestionTypes/SliderQuestion';
+import RankingQuestion from './QuestionTypes/RankingQuestion';
 import NumericalQuestion from "./QuestionTypes/NumericalQuestion";
 import SingleChoiceListQuestion from "./QuestionTypes/SingleChoiceListQuestion";
-import SliderQuestion from "./QuestionTypes/SliderQuestion";
 
 export interface QuestionnaireProps {}
 
@@ -79,34 +80,42 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
         secondButtonText={"No"}
         handleChoice={handleAnswer}
       /> */}
-      <SliderQuestion
-        currentStep={currentStep}
-        renderOnStep={3}
-        question={"How many people were with you while shopping today?"}
-        subText={"Swipe right or left to adjust the slider."}
-        rangeMax={8}
-        rangeMin={0}
-        intervals={1}
-        startValue={2}
-        handleChoice={handleAnswer}
-        goBackOneStep={handleGoingBackOneStep}
-        // maxLabel={'4+'}
-      />
-      <SliderQuestion
-        currentStep={currentStep}
-        renderOnStep={4}
-        question={"How was your shopping trip today?"}
-        subText={"Swipe right or left to adjust the slider."}
-        rangeMin={0}
-        rangeMax={100}
-        startValue={50}
-        minLabel={"😫"}
-        maxLabel={"😄"}
-        handleChoice={handleAnswer}
-        goBackOneStep={handleGoingBackOneStep}
-      />
-    </div>
-  );
+            <RankingQuestion
+                currentStep={currentStep}
+                renderOnStep={3}
+                question={'What is most important to you while shopping?'}
+                subText={
+                    'Order the list from most important to least important. Left-click on an item and use the W and S keys to move.'
+                }
+                items={['Clothing', 'Dairy and meat', 'Sweets']}
+                handleChoice={handleAnswer}
+            />
+            <SliderQuestion
+                currentStep={currentStep}
+                renderOnStep={4}
+                question={'How many people were with you while shopping today?'}
+                subText={'Swipe right or left to adjust the slider.'}
+                rangeMax={4}
+                rangeMin={0}
+                intervals={1}
+                startValue={2}
+                // maxLabel={'4+'}
+                handleChoice={handleAnswer}
+            />
+            <SliderQuestion
+                currentStep={currentStep}
+                renderOnStep={5}
+                question={'How was your shopping trip today?'}
+                subText={'Swipe right or left to adjust the slider.'}
+                rangeMin={0}
+                rangeMax={100}
+                startValue={50}
+                minLabel={'😫'}
+                maxLabel={'😄'}
+                handleChoice={handleAnswer}
+            />
+        </div>
+    );
 };
 
 export default Questionnaire;
