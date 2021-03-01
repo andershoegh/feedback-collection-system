@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './RankingQuestion.css';
 import Arrows from '../Resources/ArrowsDownUp.png';
+import BackButton from '../BackButton';
+import NextButton from '../NextButton';
 
 export interface RankingQuestionProps {
     currentStep: number;
@@ -9,10 +11,11 @@ export interface RankingQuestionProps {
     subText: string;
     items: string[];
     handleChoice: (question: string, answer: string | number | string[]) => void;
+    goBackOneStep: () => void;
 }
 
 const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
-    const { currentStep, renderOnStep, question, subText, items, handleChoice } = props;
+    const { currentStep, renderOnStep, question, subText, items, handleChoice, goBackOneStep } = props;
     const [activeItem, setActiveItem] = useState<HTMLDivElement>();
     const [list, setList] = useState<string[]>(items);
     const listRef = useRef<HTMLDivElement>(null);
@@ -97,44 +100,42 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
     return (
         <>
             {currentStep !== renderOnStep ? null : (
-                <div className="w-4/5">
-                    <div className="text-3xl leading-10 font-medium">{question}</div>
-                    <div className="font-normal">{subText}</div>
-                    <div className="flex row-auto mt-12 w-full">
-                        <div className="flex flex-col justify-between my-16 mr-6">
-                            {list.map((item, index) => {
-                                return (
-                                    <div key={index} className="font-medium text-2xl text-blue-500">
-                                        {index + 1}
-                                    </div>
-                                );
-                            })}
+                <div className="w-4/5 h-screen relative">
+                    <div>
+                        <div className="my-10">
+                            <BackButton currentStep={currentStep} onClick={() => goBackOneStep()} />
                         </div>
-                        <div ref={listRef} className="w-full">
-                            {list.map((item) => {
-                                return (
-                                    <div
-                                        key={item}
-                                        onClick={(e) => activateItem(e.target as HTMLDivElement)}
-                                        className="flex bg-white border-4 border-transparent p-6 text-3xl rounded-xl my-8 shadow-inactive w-full focus:shadow-focused focus:outline-none focus:border-4 focus:border-blue-500 focus:border-opacity-100"
-                                    >
-                                        <img src={Arrows} alt="arrows" className="mr-6" />
-                                        <span>{item}</span>
-                                    </div>
-                                );
-                            })}
+                        <div className="text-3xl leading-10 font-medium">{question}</div>
+                        <div className="font-normal text-gray-600 mt-2">{subText}</div>
+                        <div className="flex row-auto text-lg font-normal mt-10 w-4/5">
+                            <div className="flex flex-col justify-between mr-6 py-5">
+                                {list.map((item, index) => {
+                                    return (
+                                        <div key={index} className="mb-5 text-blue-500">
+                                            {index + 1}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                            <div ref={listRef} className="w-full">
+                                {list.map((item) => {
+                                    return (
+                                        <div
+                                            key={item}
+                                            onClick={(e) => activateItem(e.target as HTMLDivElement)}
+                                            className={`${buttonStyle} flex items-center bg-white pl-4 py-3 mb-5 w-full`}
+                                        >
+                                            <img src={Arrows} alt="arrows" className="mr-4" />
+                                            <span>{item}</span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                        <div className="absolute bottom-10 right-0">
+                            <NextButton onClick={() => handleChoice(question, list)} />
                         </div>
                     </div>
-                    <button
-                        onClick={() => {
-                            setTimeout(() => {
-                                handleChoice(question, list);
-                            }, 200);
-                        }}
-                        className="border-4 border-transparent shadow-inactive focus:shadow-focused focus:outline-none focus:border-4 focus:border-blue-500 focus:border-opacity-100 py-6 px-32 text-3xl rounded-xl m-4"
-                    >
-                        Next
-                    </button>
                 </div>
             )}
         </>
@@ -142,3 +143,6 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
 };
 
 export default RankingQuestion;
+
+const buttonStyle =
+    'shadow-inactive focus:shadow-focused focus:border-blue-500 border-4 border-transparent focus:outline-none rounded-xl active:scale-90 animate transition transform';
