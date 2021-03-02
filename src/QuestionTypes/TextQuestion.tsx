@@ -78,40 +78,38 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
     playAnimation();
   }, []);
 
-  return (
-    <>
-      {currentStep !== renderOnStep ? null : (
-        <div className="w-4/5 h-screen relative">
-          <div className="my-10">
-            <BackButton
-              currentStep={currentStep}
-              onClick={() =>
-                setTimeout(() => {
-                  goBackOneStep();
-                }, 200)
-              }
-            />
-          </div>
-          <div className="text-3xl leading-10 font-medium">{question}</div>
-          <div className="font-normal text-gray-600 mt-2">{subText}</div>
-          <div className="flex flex-col items-center mt-40">
-            <div
-              ref={dotsRef}
-              className="mb-20 flex relative justify-between w-36"
-            >
-              <div className="dot dot-one"></div>
-              <div className="dot dot-two"></div>
-              <div className="dot dot-three"></div>
-              <div className="checkmark draw absolute hidden"></div>
-            </div>
-            <div className="text-lg">{getAnswerText}</div>
-            {!redoAnswer ? null : (
-              <button
-                onClick={() => playAnimation()}
-                className={`mt-14 px-4 py-1 text-lg place-items-center ${buttonStyle}`}
-              >
-                Want a do-over?
-              </button>
+    return (
+        <>
+            {currentStep !== renderOnStep ? null : (
+                <div className="w-4/5 h-screen relative">
+                    <div className="my-10">
+                        <BackButton currentStep={currentStep} onClick={() => goBackOneStep()} />
+                    </div>
+                    <div className="absolute top-32">
+                        <div className="text-3xl leading-10 font-medium">{question}</div>
+                        <div className="font-normal text-gray-600 mt-2">{subText}</div>
+                        <div className="flex flex-col items-center mt-40">
+                            <div ref={dotsRef} className="mb-20 flex relative justify-between w-36">
+                                <div className="dot dot-one"></div>
+                                <div className="dot dot-two"></div>
+                                <div className="dot dot-three"></div>
+                                <div className="checkmark draw absolute hidden"></div>
+                            </div>
+                            <div className="text-lg">{getAnswerText}</div>
+                            {!redoAnswer ? null : (
+                                <button
+                                    onClick={() => playAnimation()}
+                                    className={`mt-14 px-4 py-1 text-lg place-items-center ${buttonStyle}`}
+                                >
+                                    Want a do-over?
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                    <div className="absolute bottom-10 right-0">
+                        <NextButton onClick={() => (answer ? handleChoice(question, answer) : null)} />
+                    </div>
+                </div>
             )}
           </div>
           <div className="absolute bottom-10 right-0">

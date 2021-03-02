@@ -2,7 +2,7 @@
     width: 1.2rem;
     height: 1.2rem;
     border-radius: 50%;
-    background: #40c3f7;
+    background: rgb(59, 130, 246);
     animation: dotTyping 2s infinite;
 }
 
@@ -37,20 +37,17 @@
 @keyframes dotTyping {
     0% {
         transform: translate(0, 0);
-        background: rgba(#40c3f7, 0.2);
     }
     10% {
         transform: translate(0, 0.3rem) scaleX(1);
     }
     20% {
-        background: rgba(#40c3f7, 0.6);
         transform: translate(0, -1.1rem) scaleX(0.9) scaleY(1.1);
     }
     30% {
         transform: translate(0, 0.5rem) scaleX(1.2) scaleY(1);
     }
     40% {
-        background: rgba(#40c3f7, 0.2);
         transform: translate(0, 0) scaleX(1);
     }
 }
