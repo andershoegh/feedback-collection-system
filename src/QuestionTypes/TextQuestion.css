@@ -1,0 +1,139 @@
+.dot {
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 50%;
+    background: #40c3f7;
+    animation: dotTyping 2s infinite;
+}
+
+.dot-two {
+    animation-delay: 0.1s;
+}
+
+.dot-three {
+    animation-delay: 0.2s;
+}
+
+.checkmark::after {
+    content: '';
+    opacity: 1;
+    height: 2rem;
+    width: 4rem;
+    transform-origin: left top;
+    border-left: 0.5rem solid white;
+    border-bottom: 0.5rem solid white;
+    /* border-right: 0.5rem solid white;
+    border-top: 0.5rem solid white; */
+    position: absolute;
+    left: 2.5rem;
+    top: 0.8rem;
+}
+
+.checkmark.draw::after {
+    animation: checkmark 0.8s 1.4s backwards;
+    transform: rotate(315deg);
+}
+
+@keyframes dotTyping {
+    0% {
+        transform: translate(0, 0);
+        background: rgba(#40c3f7, 0.2);
+    }
+    10% {
+        transform: translate(0, 0.3rem) scaleX(1);
+    }
+    20% {
+        background: rgba(#40c3f7, 0.6);
+        transform: translate(0, -1.1rem) scaleX(0.9) scaleY(1.1);
+    }
+    30% {
+        transform: translate(0, 0.5rem) scaleX(1.2) scaleY(1);
+    }
+    40% {
+        background: rgba(#40c3f7, 0.2);
+        transform: translate(0, 0) scaleX(1);
+    }
+}
+
+@keyframes completeDot0 {
+    0% {
+        transform: translate(0, 0);
+    }
+    70% {
+        transform: translate(-0.5rem, 0);
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(3rem, 0);
+        opacity: 0;
+    }
+}
+
+@keyframes completeDot2 {
+    0% {
+        transform: translate(0, 0);
+    }
+    70% {
+        transform: translate(0.5rem, 0);
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-3rem, 0);
+        opacity: 0;
+    }
+}
+
+@keyframes completeDot1 {
+    0% {
+        transform: scale(1);
+    }
+    28% {
+        transform: scale(1);
+    }
+    35% {
+        transform: scale(0.7);
+    }
+    42% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1);
+    }
+    65% {
+        transform: scale(0.7);
+    }
+    85% {
+        transform: scale(7.5);
+    }
+    95% {
+        transform: scale(6.8);
+    }
+    100% {
+        transform: scale(7);
+    }
+}
+
+@keyframes checkmark {
+    0% {
+        height: 0;
+        width: 0;
+        opacity: 0;
+    }
+    20% {
+        height: 2rem;
+        width: 0;
+        opacity: 1;
+    }
+    40% {
+        height: 2rem;
+        width: 4rem;
+    }
+    100% {
+        height: 2rem;
+        width: 4rem;
+    }
+}

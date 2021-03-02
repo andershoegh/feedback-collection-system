@@ -3,6 +3,7 @@ import SliderQuestion from './QuestionTypes/SliderQuestion';
 import RankingQuestion from './QuestionTypes/RankingQuestion';
 import NumericalQuestion from './QuestionTypes/NumericalQuestion';
 import SingleChoiceListQuestion from './QuestionTypes/SingleChoiceListQuestion';
+import TextQuestion from './QuestionTypes/TextQuestion';
 
 export interface QuestionnaireProps {}
 
@@ -107,6 +108,14 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                 startValue={50}
                 minLabel={'😫'}
                 maxLabel={'😄'}
+                handleChoice={handleAnswer}
+                goBackOneStep={handleGoingBackOneStep}
+            />
+            <TextQuestion
+                currentStep={currentStep}
+                renderOnStep={6}
+                question={"What's the most crowded areas in the store when you visit?"}
+                subText={'Please answer this question on your phone. Your answer will not be visible on this screen.'}
                 handleChoice={handleAnswer}
                 goBackOneStep={handleGoingBackOneStep}
             />
