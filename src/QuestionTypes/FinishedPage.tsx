@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import BackButton from '../BackButton';
 
 export interface FinishedPageProps {
@@ -7,10 +7,32 @@ export interface FinishedPageProps {
     text: string;
     subText: string;
     goBackOneStep: () => void;
+    logAndReset: () => void;
 }
 
 const FinishedPage: React.FC<FinishedPageProps> = (props) => {
-    const { currentStep, renderOnStep, text, subText, goBackOneStep } = props;
+    const { currentStep, renderOnStep, text, subText, goBackOneStep, logAndReset } = props;
+    const [timer, setTimer] = useState<number>(10);
+
+    useEffect(() => {
+        let timeLeft = 10;
+        setTimer(timeLeft);
+        let x = setInterval(() => {
+            if (currentStep === renderOnStep) {
+                setTimer(timeLeft);
+
+                if (timeLeft < 1) {
+                    clearInterval(x);
+                    logAndReset();
+                }
+                timeLeft--;
+            }
+        }, 1000);
+
+        return () => {
+            clearInterval(x);
+        };
+    }, [currentStep, renderOnStep]);
 
     return (
         <>
@@ -23,6 +45,7 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
                         <div className="text-3xl leading-10 font-medium">{text}</div>
                         <div className="font-normal text-gray-600 mt-2">{subText}</div>
                     </div>
+                    <div className="absolute bottom-10 right-0 left-0">🚀 Resetting in T minus {timer}</div>
                 </div>
             )}
         </>

@@ -29,6 +29,14 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
         }, 200);
     };
 
+    // Handles full completion of the questionnaire and resetting for a new participant
+    const logAndReset = () => {
+        // Send questionnaireAnswers to db or whatever
+
+        setQuestionnaireAnswers([]);
+        setCurrentStep(1);
+    };
+
     const handleGoingBackOneStep = () => {
         // Remove latest entry in questionnaireanswers array
         questionnaireAnswers.pop();
@@ -142,6 +150,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     text={'Thanks for participating! 😘'}
                     subText={'Now please get the fuck outta here'}
                     goBackOneStep={handleGoingBackOneStep}
+                    logAndReset={logAndReset}
                 />
             </div>
         </div>
