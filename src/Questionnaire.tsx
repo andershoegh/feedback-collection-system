@@ -4,6 +4,7 @@ import SliderQuestion from "./QuestionTypes/SliderQuestion";
 import NumericalQuestion from "./QuestionTypes/NumericalQuestion";
 import SingleChoiceListQuestion from "./QuestionTypes/SingleChoiceListQuestion";
 import MultiChoiceListQuestion from "./QuestionTypes/MultiChoiceListQuestion";
+import Progressbar from "./Progressbar";
 
 export interface QuestionnaireProps {}
 
@@ -12,6 +13,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
   const [questionnaireAnswers, setQuestionnaireAnswers] = useState<
     { question: string; answer: string | number | string[] }[]
   >([]);
+  const [maxQuestions] = useState(5); // manually set the amount of questions
 
   // Handles each answer from a question and puts it into the questionnaireAnswers state
   // array and advances the questionnaire to the next question
@@ -22,7 +24,9 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
     setTimeout(() => {
       const newAnswer = { question, answer };
       setQuestionnaireAnswers((prev) => [...prev, newAnswer]);
-      setCurrentStep(currentStep + 1);
+      if (currentStep <= maxQuestions) {
+        setCurrentStep(currentStep + 1);
+      }
     }, 200);
   };
 
@@ -36,46 +40,49 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
   console.log(questionnaireAnswers);
 
   return (
-    <div className="h-screen w-2/3 flex justify-center items-center">
-      <SingleChoiceListQuestion
-        goBackOneStep={() => handleGoingBackOneStep()}
-        currentStep={currentStep}
-        renderOnStep={1}
-        question={"How many people did you shop with today?"}
-        handleChoice={handleAnswer}
-        answersArray={[
-          "Not that many",
-          "I swear it was only me",
-          "I don't care, we were 10 people and my mom",
-        ]}
-      />
-      <MultiChoiceListQuestion
-        goBackOneStep={() => handleGoingBackOneStep()}
-        currentStep={currentStep}
-        renderOnStep={3}
-        question={"How many people did you shop with today?"}
-        handleChoice={handleAnswer}
-        answersArray={[
-          "Not that many",
-          "I swear it was only me",
-          "I don't care, we were 10 people and my mom",
-        ]}
-      />
-      <NumericalQuestion
-        goBackOneStep={() => handleGoingBackOneStep()}
-        currentStep={currentStep}
-        renderOnStep={2}
-        question={"How many people did you shop with today?"}
-        handleChoice={handleAnswer}
-      />
-      {/* <NumericalQuestion
+    <div className="w-full">
+      <Progressbar maxSteps={maxQuestions} currentStep={currentStep} />
+
+      <div className="h-screen flex justify-center items-center">
+        <SingleChoiceListQuestion
+          goBackOneStep={() => handleGoingBackOneStep()}
+          currentStep={currentStep}
+          renderOnStep={1}
+          question={"How many people did you shop with today?"}
+          handleChoice={handleAnswer}
+          answersArray={[
+            "Not that many",
+            "I swear it was only me",
+            "I don't care, we were 10 people and my mom",
+          ]}
+        />
+        <MultiChoiceListQuestion
+          goBackOneStep={() => handleGoingBackOneStep()}
+          currentStep={currentStep}
+          renderOnStep={3}
+          question={"How many people did you shop with today?"}
+          handleChoice={handleAnswer}
+          answersArray={[
+            "Not that many",
+            "I swear it was only me",
+            "I don't care, we were 10 people and my mom",
+          ]}
+        />
+        <NumericalQuestion
+          goBackOneStep={() => handleGoingBackOneStep()}
+          currentStep={currentStep}
+          renderOnStep={2}
+          question={"How many people did you shop with today?"}
+          handleChoice={handleAnswer}
+        />
+        {/* <NumericalQuestion
         goBackOneStep={() => handleGoingBackOneStep()}
         currentStep={currentStep}
         renderOnStep={2}
         question={"How many people did you shop with today?"}
         handleChoice={handleAnswer}
       /> */}
-      {/* <ButtonQuestion
+        {/* <ButtonQuestion
         currentStep={currentStep}
         renderOnStep={1}
         question={
@@ -85,7 +92,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
         secondButtonText={"No"}
         handleChoice={handleAnswer}
       /> */}
-      {/* <ButtonQuestion
+        {/* <ButtonQuestion
         currentStep={currentStep}
         renderOnStep={2}
         question={"Hello?"}
@@ -93,7 +100,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
         secondButtonText={"No"}
         handleChoice={handleAnswer}
       /> */}
-      {/* <RankingQuestion
+        {/* <RankingQuestion
         currentStep={currentStep}
         renderOnStep={3}
         question={"What is most important to you while shopping?"}
@@ -104,32 +111,33 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
         handleChoice={handleAnswer}
         goBackOneStep={handleGoingBackOneStep}
       /> */}
-      <SliderQuestion
-        currentStep={currentStep}
-        renderOnStep={4}
-        question={"How many people were with you while shopping today?"}
-        subText={"Swipe right or left to adjust the slider."}
-        rangeMax={4}
-        rangeMin={0}
-        intervals={1}
-        startValue={2}
-        // maxLabel={'4+'}
-        handleChoice={handleAnswer}
-        goBackOneStep={handleGoingBackOneStep}
-      />
-      <SliderQuestion
-        currentStep={currentStep}
-        renderOnStep={5}
-        question={"How was your shopping trip today?"}
-        subText={"Swipe right or left to adjust the slider."}
-        rangeMin={0}
-        rangeMax={100}
-        startValue={50}
-        minLabel={"😫"}
-        maxLabel={"😄"}
-        handleChoice={handleAnswer}
-        goBackOneStep={handleGoingBackOneStep}
-      />
+        <SliderQuestion
+          currentStep={currentStep}
+          renderOnStep={4}
+          question={"How many people were with you while shopping today?"}
+          subText={"Swipe right or left to adjust the slider."}
+          rangeMax={4}
+          rangeMin={0}
+          intervals={1}
+          startValue={2}
+          // maxLabel={'4+'}
+          handleChoice={handleAnswer}
+          goBackOneStep={handleGoingBackOneStep}
+        />
+        <SliderQuestion
+          currentStep={currentStep}
+          renderOnStep={5}
+          question={"How was your shopping trip today?"}
+          subText={"Swipe right or left to adjust the slider."}
+          rangeMin={0}
+          rangeMax={100}
+          startValue={50}
+          minLabel={"😫"}
+          maxLabel={"😄"}
+          handleChoice={handleAnswer}
+          goBackOneStep={handleGoingBackOneStep}
+        />
+      </div>
     </div>
   );
 };
