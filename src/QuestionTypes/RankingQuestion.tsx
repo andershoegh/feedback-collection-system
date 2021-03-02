@@ -38,7 +38,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
             prevListArr.forEach((c) => prevListClientRect.push({ content: c.innerHTML, pos: c.getBoundingClientRect() }));
 
             if (newIndex < oldList.length && newIndex >= 0) {
-                const animationDuration = 600;
+                const animationDuration = 500;
                 const newList = oldList;
 
                 // Move the active item up or down one position and update the list
@@ -48,6 +48,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
 
                 // Gets updated list array from listRef after setting a new list order an loops through to animate position change
                 const updatedListArr = Array.from(listRef.current!.children);
+
                 updatedListArr.forEach((c, i) => {
                     const item = c as HTMLDivElement;
                     const newPos = item.getBoundingClientRect();
@@ -78,15 +79,17 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
         };
 
         const handleKeyPress = (e: KeyboardEvent) => {
-            let activeItemIndex = list.findIndex((item) => item === activeItem!.innerText);
+            if (activeItem) {
+                let activeItemIndex = list.findIndex((item) => item === activeItem.innerText);
 
-            switch (e.key) {
-                case 'w':
-                    updateListOrder(list, activeItemIndex, activeItemIndex - 1);
-                    break;
-                case 's':
-                    updateListOrder(list, activeItemIndex, activeItemIndex + 1);
-                    break;
+                switch (e.key) {
+                    case 'w':
+                        updateListOrder(list, activeItemIndex, activeItemIndex - 1);
+                        break;
+                    case 's':
+                        updateListOrder(list, activeItemIndex, activeItemIndex + 1);
+                        break;
+                }
             }
         };
 
