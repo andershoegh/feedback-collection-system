@@ -23,31 +23,33 @@ const ButtonQuestion: React.SFC<{
   return (
     <>
       {currentStep !== renderOnStep ? null : (
-        <div className="w-4/5">
+        <div className="w-4/5 h-screen relative">
           <div className="mb-10 mt-4">
             <BackButton
               currentStep={currentStep}
               onClick={() => goBackOneStep()}
             />
           </div>
-          <div className="text-3xl leading-10 font-medium">{question}</div>
-          <div className="flex justify-center mt-40">
-            <button
-              onClick={() =>
-                setTimeout(() => {
-                  handleChoice(question, firstButtonText);
-                }, 200)
-              }
-              className={`${buttonStyle}`}
-            >
-              {firstButtonText}
-            </button>
-            <button
-              onClick={() => handleChoice(question, secondButtonText)}
-              className={`${buttonStyle}`}
-            >
-              {secondButtonText}
-            </button>
+          <div className="absolute top-32">
+            <div className="text-3xl leading-10 font-medium">{question}</div>
+            <div className="flex justify-center mt-40">
+              <button
+                onClick={() =>
+                  setTimeout(() => {
+                    handleChoice(question, firstButtonText);
+                  }, 200)
+                }
+                className={`${buttonStyle}`}
+              >
+                {firstButtonText}
+              </button>
+              <button
+                onClick={() => handleChoice(question, secondButtonText)}
+                className={`${buttonStyle}`}
+              >
+                {secondButtonText}
+              </button>
+            </div>
           </div>
         </div>
       )}

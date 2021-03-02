@@ -8,7 +8,7 @@ export interface BackButtonProps {
 
 const BackButton: React.SFC<BackButtonProps> = ({ onClick, currentStep }) => {
   return (
-    <>
+    <div className="absolute top-10 left-0">
       {currentStep !== 1 ? (
         <button
           onClick={onClick}
@@ -17,7 +17,7 @@ const BackButton: React.SFC<BackButtonProps> = ({ onClick, currentStep }) => {
           <ArrowBendUpLeft className="mr-3 text-xl" /> Back
         </button>
       ) : null}
-    </>
+    </div>
   );
 };
 
