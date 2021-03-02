@@ -1,9 +1,9 @@
-import { ArrowBendUpLeft } from 'phosphor-react';
-import React from 'react';
+import { ArrowBendUpLeft } from "phosphor-react";
+import React from "react";
 
 export interface BackButtonProps {
-    onClick: () => void;
-    currentStep: number;
+  onClick: () => void;
+  currentStep: number;
 }
 
 const BackButton: React.SFC<BackButtonProps> = ({ onClick, currentStep }) => {
@@ -24,4 +24,4 @@ const BackButton: React.SFC<BackButtonProps> = ({ onClick, currentStep }) => {
 export default BackButton;
 
 const buttonStyle =
-    'shadow-inactive focus:shadow-focused focus:border-blue-500 border-4 border-transparent focus:outline-none rounded-xl active:scale-90 animate transition transform';
+  "shadow-inactive focus:shadow-focused focus:border-blue-500 border-4 border-transparent focus:outline-none rounded-xl active:scale-90 animate transition transform";

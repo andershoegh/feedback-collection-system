@@ -127,7 +127,11 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
             </div>
 
             <NextButton
-              onClick={() => handleChoice(question, selectedValue.toString())}
+              onClick={() =>
+                setTimeout(() => {
+                  handleChoice(question, selectedValue.toString());
+                }, 200)
+              }
             />
           </div>
         </div>

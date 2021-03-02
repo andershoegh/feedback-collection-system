@@ -54,22 +54,24 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
         })
       );
 
-            if (newIndex < oldList.length && newIndex >= 0) {
-                const animationDuration = 500;
-                const newList = oldList;
+      if (newIndex < oldList.length && newIndex >= 0) {
+        const animationDuration = 500;
+        const newList = oldList;
 
         // Move the active item up or down one position and update the list
         newList.splice(newIndex, 0, oldList.splice(oldIndex, 1)[0]);
         setList([]);
         setList(newList);
 
-                // Gets updated list array from listRef after setting a new list order an loops through to animate position change
-                const updatedListArr = Array.from(listRef.current!.children);
+        // Gets updated list array from listRef after setting a new list order an loops through to animate position change
+        const updatedListArr = Array.from(listRef.current!.children);
 
-                updatedListArr.forEach((c, i) => {
-                    const item = c as HTMLDivElement;
-                    const newPos = item.getBoundingClientRect();
-                    const prevPos = prevListClientRect.find((child) => child.content === c.innerHTML)?.pos as DOMRect;
+        updatedListArr.forEach((c, i) => {
+          const item = c as HTMLDivElement;
+          const newPos = item.getBoundingClientRect();
+          const prevPos = prevListClientRect.find(
+            (child) => child.content === c.innerHTML
+          )?.pos as DOMRect;
 
           // Calculates the difference from old to new position on render and animates if it moved
           const deltaY = prevPos.top - newPos.top;
@@ -97,20 +99,22 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
       }
     };
 
-        const handleKeyPress = (e: KeyboardEvent) => {
-            if (activeItem) {
-                let activeItemIndex = list.findIndex((item) => item === activeItem.innerText);
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (activeItem) {
+        let activeItemIndex = list.findIndex(
+          (item) => item === activeItem.innerText
+        );
 
-                switch (e.key) {
-                    case 'w':
-                        updateListOrder(list, activeItemIndex, activeItemIndex - 1);
-                        break;
-                    case 's':
-                        updateListOrder(list, activeItemIndex, activeItemIndex + 1);
-                        break;
-                }
-            }
-        };
+        switch (e.key) {
+          case "w":
+            updateListOrder(list, activeItemIndex, activeItemIndex - 1);
+            break;
+          case "s":
+            updateListOrder(list, activeItemIndex, activeItemIndex + 1);
+            break;
+        }
+      }
+    };
 
     window.addEventListener("keydown", handleKeyPress);
 
@@ -126,7 +130,11 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
           <div>
             <BackButton
               currentStep={currentStep}
-              onClick={() => goBackOneStep()}
+              onClick={() =>
+                setTimeout(() => {
+                  goBackOneStep();
+                }, 200)
+              }
             />
             <div className="absolute top-32">
               <div className="text-3xl leading-10 font-medium">{question}</div>
@@ -159,7 +167,13 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                 </div>
               </div>
             </div>
-            <NextButton onClick={() => handleChoice(question, list)} />
+            <NextButton
+              onClick={() =>
+                setTimeout(() => {
+                  handleChoice(question, list);
+                }, 200)
+              }
+            />
           </div>
         </div>
       )}

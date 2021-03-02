@@ -28,7 +28,11 @@ const MultiChoiceListQuestion: React.SFC<MultiChoiceListQuestionProps> = ({
         <div className="w-4/5 relative h-screen">
           <BackButton
             currentStep={currentStep}
-            onClick={() => goBackOneStep()}
+            onClick={() =>
+              setTimeout(() => {
+                goBackOneStep();
+              }, 200)
+            }
           />
 
           <div className="absolute top-32">

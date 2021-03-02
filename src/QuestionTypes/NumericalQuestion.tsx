@@ -20,7 +20,11 @@ const NumericalQuestion: React.SFC<{
         <div className="w-4/5 h-screen relative">
           <BackButton
             currentStep={currentStep}
-            onClick={() => goBackOneStep()}
+            onClick={() =>
+              setTimeout(() => {
+                goBackOneStep();
+              }, 200)
+            }
           />
           <div className="absolute top-32">
             <div className="text-3xl leading-10 font-medium">{question}</div>
@@ -100,7 +104,13 @@ const NumericalQuestion: React.SFC<{
               </div>
             </div>
           </div>
-          <NextButton onClick={() => handleChoice(question, amount)} />
+          <NextButton
+            onClick={() =>
+              setTimeout(() => {
+                handleChoice(question, amount);
+              }, 200)
+            }
+          />
         </div>
       )}
     </>

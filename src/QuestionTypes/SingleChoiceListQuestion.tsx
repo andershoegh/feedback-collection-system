@@ -26,7 +26,11 @@ const SingleChoiceListQuestion: React.SFC<SingleChoiceListQuestionProps> = ({
         <div className="w-4/5 relative h-screen">
           <BackButton
             currentStep={currentStep}
-            onClick={() => goBackOneStep()}
+            onClick={() =>
+              setTimeout(() => {
+                goBackOneStep();
+              }, 200)
+            }
           />
           <div className="absolute top-32">
             <div className="text-3xl leading-10 font-bold">{question}</div>
@@ -36,7 +40,11 @@ const SingleChoiceListQuestion: React.SFC<SingleChoiceListQuestionProps> = ({
                 return (
                   <li
                     key={answer}
-                    onClick={() => handleChoice(question, answer)}
+                    onClick={() =>
+                      setTimeout(() => {
+                        handleChoice(question, answer);
+                      }, 200)
+                    }
                     className={`${buttonStyle} pl-4 py-3 mb-5`}
                   >
                     {answer}

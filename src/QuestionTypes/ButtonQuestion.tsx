@@ -27,7 +27,11 @@ const ButtonQuestion: React.SFC<{
           <div className="mb-10 mt-4">
             <BackButton
               currentStep={currentStep}
-              onClick={() => goBackOneStep()}
+              onClick={() =>
+                setTimeout(() => {
+                  goBackOneStep();
+                }, 200)
+              }
             />
           </div>
           <div className="absolute top-32">
