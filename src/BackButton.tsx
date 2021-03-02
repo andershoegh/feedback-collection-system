@@ -7,15 +7,18 @@ export interface BackButtonProps {
 }
 
 const BackButton: React.SFC<BackButtonProps> = ({ onClick, currentStep }) => {
-    return (
-        <>
-            {currentStep !== 0 ? (
-                <button onClick={onClick} className={`${buttonStyle} flex px-4 py-1 text-lg place-items-center`}>
-                    <ArrowBendUpLeft className="mr-3 text-xl" /> Back
-                </button>
-            ) : null}
-        </>
-    );
+  return (
+    <div className="absolute top-10 left-0">
+      {currentStep !== 1 ? (
+        <button
+          onClick={onClick}
+          className={`${buttonStyle} flex px-4 py-1 text-lg place-items-center`}
+        >
+          <ArrowBendUpLeft className="mr-3 text-xl" /> Back
+        </button>
+      ) : null}
+    </div>
+  );
 };
 
 export default BackButton;

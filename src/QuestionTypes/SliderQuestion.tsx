@@ -100,36 +100,35 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
       {currentStep !== renderOnStep ? null : (
         <div className="w-4/5 h-screen relative">
           <div>
-            <div className="mb-10 mt-10">
-              <BackButton
-                currentStep={currentStep}
-                onClick={() => goBackOneStep()}
-              />
+            <BackButton
+              currentStep={currentStep}
+              onClick={() => goBackOneStep()}
+            />
+            <div className="absolute top-32 w-full">
+              <div className="text-3xl leading-10 font-medium">{question}</div>
+              <div className="font-normal text-gray-600 mt-2">{subText}</div>
+              <div className="justify-center mt-40">
+                <input
+                  type="range"
+                  min={rangeMin}
+                  max={rangeMax}
+                  value={selectedValue}
+                  step={intervals}
+                  onChange={(e) => updateSelected(parseInt(e.target.value))}
+                  className="slider block w-full mb-8"
+                />
+                <span
+                  ref={labelsRef}
+                  className="flex justify-between font-normal text-lg text-blue-500 mx-2"
+                >
+                  {setIntervalLabels()}
+                </span>
+              </div>
             </div>
-            <div className="text-3xl leading-10 font-medium">{question}</div>
-            <div className="font-normal text-gray-600 mt-2">{subText}</div>
-            <div className="justify-center mt-40">
-              <input
-                type="range"
-                min={rangeMin}
-                max={rangeMax}
-                value={selectedValue}
-                step={intervals}
-                onChange={(e) => updateSelected(parseInt(e.target.value))}
-                className="slider block w-full mb-8"
-              />
-              <span
-                ref={labelsRef}
-                className="flex justify-between font-normal text-lg text-blue-500 mx-2"
-              >
-                {setIntervalLabels()}
-              </span>
-            </div>
-            <div className="absolute bottom-10 right-0">
-              <NextButton
-                onClick={() => handleChoice(question, selectedValue.toString())}
-              />
-            </div>
+
+            <NextButton
+              onClick={() => handleChoice(question, selectedValue.toString())}
+            />
           </div>
         </div>
       )}
