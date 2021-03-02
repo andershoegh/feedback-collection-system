@@ -37,7 +37,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
             <SingleChoiceListQuestion
                 goBackOneStep={() => handleGoingBackOneStep()}
                 currentStep={currentStep}
-                renderOnStep={6}
+                renderOnStep={1}
                 question={'How many people did you shop with today?'}
                 handleChoice={handleAnswer}
                 answersArray={['Not that many', 'I swear it was only me', "I don't care, we were 10 people and my mom"]}
@@ -113,7 +113,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
             />
             <TextQuestion
                 currentStep={currentStep}
-                renderOnStep={1}
+                renderOnStep={6}
                 question={"What's the most crowded areas in the store when you visit?"}
                 subText={'Please answer this question on your phone. Your answer will not be visible on this screen.'}
                 handleChoice={handleAnswer}

@@ -1,4 +1,3 @@
-import { Play } from 'phosphor-react';
 import React, { useEffect, useRef, useState } from 'react';
 import BackButton from '../BackButton';
 import NextButton from '../NextButton';
