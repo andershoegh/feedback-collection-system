@@ -14,7 +14,7 @@ export interface TextQuestionProps {
 
 const TextQuestion: React.FC<TextQuestionProps> = (props) => {
     const { currentStep, renderOnStep, question, subText, handleChoice, goBackOneStep } = props;
-    const [answer, setAnswer] = useState<string>('');
+    const [answer, setAnswer] = useState<string>('text answer from the phone');
     const [getAnswerText, setGetAnswerText] = useState('Waiting for an answer from your phone');
     const [redoAnswer, setRedoAnswer] = useState(false);
     const dotsRef = useRef<HTMLDivElement>(null);
@@ -66,8 +66,10 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
 
     // useEffect for running the animation on page load
     useEffect(() => {
-        playAnimation();
-    }, []);
+        if (currentStep === renderOnStep) {
+            playAnimation();
+        }
+    }, [currentStep, renderOnStep]);
 
     return (
         <>
