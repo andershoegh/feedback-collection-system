@@ -7,12 +7,14 @@ export interface NextButtonProps {
 
 const NextButton: React.SFC<NextButtonProps> = ({ onClick }) => {
   return (
-    <button
-      onClick={onClick}
-      className={`${buttonStyle} flex px-6 py-2 text-xl  place-items-center`}
-    >
-      Next <ArrowRight className="ml-2 text-2xl" />
-    </button>
+    <div className="absolute bottom-10 right-0">
+      <button
+        onClick={onClick}
+        className={`${buttonStyle} flex px-6 py-2 text-xl  place-items-center`}
+      >
+        Next <ArrowRight className="ml-2 text-2xl" />
+      </button>
+    </div>
   );
 };
 
