@@ -6,6 +6,7 @@ import SingleChoiceListQuestion from './QuestionTypes/SingleChoiceListQuestion';
 import MultiChoiceListQuestion from './QuestionTypes/MultiChoiceListQuestion';
 import Progressbar from './Progressbar';
 import TextQuestion from './QuestionTypes/TextQuestion';
+import FinishedPage from './QuestionTypes/FinishedPage';
 
 export interface QuestionnaireProps {}
 
@@ -14,7 +15,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
     const [questionnaireAnswers, setQuestionnaireAnswers] = useState<{ question: string; answer: string | number | string[] }[]>(
         []
     );
-    const [maxQuestions] = useState(6); // manually set the amount of questions
+    const [maxQuestions] = useState(7); // manually set the amount of questions
 
     // Handles each answer from a question and puts it into the questionnaireAnswers state
     // array and advances the questionnaire to the next question
@@ -133,6 +134,13 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     question={"What's the most crowded areas in the store when you visit?"}
                     subText={'Please answer this question on your phone. Your answer will not be visible on this screen.'}
                     handleChoice={handleAnswer}
+                    goBackOneStep={handleGoingBackOneStep}
+                />
+                <FinishedPage
+                    currentStep={currentStep}
+                    renderOnStep={7}
+                    text={'Thanks for participating! 😘'}
+                    subText={'Now please get the fuck outta here'}
                     goBackOneStep={handleGoingBackOneStep}
                 />
             </div>
