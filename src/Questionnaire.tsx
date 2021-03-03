@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import SliderQuestion from "./QuestionTypes/SliderQuestion";
-// import RankingQuestion from "./QuestionTypes/RankingQuestion";
+import RankingQuestion from "./QuestionTypes/RankingQuestion";
 import NumericalQuestion from "./QuestionTypes/NumericalQuestion";
 import SingleChoiceListQuestion from "./QuestionTypes/SingleChoiceListQuestion";
 import MultiChoiceListQuestion from "./QuestionTypes/MultiChoiceListQuestion";
@@ -36,21 +36,21 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
     }, 200);
   };
 
-    // Handles full completion of the questionnaire and resetting for a new participant
-    const logAndReset = () => {
-        // Send questionnaireAnswers to db or whatever
+  // Handles full completion of the questionnaire and resetting for a new participant
+  const logAndReset = () => {
+    // Send questionnaireAnswers to db or whatever
 
-        setQuestionnaireAnswers([]);
-        setCurrentStep(1);
-        window.location.reload();
-    };
+    setQuestionnaireAnswers([]);
+    setCurrentStep(1);
+    window.location.reload();
+  };
 
-    const handleGoingBackOneStep = () => {
-        // Remove latest entry in questionnaireanswers array
-        questionnaireAnswers.pop();
-        // Set currentstep to previous step
-        setCurrentStep(currentStep - 1);
-    };
+  const handleGoingBackOneStep = () => {
+    // Remove latest entry in questionnaireanswers array
+    questionnaireAnswers.pop();
+    // Set currentstep to previous step
+    setCurrentStep(currentStep - 1);
+  };
 
   console.log(questionnaireAnswers);
 
@@ -115,62 +115,66 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
         secondButtonText={"No"}
         handleChoice={handleAnswer}
       /> */}
-                <RankingQuestion
-                    currentStep={currentStep}
-                    renderOnStep={5}
-                    question={'What is most important to you while shopping?'}
-                    subText={
-                        'Order the list from most important to least important. Left-click on an item and use the W and S keys to move.'
-                    }
-                    items={['Clothing', 'Dairy and meat', 'Sweets']}
-                    handleChoice={handleAnswer}
-                    goBackOneStep={handleGoingBackOneStep}
-                />
-                <SliderQuestion
-                    currentStep={currentStep}
-                    renderOnStep={4}
-                    question={'How many people were with you while shopping today?'}
-                    subText={'Swipe right or left to adjust the slider.'}
-                    rangeMax={4}
-                    rangeMin={0}
-                    intervals={1}
-                    startValue={2}
-                    // maxLabel={'4+'}
-                    handleChoice={handleAnswer}
-                    goBackOneStep={handleGoingBackOneStep}
-                />
-                <SliderQuestion
-                    currentStep={currentStep}
-                    renderOnStep={7}
-                    question={'How was your shopping trip today?'}
-                    subText={'Swipe right or left to adjust the slider.'}
-                    rangeMin={0}
-                    rangeMax={100}
-                    startValue={50}
-                    minLabel={'😫'}
-                    maxLabel={'😄'}
-                    handleChoice={handleAnswer}
-                    goBackOneStep={handleGoingBackOneStep}
-                />
-                <TextQuestion
-                    currentStep={currentStep}
-                    renderOnStep={6}
-                    question={"What's the most crowded areas in the store when you visit?"}
-                    subText={'Please answer this question on your phone. Your answer will not be visible on this screen.'}
-                    handleChoice={handleAnswer}
-                    goBackOneStep={handleGoingBackOneStep}
-                />
-                <FinishedPage
-                    currentStep={currentStep}
-                    renderOnStep={8}
-                    text={'Thanks for participating! 😘'}
-                    subText={'Now please get outta here'}
-                    goBackOneStep={handleGoingBackOneStep}
-                    logAndReset={logAndReset}
-                />
-            </div>
-        </div>
-    );
+        <RankingQuestion
+          currentStep={currentStep}
+          renderOnStep={5}
+          question={"What is most important to you while shopping?"}
+          subText={
+            "Order the list from most important to least important. Left-click on an item and use the W and S keys to move."
+          }
+          items={["Clothing", "Dairy and meat", "Sweets"]}
+          handleChoice={handleAnswer}
+          goBackOneStep={handleGoingBackOneStep}
+        />
+        <SliderQuestion
+          currentStep={currentStep}
+          renderOnStep={4}
+          question={"How many people were with you while shopping today?"}
+          subText={"Swipe right or left to adjust the slider."}
+          rangeMax={4}
+          rangeMin={0}
+          intervals={1}
+          startValue={2}
+          // maxLabel={'4+'}
+          handleChoice={handleAnswer}
+          goBackOneStep={handleGoingBackOneStep}
+        />
+        <SliderQuestion
+          currentStep={currentStep}
+          renderOnStep={7}
+          question={"How was your shopping trip today?"}
+          subText={"Swipe right or left to adjust the slider."}
+          rangeMin={0}
+          rangeMax={100}
+          startValue={50}
+          minLabel={"😫"}
+          maxLabel={"😄"}
+          handleChoice={handleAnswer}
+          goBackOneStep={handleGoingBackOneStep}
+        />
+        <TextQuestion
+          currentStep={currentStep}
+          renderOnStep={6}
+          question={
+            "What's the most crowded areas in the store when you visit?"
+          }
+          subText={
+            "Please answer this question on your phone. Your answer will not be visible on this screen."
+          }
+          handleChoice={handleAnswer}
+          goBackOneStep={handleGoingBackOneStep}
+        />
+        <FinishedPage
+          currentStep={currentStep}
+          renderOnStep={8}
+          text={"Thanks for participating! 😘"}
+          subText={"Now please get outta here"}
+          goBackOneStep={handleGoingBackOneStep}
+          logAndReset={logAndReset}
+        />
+      </div>
+    </div>
+  );
 };
 
 export default Questionnaire;
