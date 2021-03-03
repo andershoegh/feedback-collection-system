@@ -1,18 +1,21 @@
 import { ArrowRight } from "phosphor-react";
 import React from "react";
+import { maxQuestions } from "./QuestionSettings";
 
 export interface NextButtonProps {
   onClick: () => void;
+  currentStep: number;
 }
 
-const NextButton: React.SFC<NextButtonProps> = ({ onClick }) => {
+const NextButton: React.SFC<NextButtonProps> = ({ onClick, currentStep }) => {
   return (
     <div className="absolute bottom-10 right-0">
       <button
         onClick={onClick}
         className={`${buttonStyle} flex px-6 py-2 text-xl  place-items-center`}
       >
-        Next <ArrowRight className="ml-2 text-2xl" />
+        {maxQuestions === currentStep ? "Finish" : "Next"}
+        <ArrowRight className="ml-2 text-2xl" />
       </button>
     </div>
   );

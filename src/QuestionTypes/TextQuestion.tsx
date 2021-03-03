@@ -13,11 +13,20 @@ export interface TextQuestionProps {
 }
 
 const TextQuestion: React.FC<TextQuestionProps> = (props) => {
-    const { currentStep, renderOnStep, question, subText, handleChoice, goBackOneStep } = props;
-    const [answer, setAnswer] = useState<string>('text answer from the phone');
-    const [getAnswerText, setGetAnswerText] = useState('Waiting for an answer from your phone');
-    const [redoAnswer, setRedoAnswer] = useState(false);
-    const dotsRef = useRef<HTMLDivElement>(null);
+  const {
+    currentStep,
+    renderOnStep,
+    question,
+    subText,
+    handleChoice,
+    goBackOneStep,
+  } = props;
+  const [answer, setAnswer] = useState<string>("text answer from the phone");
+  const [getAnswerText, setGetAnswerText] = useState(
+    "Waiting for an answer from your phone"
+  );
+  const [redoAnswer, setRedoAnswer] = useState(false);
+  const dotsRef = useRef<HTMLDivElement>(null);
 
   const answerReceived = () => {
     if (dotsRef.current) {
@@ -64,12 +73,12 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
     }, 5000);
   };
 
-    // useEffect for running the animation on page load
-    useEffect(() => {
-        if (currentStep === renderOnStep) {
-            playAnimation();
-        }
-    }, [currentStep, renderOnStep]);
+  // useEffect for running the animation on page load
+  useEffect(() => {
+    if (currentStep === renderOnStep) {
+      playAnimation();
+    }
+  }, [currentStep, renderOnStep]);
 
   return (
     <>
@@ -109,6 +118,7 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
             </div>
           </div>
           <NextButton
+            currentStep={currentStep}
             onClick={() =>
               answer
                 ? setTimeout(() => {

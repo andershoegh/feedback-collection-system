@@ -127,6 +127,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
             </div>
 
             <NextButton
+              currentStep={currentStep}
               onClick={() =>
                 setTimeout(() => {
                   handleChoice(question, selectedValue.toString());
