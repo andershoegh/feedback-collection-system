@@ -54,7 +54,10 @@ const MultiChoiceListQuestion: React.SFC<MultiChoiceListQuestionProps> = ({
               })}
             </ul>
           </div>
-          <NextButton onClick={() => handleChoice(question, answers)} />
+          <NextButton
+            currentStep={currentStep}
+            onClick={() => handleChoice(question, answers)}
+          />
         </div>
       )}
     </>

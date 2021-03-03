@@ -105,6 +105,7 @@ const NumericalQuestion: React.SFC<{
             </div>
           </div>
           <NextButton
+            currentStep={currentStep}
             onClick={() =>
               setTimeout(() => {
                 handleChoice(question, amount);

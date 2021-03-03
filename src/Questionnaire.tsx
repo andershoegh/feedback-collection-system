@@ -1,33 +1,40 @@
-import React, { useState } from 'react';
-import SliderQuestion from './QuestionTypes/SliderQuestion';
-import RankingQuestion from './QuestionTypes/RankingQuestion';
-import NumericalQuestion from './QuestionTypes/NumericalQuestion';
-import SingleChoiceListQuestion from './QuestionTypes/SingleChoiceListQuestion';
-import MultiChoiceListQuestion from './QuestionTypes/MultiChoiceListQuestion';
-import Progressbar from './Progressbar';
-import TextQuestion from './QuestionTypes/TextQuestion';
-import FinishedPage from './QuestionTypes/FinishedPage';
+import React, { useState } from "react";
+import SliderQuestion from "./QuestionTypes/SliderQuestion";
+// import RankingQuestion from "./QuestionTypes/RankingQuestion";
+import NumericalQuestion from "./QuestionTypes/NumericalQuestion";
+import SingleChoiceListQuestion from "./QuestionTypes/SingleChoiceListQuestion";
+import MultiChoiceListQuestion from "./QuestionTypes/MultiChoiceListQuestion";
+import Progressbar from "./Progressbar";
+import TextQuestion from "./QuestionTypes/TextQuestion";
+import FinishedPage from "./QuestionTypes/FinishedPage";
+import { maxQuestions } from "./QuestionSettings";
 
 export interface QuestionnaireProps {}
 
 const Questionnaire: React.SFC<QuestionnaireProps> = () => {
-    const [currentStep, setCurrentStep] = useState<number>(1);
-    const [questionnaireAnswers, setQuestionnaireAnswers] = useState<{ question: string; answer: string | number | string[] }[]>(
-        []
-    );
-    const [maxQuestions] = useState(8); // manually set the amount of questions
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [questionnaireAnswers, setQuestionnaireAnswers] = useState<
+    { question: string; answer: string | number | string[] }[]
+  >([]);
 
-    // Handles each answer from a question and puts it into the questionnaireAnswers state
-    // array and advances the questionnaire to the next question
-    const handleAnswer = (question: string, answer: string | number | string[]) => {
-        setTimeout(() => {
-            const newAnswer = { question, answer };
-            setQuestionnaireAnswers((prev) => [...prev, newAnswer]);
-            if (currentStep <= maxQuestions) {
-                setCurrentStep(currentStep + 1);
-            }
-        }, 200);
-    };
+  // Handles each answer from a question and puts it into the questionnaireAnswers state
+  // array and advances the questionnaire to the next question
+  const handleAnswer = (
+    question: string,
+    answer: string | number | string[]
+  ) => {
+    setTimeout(() => {
+      const newAnswer = { question, answer };
+      setQuestionnaireAnswers((prev) => [...prev, newAnswer]);
+      if (currentStep < maxQuestions) {
+        setCurrentStep(currentStep + 1);
+      } else if (currentStep === maxQuestions) {
+        setCurrentStep(0);
+      } else {
+        setCurrentStep(0);
+      }
+    }, 200);
+  };
 
     // Handles full completion of the questionnaire and resetting for a new participant
     const logAndReset = () => {
@@ -45,44 +52,52 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
         setCurrentStep(currentStep - 1);
     };
 
-    console.log(questionnaireAnswers);
+  console.log(questionnaireAnswers);
 
-    return (
-        <div className="w-full">
-            <Progressbar maxSteps={maxQuestions} currentStep={currentStep} />
+  return (
+    <div className="w-full">
+      <Progressbar maxSteps={maxQuestions} currentStep={currentStep} />
 
-            <div className="h-screen flex justify-center items-center">
-                <SingleChoiceListQuestion
-                    goBackOneStep={() => handleGoingBackOneStep()}
-                    currentStep={currentStep}
-                    renderOnStep={1}
-                    question={'How many people did you shop with today?'}
-                    handleChoice={handleAnswer}
-                    answersArray={['Not that many', 'I swear it was only me', "I don't care, we were 10 people and my mom"]}
-                />
-                <MultiChoiceListQuestion
-                    goBackOneStep={() => handleGoingBackOneStep()}
-                    currentStep={currentStep}
-                    renderOnStep={3}
-                    question={'How many people did you shop with today?'}
-                    handleChoice={handleAnswer}
-                    answersArray={['Not that many', 'I swear it was only me', "I don't care, we were 10 people and my mom"]}
-                />
-                <NumericalQuestion
-                    goBackOneStep={() => handleGoingBackOneStep()}
-                    currentStep={currentStep}
-                    renderOnStep={2}
-                    question={'How many people did you shop with today?'}
-                    handleChoice={handleAnswer}
-                />
-                {/* <NumericalQuestion
+      <div className="h-screen flex justify-center items-center">
+        <SingleChoiceListQuestion
+          goBackOneStep={() => handleGoingBackOneStep()}
+          currentStep={currentStep}
+          renderOnStep={1}
+          question={"How many people did you shop with today?"}
+          handleChoice={handleAnswer}
+          answersArray={[
+            "Not that many",
+            "I swear it was only me",
+            "I don't care, we were 10 people and my mom",
+          ]}
+        />
+        <MultiChoiceListQuestion
+          goBackOneStep={() => handleGoingBackOneStep()}
+          currentStep={currentStep}
+          renderOnStep={3}
+          question={"How many people did you shop with today?"}
+          handleChoice={handleAnswer}
+          answersArray={[
+            "Not that many",
+            "I swear it was only me",
+            "I don't care, we were 10 people and my mom",
+          ]}
+        />
+        <NumericalQuestion
+          goBackOneStep={() => handleGoingBackOneStep()}
+          currentStep={currentStep}
+          renderOnStep={2}
+          question={"How many people did you shop with today?"}
+          handleChoice={handleAnswer}
+        />
+        {/* <NumericalQuestion
         goBackOneStep={() => handleGoingBackOneStep()}
         currentStep={currentStep}
         renderOnStep={2}
         question={"How many people did you shop with today?"}
         handleChoice={handleAnswer}
       /> */}
-                {/* <ButtonQuestion
+        {/* <ButtonQuestion
         currentStep={currentStep}
         renderOnStep={1}
         question={
@@ -92,7 +107,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
         secondButtonText={"No"}
         handleChoice={handleAnswer}
       /> */}
-                {/* <ButtonQuestion
+        {/* <ButtonQuestion
         currentStep={currentStep}
         renderOnStep={2}
         question={"Hello?"}

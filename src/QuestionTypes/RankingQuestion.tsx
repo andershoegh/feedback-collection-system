@@ -168,6 +168,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
               </div>
             </div>
             <NextButton
+              currentStep={currentStep}
               onClick={() =>
                 setTimeout(() => {
                   handleChoice(question, list);

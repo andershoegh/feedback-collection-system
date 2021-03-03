@@ -114,18 +114,19 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                             </div>
                         </div>
 
-                        <NextButton
-                            onClick={() =>
-                                setTimeout(() => {
-                                    handleChoice(question, selectedValue.toString());
-                                }, 200)
-                            }
-                        />
-                    </div>
-                </div>
-            )}
-        </>
-    );
+            <NextButton
+              currentStep={currentStep}
+              onClick={() =>
+                setTimeout(() => {
+                  handleChoice(question, selectedValue.toString());
+                }, 200)
+              }
+            />
+          </div>
+        </div>
+      )}
+    </>
+  );
 };
 
 export default SliderQuestion;
