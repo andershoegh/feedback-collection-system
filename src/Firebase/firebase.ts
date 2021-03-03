@@ -16,3 +16,5 @@ export const useFirestore = () => {
   const firestore = firebase.firestore();
   return firestore;
 };
+
+export const fb = firebase.firestore;

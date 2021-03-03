@@ -8,7 +8,7 @@ import Progressbar from "./Progressbar";
 import TextQuestion from "./QuestionTypes/TextQuestion";
 import FinishedPage from "./QuestionTypes/FinishedPage";
 import { maxQuestions } from "./QuestionSettings";
-import { useFirestore } from "./Firebase/firebase";
+import { useFirestore, fb } from "./Firebase/firebase";
 
 export interface QuestionnaireProps {}
 
@@ -19,7 +19,6 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
   >([]);
 
   const fs = useFirestore();
-  console.log(fs);
 
   // Handles each answer from a question and puts it into the questionnaireAnswers state
   // array and advances the questionnaire to the next question
@@ -29,11 +28,23 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
   ) => {
     setTimeout(() => {
       const newAnswer = { question, answer };
-      setQuestionnaireAnswers((prev) => [...prev, newAnswer]);
+      const newQuestionnaireEntry = [...questionnaireAnswers, newAnswer];
+      setQuestionnaireAnswers(newQuestionnaireEntry);
       if (currentStep < maxQuestions) {
         setCurrentStep(currentStep + 1);
       } else if (currentStep === maxQuestions) {
         setCurrentStep(0);
+        // Save the answers to firestore
+        fs.collection("questionnaire")
+          .doc()
+          .set({
+            newQuestionnaireEntry,
+            created: fb.FieldValue.serverTimestamp(),
+          })
+          .then(() => console.log("Succesfully added answers to DB"))
+          .catch((err: string) =>
+            console.log("There was an error saving to firestore: " + err)
+          );
       } else {
         setCurrentStep(0);
       }

@@ -1,1 +1,1 @@
-export const maxQuestions = 2;
+export const maxQuestions = 4;
