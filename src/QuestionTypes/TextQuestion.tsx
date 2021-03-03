@@ -13,20 +13,11 @@ export interface TextQuestionProps {
 }
 
 const TextQuestion: React.FC<TextQuestionProps> = (props) => {
-  const {
-    currentStep,
-    renderOnStep,
-    question,
-    subText,
-    handleChoice,
-    goBackOneStep,
-  } = props;
-  const [answer, setAnswer] = useState<string>("text answer from the phone");
-  const [getAnswerText, setGetAnswerText] = useState(
-    "Waiting for an answer from your phone"
-  );
-  const [redoAnswer, setRedoAnswer] = useState(false);
-  const dotsRef = useRef<HTMLDivElement>(null);
+    const { currentStep, renderOnStep, question, subText, handleChoice, goBackOneStep } = props;
+    const [answer, setAnswer] = useState<string>('text answer from the phone');
+    const [getAnswerText, setGetAnswerText] = useState('Waiting for an answer from your phone');
+    const [redoAnswer, setRedoAnswer] = useState(false);
+    const dotsRef = useRef<HTMLDivElement>(null);
 
   const answerReceived = () => {
     if (dotsRef.current) {
@@ -93,44 +84,41 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
             }
           />
 
-          <div className="absolute top-32">
-            <div className="text-3xl leading-10 font-medium">{question}</div>
-            <div className="font-normal text-gray-600 mt-2">{subText}</div>
-            <div className="flex flex-col items-center mt-40">
-              <div
-                ref={dotsRef}
-                className="mb-20 flex relative justify-between w-36"
-              >
-                <div className="dot dot-one"></div>
-                <div className="dot dot-two"></div>
-                <div className="dot dot-three"></div>
-                <div className="checkmark draw absolute hidden"></div>
-              </div>
-              <div className="text-lg">{getAnswerText}</div>
-              {!redoAnswer ? null : (
-                <button
-                  onClick={() => playAnimation()}
-                  className={`mt-14 px-4 py-1 text-lg place-items-center ${buttonStyle}`}
-                >
-                  Want a do-over?
-                </button>
-              )}
-            </div>
-          </div>
-          <NextButton
-            currentStep={currentStep}
-            onClick={() =>
-              answer
-                ? setTimeout(() => {
-                    handleChoice(question, answer);
-                  }, 200)
-                : null
-            }
-          />
-        </div>
-      )}
-    </>
-  );
+                    <div className="absolute top-32">
+                        <div className="text-3xl leading-10 font-medium">{question}</div>
+                        <div className="font-normal text-gray-600 mt-2">{subText}</div>
+                        <div className="flex flex-col items-center mt-40">
+                            <div ref={dotsRef} className="mb-20 flex relative justify-between w-36">
+                                <div className="dot dot-one"></div>
+                                <div className="dot dot-two"></div>
+                                <div className="dot dot-three"></div>
+                                <div className="checkmark draw absolute hidden"></div>
+                            </div>
+                            <div className="text-lg">{getAnswerText}</div>
+                            {!redoAnswer ? null : (
+                                <button
+                                    onClick={() => playAnimation()}
+                                    className={`mt-14 px-4 py-1 text-lg place-items-center ${buttonStyle}`}
+                                >
+                                    Want a do-over?
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                    <NextButton
+                        onClick={() =>
+                            answer
+                                ? setTimeout(() => {
+                                      handleChoice(question, answer);
+                                  }, 200)
+                                : null
+                        }
+                        currentStep={currentStep}
+                    />
+                </div>
+            )}
+        </>
+    );
 };
 
 export default TextQuestion;
