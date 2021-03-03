@@ -8,6 +8,7 @@ import Progressbar from "./Progressbar";
 import TextQuestion from "./QuestionTypes/TextQuestion";
 import FinishedPage from "./QuestionTypes/FinishedPage";
 import { maxQuestions } from "./QuestionSettings";
+import { useFirestore } from "./Firebase/firebase";
 
 export interface QuestionnaireProps {}
 
@@ -16,6 +17,8 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
   const [questionnaireAnswers, setQuestionnaireAnswers] = useState<
     { question: string; answer: string | number | string[] }[]
   >([]);
+
+  const fs = useFirestore();
 
   // Handles each answer from a question and puts it into the questionnaireAnswers state
   // array and advances the questionnaire to the next question
@@ -56,6 +59,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
 
   return (
     <div className="w-full">
+      <button>Test firestore</button>
       <Progressbar maxSteps={maxQuestions} currentStep={currentStep} />
 
       <div className="h-screen flex justify-center items-center">

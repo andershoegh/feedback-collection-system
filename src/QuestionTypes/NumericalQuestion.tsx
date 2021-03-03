@@ -30,7 +30,7 @@ const NumericalQuestion: React.SFC<{
             <div className="text-3xl leading-10 font-medium">{question}</div>
             <div className="flex justify-center mt-8 font-medium text-6xl text-blue-600">
               <span className="">{amount === "0" ? "" : amount} </span>
-              <span className=" animate-pulse font-light">|</span>
+              <span className="animate-pulse font-light">|</span>
             </div>
             <div className="grid-cols-3  grid w-64 gap-3 mt-6 justify-items-center mx-auto text-2xl font-medium">
               <div

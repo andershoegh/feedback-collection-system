@@ -21,7 +21,7 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
     handleChoice,
     goBackOneStep,
   } = props;
-  const [answer, setAnswer] = useState<string>("text answer from the phone");
+  const [answer] = useState<string>("text answer from the phone");
   const [getAnswerText, setGetAnswerText] = useState(
     "Waiting for an answer from your phone"
   );
