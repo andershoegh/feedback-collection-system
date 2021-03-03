@@ -35,6 +35,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
 
         setQuestionnaireAnswers([]);
         setCurrentStep(1);
+        window.location.reload();
     };
 
     const handleGoingBackOneStep = () => {
@@ -148,7 +149,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     currentStep={currentStep}
                     renderOnStep={7}
                     text={'Thanks for participating! 😘'}
-                    subText={'Now please get the fuck outta here'}
+                    subText={'Now please get outta here'}
                     goBackOneStep={handleGoingBackOneStep}
                     logAndReset={logAndReset}
                 />

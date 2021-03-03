@@ -32,7 +32,7 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
         return () => {
             clearInterval(x);
         };
-    }, [currentStep, renderOnStep]);
+    }, [currentStep, renderOnStep, logAndReset]);
 
     return (
         <>
@@ -45,7 +45,7 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
                         <div className="text-3xl leading-10 font-medium">{text}</div>
                         <div className="font-normal text-gray-600 mt-2">{subText}</div>
                     </div>
-                    <div className="absolute bottom-10 right-0 left-0">🚀 Resetting in T minus {timer}</div>
+                    <div className="text-sm font-light absolute bottom-10 right-0 left-0">🚀 Resetting in T minus {timer}</div>
                 </div>
             )}
         </>

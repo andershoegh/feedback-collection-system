@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import BackButton from '../BackButton';
 import NextButton from '../NextButton';
 import './TextQuestion.css';
@@ -40,7 +40,7 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
         setTimeout(() => setRedoAnswer(true), 1700);
     };
 
-    const playAnimation = () => {
+    const playAnimation = useCallback(() => {
         if (dotsRef.current) {
             dotsRef.current.childNodes.forEach((child, index) => {
                 const c = child as HTMLDivElement;
@@ -62,14 +62,14 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
         setTimeout(() => {
             answerReceived();
         }, 5000);
-    };
+    }, []);
 
     // useEffect for running the animation on page load
     useEffect(() => {
         if (currentStep === renderOnStep) {
             playAnimation();
         }
-    }, [currentStep, renderOnStep]);
+    }, [currentStep, renderOnStep, playAnimation]);
 
     return (
         <>
