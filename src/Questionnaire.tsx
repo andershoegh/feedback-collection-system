@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SliderQuestion from './QuestionTypes/SliderQuestion';
-// import RankingQuestion from "./QuestionTypes/RankingQuestion";
+import RankingQuestion from './QuestionTypes/RankingQuestion';
 import NumericalQuestion from './QuestionTypes/NumericalQuestion';
 import SingleChoiceListQuestion from './QuestionTypes/SingleChoiceListQuestion';
 import MultiChoiceListQuestion from './QuestionTypes/MultiChoiceListQuestion';
@@ -15,7 +15,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
     const [questionnaireAnswers, setQuestionnaireAnswers] = useState<{ question: string; answer: string | number | string[] }[]>(
         []
     );
-    const [maxQuestions] = useState(7); // manually set the amount of questions
+    const [maxQuestions] = useState(8); // manually set the amount of questions
 
     // Handles each answer from a question and puts it into the questionnaireAnswers state
     // array and advances the questionnaire to the next question
@@ -100,17 +100,17 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
         secondButtonText={"No"}
         handleChoice={handleAnswer}
       /> */}
-                {/* <RankingQuestion
-        currentStep={currentStep}
-        renderOnStep={3}
-        question={"What is most important to you while shopping?"}
-        subText={
-          "Order the list from most important to least important. Left-click on an item and use the W and S keys to move."
-        }
-        items={["Clothing", "Dairy and meat", "Sweets"]}
-        handleChoice={handleAnswer}
-        goBackOneStep={handleGoingBackOneStep}
-      /> */}
+                <RankingQuestion
+                    currentStep={currentStep}
+                    renderOnStep={5}
+                    question={'What is most important to you while shopping?'}
+                    subText={
+                        'Order the list from most important to least important. Left-click on an item and use the W and S keys to move.'
+                    }
+                    items={['Clothing', 'Dairy and meat', 'Sweets']}
+                    handleChoice={handleAnswer}
+                    goBackOneStep={handleGoingBackOneStep}
+                />
                 <SliderQuestion
                     currentStep={currentStep}
                     renderOnStep={4}
@@ -126,7 +126,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                 />
                 <SliderQuestion
                     currentStep={currentStep}
-                    renderOnStep={5}
+                    renderOnStep={7}
                     question={'How was your shopping trip today?'}
                     subText={'Swipe right or left to adjust the slider.'}
                     rangeMin={0}
@@ -147,7 +147,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                 />
                 <FinishedPage
                     currentStep={currentStep}
-                    renderOnStep={7}
+                    renderOnStep={8}
                     text={'Thanks for participating! 😘'}
                     subText={'Now please get outta here'}
                     goBackOneStep={handleGoingBackOneStep}
