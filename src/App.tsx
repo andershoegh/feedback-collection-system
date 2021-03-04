@@ -5,7 +5,7 @@ import { TouchlessApp } from "touchless-navigation";
 
 function App() {
   return (
-    <TouchlessApp>
+    <TouchlessApp startElement={2}>
       <div className="flex font-body">
         <Guide />
         <Questionnaire />

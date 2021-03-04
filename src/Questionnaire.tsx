@@ -81,7 +81,11 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
     <div className="w-full relative">
       <Progressbar maxSteps={maxQuestions} currentStep={currentStep} />
 
-      <SwitchLanguageButton renderOnStep={currentStep} />
+      <SwitchLanguageButton
+        renderOnStep={
+          currentStep
+        } /* needs a way of setting const in QuestionSettings to english */
+      />
 
       <div className="h-screen flex justify-center items-center">
         {/* Demo data  */}
