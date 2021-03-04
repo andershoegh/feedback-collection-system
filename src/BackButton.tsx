@@ -1,6 +1,7 @@
 import { ArrowBendUpLeft } from "phosphor-react";
 import React from "react";
 import { Touchless } from "touchless-navigation";
+import { language } from "./QuestionSettings";
 
 export interface BackButtonProps {
   onClick: () => void;
@@ -16,7 +17,8 @@ const BackButton: React.SFC<BackButtonProps> = ({ onClick, currentStep }) => {
             onClick={onClick}
             className={`${buttonStyle} flex px-4 py-1 text-lg place-items-center`}
           >
-            <ArrowBendUpLeft className="mr-3 text-xl" /> Back
+            <ArrowBendUpLeft className="mr-3 text-xl" />{" "}
+            {language === "Danish" ? "Tilbage" : "Back"}
           </button>
         </Touchless>
       ) : null}

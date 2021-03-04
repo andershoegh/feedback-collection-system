@@ -1,6 +1,7 @@
 import React from "react";
 import { Touchless } from "touchless-navigation";
 import BackButton from "../BackButton";
+import { language } from "../QuestionSettings";
 
 export interface SingleChoiceListQuestionProps {
   currentStep: number;
@@ -35,11 +36,13 @@ const SingleChoiceListQuestion: React.SFC<SingleChoiceListQuestionProps> = ({
           />
           <div className="absolute top-32">
             <div className="text-3xl leading-10 font-bold">{question}</div>
-            <div className="mt-2 text-gray-600">Choose one.</div>
+            <div className="mt-2 text-gray-600">
+              {language === "Danish" ? "Vælg én" : "Choose one"}
+            </div>
             <ul className="w-4/5 mt-10 text-lg font-normal">
               {answersArray.map((answer) => {
                 return (
-                  <Touchless>
+                  <Touchless className={`${buttonStyle} pl-4 py-3 mb-5`}>
                     <li
                       key={answer}
                       onClick={() =>
@@ -47,7 +50,6 @@ const SingleChoiceListQuestion: React.SFC<SingleChoiceListQuestionProps> = ({
                           handleChoice(question, answer);
                         }, 200)
                       }
-                      className={`${buttonStyle} pl-4 py-3 mb-5`}
                     >
                       {answer}
                     </li>

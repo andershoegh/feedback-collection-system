@@ -1,6 +1,7 @@
 import React from "react";
 import BackButton from "../BackButton";
 import { Touchless } from "touchless-navigation";
+import { language } from "../QuestionSettings";
 
 export interface ButtonQuestionProps {}
 
@@ -37,26 +38,26 @@ const ButtonQuestion: React.SFC<{
           </div>
           <div className="absolute top-32">
             <div className="text-3xl leading-10 font-medium">{question}</div>
+            <div className="mt-2 text-gray-600">
+              {language === "Danish" ? "Vælg én" : "Choose one"}
+            </div>
             <div className="flex justify-center mt-40">
-              <Touchless>
-                <button
-                  onClick={() =>
-                    setTimeout(() => {
-                      handleChoice(question, firstButtonText);
-                    }, 200)
-                  }
-                  className={`${buttonStyle}`}
-                >
-                  {firstButtonText}
-                </button>
+              <Touchless
+                onClick={() =>
+                  setTimeout(() => {
+                    handleChoice(question, firstButtonText);
+                  }, 200)
+                }
+                className={`${buttonStyle}`}
+              >
+                {firstButtonText}
               </Touchless>
-              <Touchless>
-                <button
-                  onClick={() => handleChoice(question, secondButtonText)}
-                  className={`${buttonStyle}`}
-                >
-                  {secondButtonText}
-                </button>
+
+              <Touchless
+                onClick={() => handleChoice(question, secondButtonText)}
+                className={`${buttonStyle}`}
+              >
+                {secondButtonText}
               </Touchless>
             </div>
           </div>

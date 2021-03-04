@@ -4,12 +4,12 @@ import Arrows from "../Resources/ArrowsDownUp.png";
 import BackButton from "../BackButton";
 import NextButton from "../NextButton";
 import { Touchless } from "touchless-navigation";
+import { language } from "../QuestionSettings";
 
 export interface RankingQuestionProps {
   currentStep: number;
   renderOnStep: number;
   question: string;
-  subText: string;
   items: string[];
   handleChoice: (question: string, answer: string | number | string[]) => void;
   goBackOneStep: () => void;
@@ -20,7 +20,6 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
     currentStep,
     renderOnStep,
     question,
-    subText,
     items,
     handleChoice,
     goBackOneStep,
@@ -139,7 +138,11 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
             />
             <div className="absolute top-32">
               <div className="text-3xl leading-10 font-medium">{question}</div>
-              <div className="font-normal text-gray-600 mt-2">{subText}</div>
+              <div className="font-normal text-gray-600 mt-2">
+                {language === "Danish"
+                  ? "Arrangér svarene i rækkefølge hvor 1 er størst"
+                  : "Arrange the answers in order where 1 is greatest"}
+              </div>
               <div className="flex row-auto text-lg font-normal mt-10 w-4/5">
                 <div className="flex flex-col justify-between mr-6 py-5">
                   {list.map((item, index) => {

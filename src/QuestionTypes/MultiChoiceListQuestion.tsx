@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Touchless } from "touchless-navigation";
 import BackButton from "../BackButton";
 import NextButton from "../NextButton";
+import { language } from "../QuestionSettings";
 
 export interface MultiChoiceListQuestionProps {
   currentStep: number;
@@ -39,20 +40,20 @@ const MultiChoiceListQuestion: React.SFC<MultiChoiceListQuestionProps> = ({
           <div className="absolute top-32">
             <div className="text-3xl leading-10 font-bold">{question}</div>
             <div className="mt-2 text-gray-600">
-              You can select multiple answers.
+              {language === "Danish"
+                ? "Du kan vælge mere end ét svar"
+                : "You can choose more than one answer"}
             </div>
             <ul className=" w-11/12 mt-10 text-lg font-normal">
               {answersArray.map((answer) => {
                 return (
-                  <Touchless>
-                    <Checkbox
-                      key={answer}
-                      answer={answer}
-                      updateAnswers={(answer) => {
-                        setAnswers((prev) => [...prev, answer]);
-                      }}
-                    />
-                  </Touchless>
+                  <Checkbox
+                    key={answer}
+                    answer={answer}
+                    updateAnswers={(answer) => {
+                      setAnswers((prev) => [...prev, answer]);
+                    }}
+                  />
                 );
               })}
             </ul>
@@ -80,7 +81,7 @@ export interface CheckboxProps {
 const Checkbox: React.SFC<CheckboxProps> = ({ answer, updateAnswers }) => {
   const [checked, setChecked] = useState(false);
   return (
-    <div
+    <Touchless
       className={`${buttonStyle} pl-4 py-3 mb-5 flex place-items-center ${
         checked ? "bg-blue-100" : ""
       }`}
@@ -95,6 +96,6 @@ const Checkbox: React.SFC<CheckboxProps> = ({ answer, updateAnswers }) => {
         <Square size={28} weight="bold" color={"#127FBF"} />
       )}
       <li className="ml-4">{answer}</li>
-    </div>
+    </Touchless>
   );
 };
