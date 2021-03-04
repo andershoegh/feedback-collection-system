@@ -3,6 +3,7 @@ import "./RankingQuestion.css";
 import Arrows from "../Resources/ArrowsDownUp.png";
 import BackButton from "../BackButton";
 import NextButton from "../NextButton";
+import { Touchless } from "touchless-navigation";
 
 export interface RankingQuestionProps {
   currentStep: number;
@@ -152,16 +153,18 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                 <div ref={listRef} className="w-full">
                   {list.map((item) => {
                     return (
-                      <div
-                        key={item}
-                        onClick={(e) =>
-                          activateItem(e.target as HTMLDivElement)
-                        }
-                        className={`${buttonStyle} flex items-center bg-white pl-4 py-3 mb-5 w-full`}
-                      >
-                        <img src={Arrows} alt="arrows" className="mr-4" />
-                        <span>{item}</span>
-                      </div>
+                      <Touchless>
+                        <div
+                          key={item}
+                          onClick={(e) =>
+                            activateItem(e.target as HTMLDivElement)
+                          }
+                          className={`${buttonStyle} flex items-center bg-white pl-4 py-3 mb-5 w-full`}
+                        >
+                          <img src={Arrows} alt="arrows" className="mr-4" />
+                          <span>{item}</span>
+                        </div>
+                      </Touchless>
                     );
                   })}
                 </div>

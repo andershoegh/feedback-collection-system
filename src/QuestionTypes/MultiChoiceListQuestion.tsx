@@ -1,5 +1,6 @@
 import { CheckSquare, Square } from "phosphor-react";
 import React, { useState } from "react";
+import { Touchless } from "touchless-navigation";
 import BackButton from "../BackButton";
 import NextButton from "../NextButton";
 
@@ -43,13 +44,15 @@ const MultiChoiceListQuestion: React.SFC<MultiChoiceListQuestionProps> = ({
             <ul className=" w-11/12 mt-10 text-lg font-normal">
               {answersArray.map((answer) => {
                 return (
-                  <Checkbox
-                    key={answer}
-                    answer={answer}
-                    updateAnswers={(answer) => {
-                      setAnswers((prev) => [...prev, answer]);
-                    }}
-                  />
+                  <Touchless>
+                    <Checkbox
+                      key={answer}
+                      answer={answer}
+                      updateAnswers={(answer) => {
+                        setAnswers((prev) => [...prev, answer]);
+                      }}
+                    />
+                  </Touchless>
                 );
               })}
             </ul>

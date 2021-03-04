@@ -1,5 +1,6 @@
 import React from "react";
 import BackButton from "../BackButton";
+import { Touchless } from "touchless-navigation";
 
 export interface ButtonQuestionProps {}
 
@@ -37,22 +38,26 @@ const ButtonQuestion: React.SFC<{
           <div className="absolute top-32">
             <div className="text-3xl leading-10 font-medium">{question}</div>
             <div className="flex justify-center mt-40">
-              <button
-                onClick={() =>
-                  setTimeout(() => {
-                    handleChoice(question, firstButtonText);
-                  }, 200)
-                }
-                className={`${buttonStyle}`}
-              >
-                {firstButtonText}
-              </button>
-              <button
-                onClick={() => handleChoice(question, secondButtonText)}
-                className={`${buttonStyle}`}
-              >
-                {secondButtonText}
-              </button>
+              <Touchless>
+                <button
+                  onClick={() =>
+                    setTimeout(() => {
+                      handleChoice(question, firstButtonText);
+                    }, 200)
+                  }
+                  className={`${buttonStyle}`}
+                >
+                  {firstButtonText}
+                </button>
+              </Touchless>
+              <Touchless>
+                <button
+                  onClick={() => handleChoice(question, secondButtonText)}
+                  className={`${buttonStyle}`}
+                >
+                  {secondButtonText}
+                </button>
+              </Touchless>
             </div>
           </div>
         </div>

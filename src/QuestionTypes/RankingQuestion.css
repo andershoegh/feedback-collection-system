@@ -1,15 +1,6 @@
 .active-item {
-    animation: wiggle 2s infinite, pulse 2s infinite;
+    animation: wiggle 2s infinite;
     border: 0.2rem solid #127fbf;
-}
-
-@keyframes pulse {
-    0% {
-        box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.2), 0 0 0 0 #127fbf;
-    }
-    40% {
-        box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.2), 0 0 10px 10px rgba(18, 127, 191, 0);
-    }
 }
 
 @keyframes wiggle {

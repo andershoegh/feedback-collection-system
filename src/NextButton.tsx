@@ -1,5 +1,6 @@
 import { ArrowRight } from "phosphor-react";
 import React from "react";
+import { Touchless } from "touchless-navigation";
 import { maxQuestions } from "./QuestionSettings";
 
 export interface NextButtonProps {
@@ -10,13 +11,15 @@ export interface NextButtonProps {
 const NextButton: React.SFC<NextButtonProps> = ({ onClick, currentStep }) => {
   return (
     <div className="absolute bottom-10 right-0">
-      <button
-        onClick={onClick}
-        className={`${buttonStyle} flex px-6 py-2 text-xl  place-items-center`}
-      >
-        {maxQuestions === currentStep ? "Finish" : "Next"}
-        <ArrowRight className="ml-2 text-2xl" />
-      </button>
+      <Touchless>
+        <button
+          onClick={onClick}
+          className={`${buttonStyle} flex px-6 py-2 text-xl  place-items-center`}
+        >
+          {maxQuestions === currentStep ? "Finish" : "Next"}
+          <ArrowRight className="ml-2 text-2xl" />
+        </button>
+      </Touchless>
     </div>
   );
 };
