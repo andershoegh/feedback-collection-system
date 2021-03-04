@@ -108,20 +108,132 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     }
                 />
 
-                {/* End of demo data */}
+        <ButtonQuestion
+          currentStep={currentStep}
+          goBackOneStep={handleGoingBackOneStep}
+          handleChoice={handleAnswer}
+          renderOnStep={1}
+          firstButtonText={language === "Danish" ? "Ja" : "Yes"}
+          secondButtonText={language === "Danish" ? "Nej" : "No"}
+          question={
+            language === "Danish"
+              ? "Var du bekymret for hvor tæt andre kom på dig under dit indkøb?"
+              : "Did you worry about how close people got to you while shopping?"
+          }
+        />
 
-                <FinishedPage
-                    currentStep={currentStep}
-                    renderOnStep={8}
-                    text={'Thanks for participating! 😘'}
-                    subText={'Now please get outta here'}
-                    goBackOneStep={handleGoingBackOneStep}
-                    logAndReset={logAndReset}
-                />
-                <WelcomePage currentStep={currentStep} renderOnStep={0} startOnPhoneConnection={startOnPhoneConnection} />
-            </div>
-        </div>
-    );
+        <MultiChoiceListQuestion
+          currentStep={currentStep}
+          goBackOneStep={handleGoingBackOneStep}
+          handleChoice={handleAnswer}
+          renderOnStep={2}
+          question={
+            language === "Danish"
+              ? "Hvilke af følgende udsagn er du enig i?"
+              : "Which of the following statements do you agree with?"
+          }
+          answersArray={
+            language === "Danish"
+              ? [
+                  "Jeg synes der var god plads i butikken",
+                  "Jeg synes folk holdt god afstand",
+                  "Det var nemt at vide hvor mange der var i butikken inden jeg gik ind",
+                ]
+              : [
+                  "I thought there was plenty of space in the store",
+                  "I think people kept a good social distance",
+                  "It was easy to find out how many were already in the store before i entered",
+                ]
+          }
+        />
+
+        <NumericalQuestion
+          currentStep={currentStep}
+          goBackOneStep={handleGoingBackOneStep}
+          handleChoice={handleAnswer}
+          renderOnStep={3}
+          question={
+            language === "Danish"
+              ? "Hvor mange gange handler du om ugen i gennemsnit?"
+              : "How often do you on average shop groceries per week?"
+          }
+        />
+
+        <RankingQuestion
+          currentStep={currentStep}
+          goBackOneStep={handleGoingBackOneStep}
+          handleChoice={handleAnswer}
+          renderOnStep={4}
+          question={
+            language === "Danish"
+              ? "I hvilke områder var der flest mennesker?"
+              : "In which areas were there most people?"
+          }
+          answersArray={
+            language === "Danish"
+              ? ["Vin og spiritus", "Mejeri og kød", "Frugt og grønt"]
+              : ["Wine and spirits", "Dairy and meat", "Fruit and vegetable"]
+          }
+        />
+
+        <SingleChoiceListQuestion
+          currentStep={currentStep}
+          goBackOneStep={handleGoingBackOneStep}
+          handleChoice={handleAnswer}
+          renderOnStep={5}
+          question={
+            language === "Danish"
+              ? "Har du oplevet at folk kommer for tæt på imens du handler?"
+              : "Have you experienced people coming too close to you while shopping?"
+          }
+          answersArray={
+            language === "Danish"
+              ? ["Ja", "Nej", "Det er jeg ligeglad med"]
+              : ["Yes", "No", "I don't care about that"]
+          }
+        />
+
+        <SliderQuestion
+          currentStep={currentStep}
+          goBackOneStep={handleGoingBackOneStep}
+          handleChoice={handleAnswer}
+          renderOnStep={6}
+          question={"How happy were you with your shopping trip today?"}
+          minLabel={"🙁"}
+          maxLabel={"😄"}
+          rangeMax={100}
+          rangeMin={0}
+          startValue={50}
+        />
+
+        <TextQuestion
+          currentStep={currentStep}
+          goBackOneStep={handleGoingBackOneStep}
+          handleChoice={handleAnswer}
+          renderOnStep={7}
+          question={
+            "Did you have any frustrations during your grocery shopping? If you did, please describe them"
+          }
+        />
+
+        {/* End of demo data */}
+
+        <FinishedPage
+          currentStep={currentStep}
+          renderOnStep={8}
+          text={"Thanks for participating! 😘"}
+          subText={"Now please get outta here"}
+          goBackOneStep={handleGoingBackOneStep}
+          logAndReset={logAndReset}
+        />
+        <WelcomePage
+          currentStep={currentStep}
+          renderOnStep={0}
+          startOnPhoneConnection={startOnPhoneConnection}
+        />
+      </div>
+    </div>
+  );
 };
 
 export default Questionnaire;

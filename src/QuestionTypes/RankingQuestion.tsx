@@ -10,7 +10,7 @@ export interface RankingQuestionProps {
   currentStep: number;
   renderOnStep: number;
   question: string;
-  items: string[];
+  answersArray: string[];
   handleChoice: (question: string, answer: string | number | string[]) => void;
   goBackOneStep: () => void;
 }
@@ -20,12 +20,12 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
     currentStep,
     renderOnStep,
     question,
-    items,
+    answersArray,
     handleChoice,
     goBackOneStep,
   } = props;
   const [activeItem, setActiveItem] = useState<HTMLDivElement>();
-  const [list, setList] = useState<string[]>(items);
+  const [list, setList] = useState<string[]>(answersArray);
   const listRef = useRef<HTMLDivElement>(null);
 
   const activateItem = useCallback(
@@ -156,17 +156,15 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                 <div ref={listRef} className="w-full">
                   {list.map((item) => {
                     return (
-                      <Touchless>
-                        <div
-                          key={item}
-                          onClick={(e) =>
-                            activateItem(e.target as HTMLDivElement)
-                          }
-                          className={`${buttonStyle} flex items-center bg-white pl-4 py-3 mb-5 w-full`}
-                        >
-                          <img src={Arrows} alt="arrows" className="mr-4" />
-                          <span>{item}</span>
-                        </div>
+                      <Touchless
+                        key={item}
+                        onClick={(e) =>
+                          activateItem(e.target as HTMLDivElement)
+                        }
+                        className={`${buttonStyle} flex items-center bg-white pl-4 py-3 mb-5 w-full`}
+                      >
+                        <img src={Arrows} alt="arrows" className="mr-4" />
+                        <span>{item}</span>
                       </Touchless>
                     );
                   })}
