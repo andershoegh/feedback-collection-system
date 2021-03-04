@@ -13,20 +13,41 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
   return (
     <>
       {currentStep !== renderOnStep ? null : (
-        <div className="w-full h-screen flex flex-col relative justify-start pt-40 px-48">
-          <div className="text-4xl leading-10 font-medium mb-5">
-            Try the public display of the future while answering a short
-            questionnaire
-          </div>
-          <div className="font-normal text-gray-600 mt-2 w-96">
-            Scan the QR code with your phone and follow the instructions to get
-            started
-          </div>
-          <div
-            onClick={startOnPhoneConnection}
-            className={`${buttonStyle} w-72 h-72 text-center justify-center place-items-center flex mt-4`}
-          >
-            <MobileQR />
+        <div className="h-screen w-2/3 flex place-items-center">
+          <div>
+            <div className="">
+              <div className="mb-10">
+                <div className="text-4xl">🇩🇰</div>
+                <div className="text-2xl leading-10 font-normal mb-2">
+                  Prøv de nye kontaktløse skærme ved at udfylde et kort
+                  spørgeskema
+                </div>
+                <div className="font-normal text-gray-600">
+                  Scan the QR code with your phone and follow the instructions
+                  to get started
+                </div>
+              </div>
+
+              <div className="mb-10">
+                <div className="text-4xl">🇬🇧</div>
+                <div className="text-2xl leading-10 font-normal mb-2">
+                  Try the public display of the future while answering a short
+                  questionnaire
+                </div>
+                <div className="font-normal text-gray-600">
+                  Scan the QR code with your phone and follow the instructions
+                  to get started
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                onClick={startOnPhoneConnection}
+                className={`${buttonStyle} w-72 h-72 text-center justify-center place-items-center flex mt-4`}
+              >
+                <MobileQR />
+              </div>
+            </div>
           </div>
         </div>
       )}

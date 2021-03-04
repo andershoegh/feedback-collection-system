@@ -1,7 +1,7 @@
 import { ArrowRight } from "phosphor-react";
 import React from "react";
 import { Touchless } from "touchless-navigation";
-import { maxQuestions } from "./QuestionSettings";
+import { language, maxQuestions } from "./QuestionSettings";
 
 export interface NextButtonProps {
   onClick: () => void;
@@ -16,7 +16,14 @@ const NextButton: React.SFC<NextButtonProps> = ({ onClick, currentStep }) => {
           onClick={onClick}
           className={`${buttonStyle} flex px-6 py-2 text-xl  place-items-center`}
         >
-          {maxQuestions === currentStep ? "Finish" : "Next"}
+          {maxQuestions === currentStep
+            ? language === "Danish"
+              ? "Afslut"
+              : "Finish"
+            : language === "Danish"
+            ? "Næste"
+            : "Next"}
+
           <ArrowRight className="ml-2 text-2xl" />
         </button>
       </Touchless>

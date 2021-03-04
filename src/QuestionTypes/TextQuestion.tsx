@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import BackButton from "../BackButton";
 import NextButton from "../NextButton";
+import { language } from "../QuestionSettings";
 import "./TextQuestion.css";
 
 export interface TextQuestionProps {
   currentStep: number;
   renderOnStep: number;
   question: string;
-  subText: string;
   handleChoice: (question: string, answer: string | number | string[]) => void;
   goBackOneStep: () => void;
 }
@@ -17,7 +17,6 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
     currentStep,
     renderOnStep,
     question,
-    subText,
     handleChoice,
     goBackOneStep,
   } = props;
@@ -95,7 +94,11 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
 
           <div className="absolute top-32">
             <div className="text-3xl leading-10 font-medium">{question}</div>
-            <div className="font-normal text-gray-600 mt-2">{subText}</div>
+            <div className="font-normal text-gray-600 mt-2">
+              {language === "Danish"
+                ? "Indtast dit svar på din telefon"
+                : "Type your answer on your phone"}
+            </div>
             <div className="flex flex-col items-center mt-40">
               <div
                 ref={dotsRef}
@@ -112,7 +115,9 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
                   onClick={() => playAnimation()}
                   className={`mt-14 px-4 py-1 text-lg place-items-center ${buttonStyle}`}
                 >
-                  Want a do-over?
+                  {language === "Danish"
+                    ? "Vil du indtaste et andet svar?"
+                    : "Do you want to type something else?"}
                 </button>
               )}
             </div>
