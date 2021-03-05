@@ -23,8 +23,8 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                   spørgeskema
                 </div>
                 <div className="font-normal text-gray-600">
-                  Scan the QR code with your phone and follow the instructions
-                  to get started
+                  Scan QR koden med din telefon og følg instruktionerne for at
+                  komme i gang
                 </div>
               </div>
 
