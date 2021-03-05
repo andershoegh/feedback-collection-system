@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SliderQuestion from "./QuestionTypes/SliderQuestion";
 import RankingQuestion from "./QuestionTypes/RankingQuestion";
 import NumericalQuestion from "./QuestionTypes/NumericalQuestion";
@@ -12,6 +12,7 @@ import { useFirestore, fb } from "./Firebase/firebase";
 import WelcomePage from "./WelcomePage";
 import ButtonQuestion from "./QuestionTypes/ButtonQuestion";
 import SwitchLanguageButton from "./SwitchLanguageButton";
+import { useConnectionChange, useGoToStartElement } from "touchless-navigation";
 
 export interface QuestionnaireProps {}
 
@@ -21,38 +22,49 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
     { question: string; answer: string | number | string[] }[]
   >([]);
 
-  const fs = useFirestore();
+  const connected = useConnectionChange();
+  const goToStart = useGoToStartElement();
+  useEffect(() => {
+    if (connected === true) {
+      setCurrentStep(1);
+    } else {
+      // console.log("Not connected"):
+    }
+  }, [connected]);
 
+  const fs = useFirestore();
+  useEffect(goToStart, [currentStep]);
   // Handles each answer from a question and puts it into the questionnaireAnswers state
   // array and advances the questionnaire to the next question
   const handleAnswer = (
     question: string,
     answer: string | number | string[]
   ) => {
-    setTimeout(() => {
-      const newAnswer = { question, answer };
-      const newQuestionnaireEntry = [...questionnaireAnswers, newAnswer];
-      setQuestionnaireAnswers(newQuestionnaireEntry);
-      if (currentStep < maxQuestions) {
-        setCurrentStep(currentStep + 1);
-      } else if (currentStep === maxQuestions) {
-        console.log("uploading to db");
-        // Save the answers to firestore
-        fs.collection("questionnaire")
-          .doc()
-          .set({
-            newQuestionnaireEntry,
-            created: fb.FieldValue.serverTimestamp(),
-          })
-          .then(() => console.log("Succesfully added answers to DB"))
-          .catch((err: string) =>
-            console.log("There was an error saving to firestore: " + err)
-          )
-          .then(logAndReset);
-      } else {
-        logAndReset();
-      }
-    }, 200);
+    const newAnswer = { question, answer };
+    const newQuestionnaireEntry = [...questionnaireAnswers, newAnswer];
+    setQuestionnaireAnswers(newQuestionnaireEntry);
+    if (currentStep < maxQuestions) {
+      // setTimeout(() => {
+      setCurrentStep(currentStep + 1);
+      // }, 200);
+    } else if (currentStep === maxQuestions) {
+      console.log("uploading to db");
+      // Save the answers to firestore
+      fs.collection("questionnaire")
+        .doc()
+        .set({
+          newQuestionnaireEntry,
+          created: fb.FieldValue.serverTimestamp(),
+        })
+        .then(() => console.log("Succesfully added answers to DB"))
+        .catch((err: string) =>
+          console.log("There was an error saving to firestore: " + err)
+        )
+        .then(logAndReset)
+        .catch((err) => console.log(err));
+    } else {
+      logAndReset();
+    }
   };
 
   // Handles full completion of the questionnaire and resetting for a new participant
@@ -74,8 +86,6 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
   const startOnPhoneConnection = () => {
     setCurrentStep(1);
   };
-
-  console.log(questionnaireAnswers);
 
   return (
     <div className="w-full relative">
@@ -180,7 +190,11 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
           goBackOneStep={handleGoingBackOneStep}
           handleChoice={handleAnswer}
           renderOnStep={6}
-          question={"How happy were you with your shopping trip today?"}
+          question={
+            language === "Danish"
+              ? "Hvor tilfreds var du med din shoppingtur i dag?"
+              : "How happy were you with your shopping trip today?"
+          }
           minLabel={"🙁"}
           maxLabel={"😄"}
           rangeMax={100}
@@ -194,7 +208,9 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
           handleChoice={handleAnswer}
           renderOnStep={7}
           question={
-            "Did you have any frustrations during your grocery shopping? If you did, please describe them"
+            language === "Danish"
+              ? "Var der noget der frustrerede dig, mens du handlede? Hvis ja, beskriv det venligst"
+              : "Did you have any frustrations during your grocery shopping? If you did, please describe them"
           }
         />
 

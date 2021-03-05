@@ -70,9 +70,6 @@ const MultiChoiceListQuestion: React.SFC<MultiChoiceListQuestionProps> = ({
 
 export default MultiChoiceListQuestion;
 
-const buttonStyle =
-  "shadow-inactive focus:shadow-focused focus:border-blue-500 border-4 border-transparent focus:outline-none rounded-xl";
-
 export interface CheckboxProps {
   answer: string;
   updateAnswers: (answer: string) => void;
@@ -82,7 +79,7 @@ const Checkbox: React.SFC<CheckboxProps> = ({ answer, updateAnswers }) => {
   const [checked, setChecked] = useState(false);
   return (
     <Touchless
-      className={`${buttonStyle} pl-4 py-3 mb-5 flex place-items-center ${
+      className={`pl-4 py-3 mb-5 flex place-items-center ${
         checked ? "bg-blue-100" : ""
       }`}
       onClick={() => {

@@ -5,7 +5,7 @@ import { TouchlessApp } from "touchless-navigation";
 
 function App() {
   return (
-    <TouchlessApp startElement={2}>
+    <TouchlessApp secondaryThreshold={50}>
       <div className="flex font-body">
         <Guide />
         <Questionnaire />

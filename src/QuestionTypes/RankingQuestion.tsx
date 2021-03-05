@@ -161,7 +161,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                         onClick={(e) =>
                           activateItem(e.target as HTMLDivElement)
                         }
-                        className={`${buttonStyle} flex items-center bg-white pl-4 py-3 mb-5 w-full`}
+                        className={`flex items-center bg-white pl-4 py-3 mb-5 w-full`}
                       >
                         <img src={Arrows} alt="arrows" className="mr-4" />
                         <span>{item}</span>
@@ -187,6 +187,3 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
 };
 
 export default RankingQuestion;
-
-const buttonStyle =
-  "shadow-inactive focus:shadow-focused focus:border-blue-500 border-4 border-transparent focus:outline-none rounded-xl active:scale-90 animate transition transform";

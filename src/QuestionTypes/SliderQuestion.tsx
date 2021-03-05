@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { Touchless } from "touchless-navigation";
 import BackButton from "../BackButton";
 import NextButton from "../NextButton";
 import { language } from "../QuestionSettings";
@@ -119,15 +120,18 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                   : "Swipe to your desired answer"}
               </div>
               <div className="justify-center mt-40">
-                <input
-                  type="range"
-                  min={rangeMin}
-                  max={rangeMax}
-                  value={selectedValue}
-                  step={intervals}
-                  onChange={(e) => updateSelected(parseInt(e.target.value))}
-                  className="slider block w-full mb-8"
-                />
+                <Touchless>
+                  <input
+                    type="range"
+                    min={rangeMin}
+                    max={rangeMax}
+                    value={selectedValue}
+                    step={intervals}
+                    onChange={(e) => updateSelected(parseInt(e.target.value))}
+                    className="slider block w-full mb-8"
+                  />
+                </Touchless>
+
                 <span
                   ref={labelsRef}
                   className="flex justify-between font-normal text-lg text-blue-500 mx-2"

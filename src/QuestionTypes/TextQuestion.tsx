@@ -113,7 +113,7 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
               {!redoAnswer ? null : (
                 <button
                   onClick={() => playAnimation()}
-                  className={`mt-14 px-4 py-1 text-lg place-items-center ${buttonStyle}`}
+                  className={`mt-14 px-4 py-1 text-lg place-items-center`}
                 >
                   {language === "Danish"
                     ? "Vil du indtaste et andet svar?"
@@ -139,6 +139,3 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
 };
 
 export default TextQuestion;
-
-const buttonStyle =
-  "shadow-inactive focus:shadow-focused focus:border-blue-500 border-4 border-transparent focus:outline-none rounded-xl active:scale-90 animate transition transform";

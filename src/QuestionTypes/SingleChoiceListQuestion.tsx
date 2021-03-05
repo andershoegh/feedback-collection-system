@@ -42,17 +42,16 @@ const SingleChoiceListQuestion: React.SFC<SingleChoiceListQuestionProps> = ({
             <ul className="w-4/5 mt-10 text-lg font-normal">
               {answersArray.map((answer) => {
                 return (
-                  <Touchless className={`${buttonStyle} pl-4 py-3 mb-5`}>
-                    <li
-                      key={answer}
-                      onClick={() =>
-                        setTimeout(() => {
-                          handleChoice(question, answer);
-                        }, 200)
-                      }
-                    >
-                      {answer}
-                    </li>
+                  <Touchless
+                    className={`pl-4 py-3 mb-5`}
+                    key={answer}
+                    onClick={() =>
+                      setTimeout(() => {
+                        handleChoice(question, answer);
+                      }, 200)
+                    }
+                  >
+                    {answer}
                   </Touchless>
                 );
               })}
@@ -65,6 +64,3 @@ const SingleChoiceListQuestion: React.SFC<SingleChoiceListQuestionProps> = ({
 };
 
 export default SingleChoiceListQuestion;
-
-const buttonStyle =
-  "shadow-inactive focus:shadow-focused focus:border-blue-500 border-4 border-transparent focus:outline-none rounded-xl active:scale-90 animate transition transform";

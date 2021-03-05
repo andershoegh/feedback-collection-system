@@ -11,27 +11,22 @@ export interface NextButtonProps {
 const NextButton: React.SFC<NextButtonProps> = ({ onClick, currentStep }) => {
   return (
     <div className="absolute bottom-10 right-0">
-      <Touchless>
-        <button
-          onClick={onClick}
-          className={`${buttonStyle} flex px-6 py-2 text-xl  place-items-center`}
-        >
-          {maxQuestions === currentStep
-            ? language === "Danish"
-              ? "Afslut"
-              : "Finish"
-            : language === "Danish"
-            ? "Næste"
-            : "Next"}
+      <Touchless
+        onClick={onClick}
+        className={`flex px-6 py-2 text-xl  place-items-center`}
+      >
+        {maxQuestions === currentStep
+          ? language === "Danish"
+            ? "Afslut"
+            : "Finish"
+          : language === "Danish"
+          ? "Næste"
+          : "Next"}
 
-          <ArrowRight className="ml-2 text-2xl" />
-        </button>
+        <ArrowRight className="ml-2 text-2xl" />
       </Touchless>
     </div>
   );
 };
 
 export default NextButton;
-
-const buttonStyle =
-  "shadow-inactive focus:shadow-focused focus:border-blue-500 border-4 border-transparent focus:outline-none rounded-xl active:scale-90 animate transition transform";
