@@ -43,20 +43,19 @@ const ButtonQuestion: React.SFC<{
             </div>
             <div className="flex justify-center mt-40">
               <Touchless
-                startElement={true}
                 onClick={() =>
                   setTimeout(() => {
                     handleChoice(question, firstButtonText);
                   }, 200)
                 }
-                className={`shadow-inactive py-6 px-32 text-3xl rounded-xl m-4`}
+                className={`shadow-inactive py-6 px-32 text-3xl border-4 border-transparent rounded-xl m-4`}
               >
                 {firstButtonText}
               </Touchless>
 
               <Touchless
                 onClick={() => handleChoice(question, secondButtonText)}
-                className={`shadow-inactive py-6 px-32 text-3xl rounded-xl m-4`}
+                className={`shadow-inactive py-6 px-32 text-3xl border-4 border-transparent rounded-xl m-4`}
               >
                 {secondButtonText}
               </Touchless>

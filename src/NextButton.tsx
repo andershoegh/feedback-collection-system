@@ -13,7 +13,7 @@ const NextButton: React.SFC<NextButtonProps> = ({ onClick, currentStep }) => {
     <div className="absolute bottom-10 right-0">
       <Touchless
         onClick={onClick}
-        className={`flex px-6 py-2 text-xl  place-items-center`}
+        className={`shadow-inactive rounded-xl flex px-6 py-2 text-xl place-items-center border-4 border-transparent`}
       >
         {maxQuestions === currentStep
           ? language === "Danish"

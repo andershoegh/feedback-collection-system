@@ -120,7 +120,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                   : "Swipe to your desired answer"}
               </div>
               <div className="justify-center mt-40">
-                <Touchless>
+                <Touchless className="shadow-inactive rounded-xl border-4 border-transparent py-4 px-2 mb-4">
                   <input
                     type="range"
                     min={rangeMin}
@@ -128,13 +128,13 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                     value={selectedValue}
                     step={intervals}
                     onChange={(e) => updateSelected(parseInt(e.target.value))}
-                    className="slider block w-full mb-8"
+                    className="slider block w-full"
                   />
                 </Touchless>
 
                 <span
                   ref={labelsRef}
-                  className="flex justify-between font-normal text-lg text-blue-500 mx-2"
+                  className="flex justify-between font-normal text-2xl text-blue-500 mx-2"
                 >
                   {setIntervalLabels()}
                 </span>
