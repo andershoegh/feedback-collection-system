@@ -161,7 +161,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                         onClick={(e) =>
                           activateItem(e.target as HTMLDivElement)
                         }
-                        className={`flex items-center bg-white pl-4 py-3 mb-5 w-full`}
+                        className={`shadow-inactive rounded-xl flex items-center bg-white pl-4 py-3 mb-5 w-full border-4 border-transparent`}
                       >
                         <img src={Arrows} alt="arrows" className="mr-4" />
                         <span>{item}</span>

@@ -43,7 +43,7 @@ const SingleChoiceListQuestion: React.SFC<SingleChoiceListQuestionProps> = ({
               {answersArray.map((answer) => {
                 return (
                   <Touchless
-                    className={`pl-4 py-3 mb-5`}
+                    className={`shadow-inactive rounded-xl pl-4 py-3 mb-5 border-4 border-transparent`}
                     key={answer}
                     onClick={() =>
                       setTimeout(() => {

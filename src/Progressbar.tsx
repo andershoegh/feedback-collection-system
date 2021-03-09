@@ -14,7 +14,7 @@ const Progressbar: React.SFC<ProgressbarProps> = ({
   return (
     <div
       style={{ width: progress }}
-      className={`h-1 bg-blue-500 transition-all duration-300`}
+      className={`h-1 bg-blue-500 absolute transition-all duration-300`}
     ></div>
   );
 };

@@ -14,7 +14,7 @@ const BackButton: React.SFC<BackButtonProps> = ({ onClick, currentStep }) => {
       {currentStep !== 1 ? (
         <Touchless
           onClick={onClick}
-          className={`flex px-4 py-1 text-lg place-items-center`}
+          className={`shadow-inactive rounded-xl flex px-4 py-1 text-lg place-items-center border-4 border-transparent`}
         >
           <ArrowBendUpLeft className="mr-3 text-xl" />{" "}
           {language === "Danish" ? "Tilbage" : "Back"}
