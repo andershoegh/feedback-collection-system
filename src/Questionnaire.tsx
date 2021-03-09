@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SliderQuestion from "./QuestionTypes/SliderQuestion";
 import RankingQuestion from "./QuestionTypes/RankingQuestion";
 import NumericalQuestion from "./QuestionTypes/NumericalQuestion";
@@ -23,7 +23,8 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
   >([]);
 
   const connected = useConnectionChange();
-  const goToStart = useGoToStartElement();
+  const goToStart = useRef(useGoToStartElement());
+
   useEffect(() => {
     if (connected === true) {
       setCurrentStep(1);
@@ -33,7 +34,11 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
   }, [connected]);
 
   const fs = useFirestore();
-  useEffect(goToStart, [currentStep]);
+
+  useEffect(() => {
+    goToStart.current();
+  }, [currentStep]);
+
   // Handles each answer from a question and puts it into the questionnaireAnswers state
   // array and advances the questionnaire to the next question
   const handleAnswer = (
