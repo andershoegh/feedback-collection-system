@@ -142,7 +142,7 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
               )}
             </div>
           </div>
-          <NextButton≤
+          <NextButton
             onClick={() =>
               answer
                 ? setTimeout(() => {
