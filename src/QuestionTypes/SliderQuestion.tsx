@@ -120,10 +120,10 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
       const handleSliderKeys = (event: KeyboardEvent) => {
         switch (event.key) {
           case "a":
-            setSelectedValue((oldValue) => oldValue - 5);
+            setSelectedValue((oldValue) => oldValue - 10);
             break;
           case "d":
-            setSelectedValue((oldValue) => oldValue + 5);
+            setSelectedValue((oldValue) => oldValue + 10);
             break;
           default:
             break;
@@ -154,31 +154,46 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                   : "Swipe to your desired answer"}
               </div>
               <div className="justify-center mt-40">
-                <Touchless
-                  onClick={() => {
-                    if (usingCustomKeys === false) {
-                      initiate();
-                    } else {
-                      clear();
-                    }
-                    setUsingCustomKeys((prevValue) => !prevValue);
-                  }}
-                  className="shadow-inactive rounded-xl border-4 border-transparent py-4 px-2 mb-4"
-                >
-                  <input
-                    type="range"
-                    min={rangeMin}
-                    max={rangeMax}
-                    value={selectedValue}
-                    step={intervals}
-                    onChange={(e) => updateSelected(parseInt(e.target.value))}
-                    className="slider block w-full"
-                  />
-                </Touchless>
+                <div className="justify-center flex text-xl mb-8 font-medium text-gray-800">
+                  {usingCustomKeys
+                    ? language === "Danish"
+                      ? "Tryk på slideren for at vælge"
+                      : "Tap the slider to choose"
+                    : language === "English"
+                    ? "Slide to the left and the right - tap when you have chosen"
+                    : "Træk til højre og venstre - tryk når du har valgt"}
+                </div>
+                <div className={`${usingCustomKeys ? "" : ""}`}>
+                  <Touchless
+                    onClick={() => {
+                      if (usingCustomKeys === false) {
+                        initiate();
+                      } else {
+                        clear();
+                      }
+                      setUsingCustomKeys((prevValue) => !prevValue);
+                    }}
+                    className={`shadow-inactive rounded-xl border-4 border-transparent py-4 px-2 ${
+                      usingCustomKeys ? "" : ""
+                    }`}
+                  >
+                    <input
+                      type="range"
+                      min={rangeMin}
+                      max={rangeMax}
+                      value={selectedValue}
+                      step={intervals}
+                      onChange={(e) => updateSelected(parseInt(e.target.value))}
+                      className={`shadow-inactive overflow-hidden h-5 outline-none block w-full slider ${
+                        usingCustomKeys ? "" : ""
+                      }`}
+                    />
+                  </Touchless>
+                </div>
 
                 <span
                   ref={labelsRef}
-                  className="flex justify-between font-normal text-2xl text-blue-500 mx-2"
+                  className="flex justify-between font-normal text-2xl mt-2 text-blue-500 mx-2"
                 >
                   {setIntervalLabels()}
                 </span>
