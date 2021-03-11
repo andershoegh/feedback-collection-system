@@ -1,55 +1,58 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import SliderQuestion from './QuestionTypes/SliderQuestion';
-import RankingQuestion from './QuestionTypes/RankingQuestion';
-import NumericalQuestion from './QuestionTypes/NumericalQuestion';
-import SingleChoiceListQuestion from './QuestionTypes/SingleChoiceListQuestion';
-import MultiChoiceListQuestion from './QuestionTypes/MultiChoiceListQuestion';
-import Progressbar from './Progressbar';
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import SliderQuestion from './QuestionTypes/SliderQuestion'
+import RankingQuestion from './QuestionTypes/RankingQuestion'
+import NumericalQuestion from './QuestionTypes/NumericalQuestion'
+import SingleChoiceListQuestion from './QuestionTypes/SingleChoiceListQuestion'
+import MultiChoiceListQuestion from './QuestionTypes/MultiChoiceListQuestion'
+import Progressbar from './Progressbar'
 // import TextQuestion from "./QuestionTypes/TextQuestion";
-import FinishedPage from './QuestionTypes/FinishedPage';
-import { LanguageContext, maxQuestions } from './QuestionSettings';
-import { useFirestore, fb } from './Firebase/firebase';
-import WelcomePage from './WelcomePage';
-import ButtonQuestion from './QuestionTypes/ButtonQuestion';
-import SwitchLanguageButton from './SwitchLanguageButton';
-import { useConnectionChange, useGoToStartElement } from 'touchless-navigation';
+import FinishedPage from './QuestionTypes/FinishedPage'
+import { LanguageContext, maxQuestions } from './QuestionSettings'
+import { useFirestore, fb } from './Firebase/firebase'
+import WelcomePage from './WelcomePage'
+import ButtonQuestion from './QuestionTypes/ButtonQuestion'
+import SwitchLanguageButton from './SwitchLanguageButton'
+import { useConnectionChange, useGoToStartElement } from 'touchless-navigation'
 
 export interface QuestionnaireProps {}
 
 const Questionnaire: React.SFC<QuestionnaireProps> = () => {
-    const [currentStep, setCurrentStep] = useState<number>(0);
-    const [questionnaireAnswers, setQuestionnaireAnswers] = useState<{ question: string; answer: string | number | string[] }[]>(
-        []
-    );
+    const [currentStep, setCurrentStep] = useState<number>(0)
+    const [questionnaireAnswers, setQuestionnaireAnswers] = useState<
+        { question: string; answer: string | number | string[] }[]
+    >([])
 
-    const { language } = useContext(LanguageContext);
-    const connected = useConnectionChange();
-    const goToStart = useRef(useGoToStartElement());
+    const { language } = useContext(LanguageContext)
+    const connected = useConnectionChange()
+    const goToStart = useRef(useGoToStartElement())
 
     useEffect(() => {
         if (connected === true) {
-            setCurrentStep(1);
+            setCurrentStep(1)
         } else {
             // console.log("Not connected"):
         }
-    }, [connected]);
+    }, [connected])
 
-    const fs = useFirestore();
+    const fs = useFirestore()
 
     useEffect(() => {
-        goToStart.current();
-    }, [currentStep]);
+        goToStart.current()
+    }, [currentStep])
 
     // Handles each answer from a question and puts it into the questionnaireAnswers state
     // array and advances the questionnaire to the next question
-    const handleAnswer = (question: string, answer: string | number | string[]) => {
-        const newAnswer = { question, answer };
-        const newQuestionnaireEntry = [...questionnaireAnswers, newAnswer];
-        setQuestionnaireAnswers(newQuestionnaireEntry);
+    const handleAnswer = (
+        question: string,
+        answer: string | number | string[]
+    ) => {
+        const newAnswer = { question, answer }
+        const newQuestionnaireEntry = [...questionnaireAnswers, newAnswer]
+        setQuestionnaireAnswers(newQuestionnaireEntry)
         if (currentStep < maxQuestions) {
-            setCurrentStep(currentStep + 1);
+            setCurrentStep(currentStep + 1)
         }
-    };
+    }
 
     // Handles full completion of the questionnaire and resetting for a new participant
     const logAndReset = () => {
@@ -61,32 +64,38 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                 created: fb.FieldValue.serverTimestamp(),
             })
             .then(() => console.log('Succesfully added answers to DB'))
-            .catch((err: string) => console.log('There was an error saving to firestore: ' + err))
+            .catch((err: string) =>
+                console.log('There was an error saving to firestore: ' + err)
+            )
             .then(() => {
-                setCurrentStep(0);
-                window.location.reload();
+                setCurrentStep(0)
+                window.location.reload()
             })
-            .catch((err) => console.log(err));
-    };
+            .catch((err) => console.log(err))
+    }
 
     const handleGoingBackOneStep = () => {
         // Remove latest entry in questionnaireanswers array
-        questionnaireAnswers.pop();
+        questionnaireAnswers.pop()
         // Set currentstep to previous step
-        setCurrentStep(currentStep - 1);
-    };
+        setCurrentStep(currentStep - 1)
+    }
 
     const startOnPhoneConnection = () => {
-        setCurrentStep(1);
-    };
+        setCurrentStep(1)
+    }
 
     return (
-        <div className='w-full relative'>
+        <div className="w-full relative">
             <Progressbar maxSteps={maxQuestions} currentStep={currentStep} />
 
-            <SwitchLanguageButton renderOnStep={currentStep} /* needs a way of setting const in QuestionSettings to english */ />
+            <SwitchLanguageButton
+                renderOnStep={
+                    currentStep
+                } /* needs a way of setting const in QuestionSettings to english */
+            />
 
-            <div className='h-screen flex justify-center items-center'>
+            <div className="h-screen flex justify-center items-center">
                 {/* Demo data  */}
 
                 <ButtonQuestion
@@ -152,8 +161,16 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     }
                     answersArray={
                         language === 'Danish'
-                            ? ['Vin og spiritus', 'Mejeri og kød', 'Frugt og grønt']
-                            : ['Wine and spirits', 'Dairy and meat', 'Fruit and vegetable']
+                            ? [
+                                  'Vin og spiritus',
+                                  'Mejeri og kød',
+                                  'Frugt og grønt',
+                              ]
+                            : [
+                                  'Wine and spirits',
+                                  'Dairy and meat',
+                                  'Fruit and vegetable',
+                              ]
                     }
                 />
 
@@ -208,7 +225,11 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                 <FinishedPage
                     currentStep={currentStep}
                     renderOnStep={7}
-                    text={language === 'Danish' ? 'Tak for deltagelsen!' : 'Thank you for participating'}
+                    text={
+                        language === 'Danish'
+                            ? 'Tak for deltagelsen!'
+                            : 'Thank you for participating'
+                    }
                     subText={
                         language === 'Danish'
                             ? 'Hvis du vil give os din feedback kan du gå til ....'
@@ -217,10 +238,14 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     goBackOneStep={handleGoingBackOneStep}
                     logAndReset={logAndReset}
                 />
-                <WelcomePage currentStep={currentStep} renderOnStep={0} startOnPhoneConnection={startOnPhoneConnection} />
+                <WelcomePage
+                    currentStep={currentStep}
+                    renderOnStep={0}
+                    startOnPhoneConnection={startOnPhoneConnection}
+                />
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Questionnaire;
+export default Questionnaire

@@ -1,28 +1,28 @@
 .slider {
-  /* -webkit-appearance: none; */
-  /* overflow: hidden; */
-  /* height: 20px; */
-  /* outline: 0; */
-  /* background: #40c3f7; */
-  box-shadow: inset 8px 8px white, inset -8px -8px white;
+    /* -webkit-appearance: none; */
+    /* overflow: hidden; */
+    /* height: 20px; */
+    /* outline: 0; */
+    /* background: #40c3f7; */
+    box-shadow: inset 8px 8px white, inset -8px -8px white;
 }
 
 ::-webkit-slider-runnable-track {
-  height: 20px;
-  -webkit-appearance: none;
-  color: #0f0;
+    height: 20px;
+    -webkit-appearance: none;
+    color: #0f0;
 }
 
 ::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  /*   overflow: hidden; */
-  background: rgb(37, 99, 235);
-  /*   box-shadow: -100vw 15vw 0 100vw dodgerblue; */
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    /*   overflow: hidden; */
+    background: rgb(37, 99, 235);
+    /*   box-shadow: -100vw 15vw 0 100vw dodgerblue; */
 }
 
 ::-webkit-slider-range {
-  background: #f00;
+    background: #f00;
 }

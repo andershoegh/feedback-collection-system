@@ -1,22 +1,22 @@
-import React from "react";
+import React from 'react'
 
 export interface ProgressbarProps {
-  maxSteps: number;
-  currentStep: number;
+    maxSteps: number
+    currentStep: number
 }
 
 const Progressbar: React.SFC<ProgressbarProps> = ({
-  maxSteps,
-  currentStep,
+    maxSteps,
+    currentStep,
 }) => {
-  const progress = (currentStep / maxSteps) * 100 + "%";
+    const progress = (currentStep / maxSteps) * 100 + '%'
 
-  return (
-    <div
-      style={{ width: progress }}
-      className={`h-1 bg-blue-500 absolute transition-all duration-300`}
-    ></div>
-  );
-};
+    return (
+        <div
+            style={{ width: progress }}
+            className={`h-1 bg-blue-500 absolute transition-all duration-300`}
+        ></div>
+    )
+}
 
-export default Progressbar;
+export default Progressbar

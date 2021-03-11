@@ -200,4 +200,4 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
     );
 };
 
-export default SliderQuestion;
+export default SliderQuestion

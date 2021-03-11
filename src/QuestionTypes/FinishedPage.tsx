@@ -1,60 +1,77 @@
-import React, { useEffect, useState, useContext } from 'react';
-import BackButton from '../BackButton';
-import { LanguageContext } from '../QuestionSettings';
+import React, { useEffect, useState, useContext } from 'react'
+import BackButton from '../BackButton'
+import { LanguageContext } from '../QuestionSettings'
 
 export interface FinishedPageProps {
-    currentStep: number;
-    renderOnStep: number;
-    text: string;
-    subText: string;
-    goBackOneStep: () => void;
-    logAndReset: () => void;
+    currentStep: number
+    renderOnStep: number
+    text: string
+    subText: string
+    goBackOneStep: () => void
+    logAndReset: () => void
 }
 
 const FinishedPage: React.FC<FinishedPageProps> = (props) => {
-    const { currentStep, renderOnStep, text, subText, goBackOneStep, logAndReset } = props;
-    const [timer, setTimer] = useState<number>(10);
-    const { language } = useContext(LanguageContext);
+    const {
+        currentStep,
+        renderOnStep,
+        text,
+        subText,
+        goBackOneStep,
+        logAndReset,
+    } = props
+    const [timer, setTimer] = useState<number>(10)
+    const { language } = useContext(LanguageContext)
 
     useEffect(() => {
-        let timeLeft = 10;
-        setTimer(timeLeft);
+        let timeLeft = 10
+        setTimer(timeLeft)
         let x = setInterval(() => {
             if (currentStep === renderOnStep) {
-                setTimer(timeLeft);
+                setTimer(timeLeft)
 
                 if (timeLeft < 1) {
-                    clearInterval(x);
-                    logAndReset();
+                    clearInterval(x)
+                    logAndReset()
                 }
-                timeLeft--;
+                timeLeft--
             }
-        }, 1000);
+        }, 1000)
 
         return () => {
-            clearInterval(x);
-        };
-    }, [currentStep, renderOnStep, logAndReset]);
+            clearInterval(x)
+        }
+    }, [currentStep, renderOnStep, logAndReset])
 
     return (
         <>
             {currentStep !== renderOnStep ? null : (
-                <div className='w-4/5 h-screen relative'>
-                    <div className='my-10'>
-                        <BackButton currentStep={currentStep} onClick={() => goBackOneStep()} />
+                <div className="w-4/5 h-screen relative">
+                    <div className="my-10">
+                        <BackButton
+                            currentStep={currentStep}
+                            onClick={() => goBackOneStep()}
+                        />
                     </div>
-                    <div className='absolute top-32'>
-                        <div className='text-3xl leading-10 font-medium'>{text}</div>
-                        <div className='font-normal text-gray-600 mt-2'>{subText}</div>
+                    <div className="absolute top-32">
+                        <div className="text-3xl leading-10 font-medium">
+                            {text}
+                        </div>
+                        <div className="font-normal text-gray-600 mt-2">
+                            {subText}
+                        </div>
                     </div>
-                    <div className='text-sm font-light absolute bottom-10 right-0 left-0'>
+                    <div className="text-sm font-light absolute bottom-10 right-0 left-0">
                         🚀
-                        {language === 'Danish' ? 'Systemet starter forfra om: ' : 'The system will restart in: '} {timer}
+                        {language === 'Danish'
+                            ? 'Systemet starter forfra om: '
+                            : 'The system will restart in: '}{' '}
+                        {timer}
                     </div>
                 </div>
             )}
         </>
-    );
-};
+    )
+}
 
-export default FinishedPage;
+export default FinishedPage
