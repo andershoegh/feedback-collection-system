@@ -66,7 +66,6 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                 `transform: scale(${scaleFactorMax});`
             )
         }
-        setSelectedValue(value)
     }
 
     const setIntervalLabels = () => {
@@ -123,9 +122,11 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                 switch (event.key) {
                     case 'a':
                         setSelectedValue((oldValue) => oldValue - 10)
+                        updateSelected(selectedValue - 10)
                         break
                     case 'd':
                         setSelectedValue((oldValue) => oldValue + 10)
+                        updateSelected(selectedValue + 10)
                         break
                     default:
                         break
@@ -137,7 +138,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                 console.log('Stopped using custom keys')
             }
         }
-    }, [usingCustomKeys])
+    }, [usingCustomKeys, selectedValue, updateSelected])
 
     return (
         <>
@@ -159,7 +160,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                             </div>
                             <div className="justify-center mt-40">
                                 <div className="justify-center flex text-xl mb-8 font-medium text-gray-800">
-                                    {usingCustomKeys
+                                    {!usingCustomKeys
                                         ? language === 'Danish'
                                             ? 'Tryk på slideren for at vælge'
                                             : 'Tap the slider to choose'
@@ -169,7 +170,6 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                 </div>
                                 <div className={`${usingCustomKeys ? '' : ''}`}>
                                     <Touchless
-                                        startElement={true}
                                         onClick={() => {
                                             if (usingCustomKeys === false) {
                                                 initiate()
@@ -204,7 +204,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
 
                                 <span
                                     ref={labelsRef}
-                                    className="flex justify-between font-normal text-2xl mt-2 text-blue-500 mx-2"
+                                    className="flex justify-between font-normal text-2xl mt-6 text-blue-500 mx-2"
                                 >
                                     {setIntervalLabels()}
                                 </span>
