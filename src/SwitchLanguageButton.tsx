@@ -28,14 +28,14 @@ const SwitchLanguageButton: React.SFC<SwitchLanguageButtonProps> = ({
                             <div className="h-6 w-6 place-items-center flex mr-2">
                                 <GBFlag />
                             </div>
-                            Switch to English
+                            <span>Switch to English</span>
                         </div>
                     ) : (
                         <div className="flex place-items-center">
                             <div className="h-5 w-5 place-items-center flex mr-2">
                                 <DKFlag />
                             </div>
-                            Skift til dansk
+                            <span>Skift til dansk</span>
                         </div>
                     )}
                 </Touchless>
