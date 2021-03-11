@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import './RankingQuestion.css';
 import Arrows from '../Resources/ArrowsDownUp.png';
 import BackButton from '../BackButton';
 import NextButton from '../NextButton';
-import { Touchless } from 'touchless-navigation';
+import { Touchless, useCustomKeys } from 'touchless-navigation';
 import { LanguageContext } from '../QuestionSettings';
 
 export interface RankingQuestionProps {
@@ -17,80 +17,66 @@ export interface RankingQuestionProps {
 
 const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
     const { currentStep, renderOnStep, question, answersArray, handleChoice, goBackOneStep } = props;
-    const [activeItem, setActiveItem] = useState<HTMLDivElement>();
     const [list, setList] = useState<string[]>(answersArray);
     const listRef = useRef<HTMLDivElement>(null);
+    const [activeItem, setActiveItem] = useState<HTMLDivElement | null>();
+    const [startElement, setStartElement] = useState<number>(0);
     const { language } = useContext(LanguageContext);
 
-    const activateItem = useCallback(
-        (item: HTMLDivElement) => {
-            let newItem = item;
-            activeItem?.classList.remove('active-item');
-            newItem.classList.add('active-item');
-            setActiveItem(newItem);
-        },
-        [activeItem?.classList]
-    );
-
-    useEffect(() => {
-        setList(answersArray);
-    }, [answersArray]);
+    const customKeys = useCustomKeys({
+        swipeUp: 'w',
+        swipeDown: 's',
+        swipeLeft: '',
+        swipeRight: '',
+    });
 
     useEffect(() => {
         const updateListOrder = (oldList: string[], oldIndex: number, newIndex: number) => {
-            // Stores info on list items' position before updating the list and re-rendering
-            const prevListArr = Array.from(listRef.current!.children);
-            const prevListClientRect = [{ content: '', pos: {} }];
-            prevListArr.forEach((c) =>
-                prevListClientRect.push({
-                    content: c.innerHTML,
-                    pos: c.getBoundingClientRect(),
-                })
-            );
-
             if (newIndex < oldList.length && newIndex >= 0) {
-                const animationDuration = 500;
-                const newList = oldList;
+                // Saves the previous list order from listRef, item height plus margin, and animation duration in ms
+                const prevListArr = Array.from(listRef.current!.children);
+                const itemHeight = listRef.current!.children[0].getBoundingClientRect().height + 20;
+                const animationDuration = 400;
 
-                // Move the active item up or down one position and update the list
-                newList.splice(newIndex, 0, oldList.splice(oldIndex, 1)[0]);
-                setList([]);
-                setList(newList);
+                // Moves the active item up or down one position and updates the list
+                oldList.splice(newIndex, 0, oldList.splice(oldIndex, 1)[0]);
 
-                // Gets updated list array from listRef after setting a new list order an loops through to animate position change
-                const updatedListArr = Array.from(listRef.current!.children);
-
-                updatedListArr.forEach((c, i) => {
+                // Loops through to animate position change
+                prevListArr.forEach((c, prevIndex) => {
                     const item = c as HTMLDivElement;
-                    const newPos = item.getBoundingClientRect();
-                    const prevPos = prevListClientRect.find((child) => child.content === c.innerHTML)?.pos as DOMRect;
+                    const newIndex = oldList.findIndex((child) => child === item.innerText);
 
-                    // Calculates the difference from old to new position on render and animates if it moved
-                    const deltaY = prevPos.top - newPos.top;
+                    if (newIndex !== prevIndex) {
+                        // Sets the new index position as startElement and removes wiggle animation to handle position change animation
+                        if (activeItem?.innerHTML === item.innerHTML) {
+                            setStartElement(newIndex);
+                            item.style.animation = '';
+                        }
 
-                    if (Math.abs(deltaY) > 10) {
+                        // If item moved, then places the item in its previous position before the browser draws the update
                         requestAnimationFrame(() => {
+                            const yOffset = newIndex < prevIndex ? itemHeight : -itemHeight;
+                            item.style.transform = `translate(0,${yOffset}px)`;
                             item.style.transition = 'transform 0s';
-                            item.style.transform = `translate(0, ${deltaY}px)`;
 
+                            // Then changes transform & transition that moves the item to its new position
                             requestAnimationFrame(() => {
-                                item.style.transition = `transform ${animationDuration}ms`;
                                 item.style.transform = '';
+                                item.style.transition = `transform ${animationDuration}ms`;
                             });
                         });
                     }
                 });
 
-                // Waits for re-render position change animation to finish and sets the new item position as the active item
-                const newItem = updatedListArr.find((item) => (item as HTMLDivElement).innerText === activeItem?.innerText);
+                // Waits for re-render position change animation to finish and reapplies wiggle animation to the active item
                 setTimeout(() => {
-                    activateItem(newItem as HTMLDivElement);
+                    activeItem!.style.animation = 'wiggle 2s infinite';
                 }, animationDuration);
             }
         };
 
         const handleKeyPress = (e: KeyboardEvent) => {
-            if (activeItem) {
+            if (currentStep === renderOnStep && activeItem) {
                 let activeItemIndex = list.findIndex((item) => item === activeItem.innerText);
 
                 switch (e.key) {
@@ -100,16 +86,21 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                     case 's':
                         updateListOrder(list, activeItemIndex, activeItemIndex + 1);
                         break;
+                    case 'Enter':
+                        if (activeItem === e.target) {
+                            activeItem.click();
+                        }
+                        break;
                 }
             }
         };
 
-        window.addEventListener('keydown', handleKeyPress);
+        document.addEventListener('keydown', handleKeyPress);
 
         return () => {
-            window.removeEventListener('keydown', handleKeyPress);
+            document.removeEventListener('keydown', handleKeyPress);
         };
-    }, [activeItem, list, setList, activateItem]);
+    }, [activeItem, list, setList, currentStep, renderOnStep]);
 
     return (
         <>
@@ -142,12 +133,27 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                     })}
                                 </div>
                                 <div ref={listRef} className='w-full'>
-                                    {list.map((item) => {
+                                    {list.map((item, index) => {
                                         return (
                                             <Touchless
                                                 key={item}
-                                                onClick={(e) => activateItem(e.target as HTMLDivElement)}
-                                                className={`shadow-inactive rounded-xl flex items-center bg-white pl-4 py-3 mb-5 w-full border-4 border-transparent`}
+                                                startElement={startElement === index}
+                                                className={
+                                                    'shadow-inactive rounded-xl flex items-center bg-white pl-4 py-3 mb-5 w-full border-4 border-transparent'
+                                                }
+                                                onClick={(e) => {
+                                                    const target = e.target as HTMLDivElement;
+                                                    if (activeItem !== target) {
+                                                        target.style.animation = 'wiggle 2s infinite';
+                                                        customKeys.initiate();
+                                                        setActiveItem(target);
+                                                        setStartElement(index);
+                                                    } else {
+                                                        target.style.animation = '';
+                                                        customKeys.clear();
+                                                        setActiveItem(null);
+                                                    }
+                                                }}
                                             >
                                                 <img src={Arrows} alt='arrows' className='mr-4' />
                                                 <span>{item}</span>
@@ -159,11 +165,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                         </div>
                         <NextButton
                             currentStep={currentStep}
-                            onClick={() =>
-                                setTimeout(() => {
-                                    handleChoice(question, list);
-                                }, 200)
-                            }
+                            onClick={() => setTimeout(() => handleChoice(question, list), 200)}
                         />
                     </div>
                 </div>
