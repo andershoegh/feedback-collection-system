@@ -19,7 +19,7 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                     <div>
                         <div className=''>
                             <div className='mb-10'>
-                                <div className='h-12 w-12 place-items-center flex'>
+                                <div className='h-12 w-10 place-items-center flex'>
                                     <DKFlag />
                                 </div>
                                 <div className='text-2xl leading-10 font-normal mb-2'>
