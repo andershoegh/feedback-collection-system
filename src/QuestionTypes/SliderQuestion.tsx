@@ -1,22 +1,22 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
-import { Touchless, useCustomKeys } from 'touchless-navigation';
-import BackButton from '../BackButton';
-import NextButton from '../NextButton';
-import { LanguageContext } from '../QuestionSettings';
-import './Slider.css';
+import React, { useRef, useState, useContext, useEffect } from 'react'
+import { Touchless, useCustomKeys } from 'touchless-navigation'
+import BackButton from '../BackButton'
+import NextButton from '../NextButton'
+import { LanguageContext } from '../QuestionSettings'
+import './Slider.css'
 
 export interface SliderQuestionProps {
-    currentStep: number;
-    renderOnStep: number;
-    question: string;
-    rangeMin: number;
-    rangeMax: number;
-    intervals?: number;
-    startValue: number;
-    minLabel?: string;
-    maxLabel?: string;
-    handleChoice: (question: string, answer: string) => void;
-    goBackOneStep: () => void;
+    currentStep: number
+    renderOnStep: number
+    question: string
+    rangeMin: number
+    rangeMax: number
+    intervals?: number
+    startValue: number
+    minLabel?: string
+    maxLabel?: string
+    handleChoice: (question: string, answer: string) => void
+    goBackOneStep: () => void
 }
 
 const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
@@ -32,33 +32,46 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
         maxLabel,
         handleChoice,
         goBackOneStep,
-    } = props;
-    const labelsRef = useRef<HTMLSpanElement>(null);
-    const [selectedValue, setSelectedValue] = useState<number>(startValue);
-    const highlightedClasses = ['font-semibold', 'scale-150', 'text-blue-600'];
-    const { language } = useContext(LanguageContext);
-    let baseStyleClasses = ['inline-block', 'ease-in-out', 'transform', 'transition', 'scale-100'];
+    } = props
+    const labelsRef = useRef<HTMLSpanElement>(null)
+    const [selectedValue, setSelectedValue] = useState<number>(startValue)
+    const highlightedClasses = ['font-semibold', 'scale-150', 'text-blue-600']
+    const { language } = useContext(LanguageContext)
+    let baseStyleClasses = [
+        'inline-block',
+        'ease-in-out',
+        'transform',
+        'transition',
+        'scale-100',
+    ]
 
     const updateSelected = (value: number) => {
         if (intervals && labelsRef.current) {
-            labelsRef.current.children[selectedValue].classList.remove(...highlightedClasses);
-            labelsRef.current.children[value].classList.add(...highlightedClasses);
+            labelsRef.current.children[selectedValue].classList.remove(
+                ...highlightedClasses
+            )
+            labelsRef.current.children[value].classList.add(
+                ...highlightedClasses
+            )
         } else if (labelsRef.current) {
-            let scaleFactorMin = (rangeMax - value) / (rangeMax - rangeMin) + 1;
-            let scaleFactorMax = (value - rangeMin) / (rangeMax - rangeMin) + 1;
-            console.log(scaleFactorMin, scaleFactorMax);
+            let scaleFactorMin = (rangeMax - value) / (rangeMax - rangeMin) + 1
+            let scaleFactorMax = (value - rangeMin) / (rangeMax - rangeMin) + 1
 
-            labelsRef.current.children[0].setAttribute('style', `transform: scale(${scaleFactorMin});`);
-            labelsRef.current.children[1].setAttribute('style', `transform: scale(${scaleFactorMax});`);
+            labelsRef.current.children[0].setAttribute(
+                'style',
+                `transform: scale(${scaleFactorMin});`
+            )
+            labelsRef.current.children[1].setAttribute(
+                'style',
+                `transform: scale(${scaleFactorMax});`
+            )
         }
-        console.log(value);
-        // setSelectedValue(value);
-    };
+    }
 
     const setIntervalLabels = () => {
         if (intervals) {
-            let currentLabel = rangeMin;
-            const labels = [];
+            let currentLabel = rangeMin
+            const labels = []
 
             while (currentLabel <= rangeMax) {
                 let labelText =
@@ -66,20 +79,20 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                         ? minLabel
                         : maxLabel && currentLabel === rangeMax
                         ? maxLabel
-                        : currentLabel;
+                        : currentLabel
                 let styleClasses =
                     currentLabel === selectedValue
                         ? highlightedClasses.concat(baseStyleClasses).join(' ')
-                        : baseStyleClasses.join(' ');
+                        : baseStyleClasses.join(' ')
 
                 labels.push(
                     <span key={labelText} className={styleClasses}>
                         {labelText}
                     </span>
-                );
-                currentLabel++;
+                )
+                currentLabel++
             }
-            return labels;
+            return labels
         } else {
             return [
                 <span key={minLabel} className={baseStyleClasses.join(' ')}>
@@ -88,58 +101,65 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                 <span key={maxLabel} className={baseStyleClasses.join(' ')}>
                     {maxLabel}
                 </span>,
-            ];
+            ]
         }
-    };
+    }
 
-    const [usingCustomKeys, setUsingCustomKeys] = useState(false);
+    const [usingCustomKeys, setUsingCustomKeys] = useState(false)
 
     const { clear, initiate } = useCustomKeys({
         swipeLeft: 'a',
         swipeRight: 'd',
         swipeDown: 's',
         swipeUp: 'w',
-    });
+    })
 
     useEffect(() => {
         if (usingCustomKeys) {
-            console.log('Using custom keys');
+            console.log('Using custom keys')
 
             const handleSliderKeys = (event: KeyboardEvent) => {
                 switch (event.key) {
                     case 'a':
-                        setSelectedValue((oldValue) => oldValue - 10);
-                        updateSelected(selectedValue - 10);
-                        break;
+                        setSelectedValue((oldValue) => oldValue - 10)
+                        updateSelected(selectedValue - 10)
+                        break
                     case 'd':
-                        setSelectedValue((oldValue) => oldValue + 10);
-                        updateSelected(selectedValue + 10);
-                        break;
+                        setSelectedValue((oldValue) => oldValue + 10)
+                        updateSelected(selectedValue + 10)
+                        break
                     default:
-                        break;
+                        break
                 }
-            };
-            document.addEventListener('keydown', handleSliderKeys);
+            }
+            document.addEventListener('keydown', handleSliderKeys)
             return () => {
-                document.removeEventListener('keydown', handleSliderKeys);
-                console.log('Stopped using custom keys');
-            };
+                document.removeEventListener('keydown', handleSliderKeys)
+                console.log('Stopped using custom keys')
+            }
         }
-    }, [usingCustomKeys, selectedValue, updateSelected]);
+    }, [usingCustomKeys, selectedValue, updateSelected])
 
     return (
         <>
             {currentStep !== renderOnStep ? null : (
-                <div className='w-4/5 h-screen relative'>
+                <div className="w-4/5 h-screen relative">
                     <div>
-                        <BackButton currentStep={currentStep} onClick={() => goBackOneStep()} />
-                        <div className='absolute top-32 w-full'>
-                            <div className='text-3xl leading-10 font-medium'>{question}</div>
-                            <div className='font-normal text-gray-600 mt-2'>
-                                {language === 'Danish' ? 'Swipe til det ønskede svar' : 'Swipe to your desired answer'}
+                        <BackButton
+                            currentStep={currentStep}
+                            onClick={() => goBackOneStep()}
+                        />
+                        <div className="absolute top-32 w-full">
+                            <div className="text-3xl leading-10 font-medium">
+                                {question}
                             </div>
-                            <div className='justify-center mt-40'>
-                                <div className='justify-center flex text-xl mb-8 font-medium text-gray-800'>
+                            <div className="font-normal text-gray-600 mt-2">
+                                {language === 'Danish'
+                                    ? 'Swipe til det ønskede svar'
+                                    : 'Swipe to your desired answer'}
+                            </div>
+                            <div className="justify-center mt-40">
+                                <div className="justify-center flex text-xl mb-8 font-medium text-gray-800">
                                     {!usingCustomKeys
                                         ? language === 'Danish'
                                             ? 'Tryk på slideren for at vælge'
@@ -152,23 +172,29 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                     <Touchless
                                         onClick={() => {
                                             if (usingCustomKeys === false) {
-                                                initiate();
+                                                initiate()
                                             } else {
-                                                clear();
+                                                clear()
                                             }
-                                            setUsingCustomKeys((prevValue) => !prevValue);
+                                            setUsingCustomKeys(
+                                                (prevValue) => !prevValue
+                                            )
                                         }}
                                         className={`shadow-inactive rounded-xl border-4 border-transparent py-4 px-2 ${
                                             usingCustomKeys ? '' : ''
                                         }`}
                                     >
                                         <input
-                                            type='range'
+                                            type="range"
                                             min={rangeMin}
                                             max={rangeMax}
                                             value={selectedValue}
                                             step={intervals}
-                                            onChange={(e) => updateSelected(parseInt(e.target.value))}
+                                            onChange={(e) =>
+                                                updateSelected(
+                                                    parseInt(e.target.value)
+                                                )
+                                            }
                                             className={`shadow-inactive overflow-hidden h-5 outline-none block w-full slider ${
                                                 usingCustomKeys ? '' : ''
                                             }`}
@@ -178,7 +204,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
 
                                 <span
                                     ref={labelsRef}
-                                    className='flex justify-between font-normal text-2xl mt-6 text-blue-500 mx-2'
+                                    className="flex justify-between font-normal text-2xl mt-6 text-blue-500 mx-2"
                                 >
                                     {setIntervalLabels()}
                                 </span>
@@ -189,7 +215,10 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                             currentStep={currentStep}
                             onClick={() =>
                                 setTimeout(() => {
-                                    handleChoice(question, selectedValue.toString());
+                                    handleChoice(
+                                        question,
+                                        selectedValue.toString()
+                                    )
                                 }, 200)
                             }
                         />
@@ -197,7 +226,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                 </div>
             )}
         </>
-    );
-};
+    )
+}
 
 export default SliderQuestion
