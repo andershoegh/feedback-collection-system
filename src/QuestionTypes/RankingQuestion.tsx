@@ -39,7 +39,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
 
     useEffect(() => {
         setList(answersArray)
-    }, [answersArray])
+    }, [language])
 
     useEffect(() => {
         const updateListOrder = (
