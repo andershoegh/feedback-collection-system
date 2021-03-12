@@ -38,6 +38,10 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
     })
 
     useEffect(() => {
+        setList(answersArray)
+    }, [answersArray])
+
+    useEffect(() => {
         const updateListOrder = (
             oldList: string[],
             oldIndex: number,
