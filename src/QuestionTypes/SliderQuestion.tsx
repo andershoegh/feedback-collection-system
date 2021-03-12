@@ -50,6 +50,12 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
     )
     const { language } = useContext(LanguageContext)
     const sliderRef = useRef<HTMLInputElement>(null)
+    const { clear, initiate } = useCustomKeys({
+        swipeLeft: 'a',
+        swipeRight: 'd',
+        swipeDown: 's',
+        swipeUp: 'w',
+    })
     let baseStyleClasses = [
         'inline-block',
         'ease-in-out',
@@ -61,6 +67,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
     const updateSelected = useCallback(
         (value: number) => {
             if (intervals && labelsRef.current) {
+                // styles interval numbers if they are passed through props
                 labelsRef.current.children[selectedValue].classList.remove(
                     ...highlightedClasses
                 )
@@ -68,6 +75,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                     ...highlightedClasses
                 )
             } else if (labelsRef.current) {
+                // else styles min and max label sizes based on current value
                 let scaleFactorMin =
                     (rangeMax - value) / (rangeMax - rangeMin) + 1
                 let scaleFactorMax =
@@ -123,13 +131,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
         }
     }
 
-    const { clear, initiate } = useCustomKeys({
-        swipeLeft: 'a',
-        swipeRight: 'd',
-        swipeDown: 's',
-        swipeUp: 'w',
-    })
-
+    // handles animation of thumb while selected
     const handleTouchlessClick = (runAnimation: boolean) => {
         if (runAnimation) {
             let i = 0
@@ -154,6 +156,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
         }
     }
 
+    // handles input for changing slider value
     useEffect(() => {
         if (usingCustomKeys) {
             console.log('Using custom keys')
