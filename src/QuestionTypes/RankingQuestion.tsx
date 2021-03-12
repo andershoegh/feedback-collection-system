@@ -150,7 +150,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                     ? 'Arrangér svarene i rækkefølge hvor 1 er størst'
                                     : 'Arrange the answers in order where 1 is greatest'}
                             </div>
-                            <div className="flex row-auto text-lg font-normal mt-10 w-4/5">
+                            <div className="flex row-auto text-lg font-normal mt-10 w-full">
                                 <div className="flex flex-col justify-between mr-6 py-5">
                                     {list.map((item, index) => {
                                         return (
@@ -172,7 +172,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                                     startElement === index
                                                 }
                                                 className={
-                                                    'shadow-inactive rounded-xl flex items-center bg-white pl-4 py-3 mb-5 w-full border-4 border-transparent'
+                                                    'shadow-inactive rounded-xl flex items-center  bg-white p-4 py-3 mb-5 w-full border-4 border-transparent'
                                                 }
                                                 onClick={(e) => {
                                                     const target = e.target as HTMLDivElement

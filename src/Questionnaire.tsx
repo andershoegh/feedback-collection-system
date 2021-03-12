@@ -5,7 +5,6 @@ import NumericalQuestion from './QuestionTypes/NumericalQuestion'
 import SingleChoiceListQuestion from './QuestionTypes/SingleChoiceListQuestion'
 import MultiChoiceListQuestion from './QuestionTypes/MultiChoiceListQuestion'
 import Progressbar from './Progressbar'
-// import TextQuestion from "./QuestionTypes/TextQuestion";
 import FinishedPage from './QuestionTypes/FinishedPage'
 import { LanguageContext, maxQuestions } from './QuestionSettings'
 import { useFirestore, fb } from './Firebase/firebase'
@@ -107,8 +106,8 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     secondButtonText={language === 'Danish' ? 'Nej' : 'No'}
                     question={
                         language === 'Danish'
-                            ? 'Var du bekymret for hvor tæt andre kom på dig under dit indkøb?'
-                            : 'Did you worry about how close people got to you while shopping?'
+                            ? 'Bekymrer du dig over hvor tæt folk kommer på dig når du handler?'
+                            : 'Do you worry about how close people get to you while you are shopping?'
                     }
                 />
 
@@ -125,13 +124,13 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     answersArray={
                         language === 'Danish'
                             ? [
-                                  'Jeg synes der var god plads i butikken',
-                                  'Jeg synes folk holdt god afstand',
-                                  'Det var nemt at vide hvor mange der var i butikken inden jeg gik ind',
+                                  'Jeg synes der er god plads i storcenteret',
+                                  'Jeg synes folk holder god afstand',
+                                  'Det er nemt at vide om der er for mange i én butik inden jeg går ind',
                               ]
                             : [
-                                  'I thought there was plenty of space in the store',
-                                  'I think people kept a good social distance',
+                                  'I think there is sufficient space in the mall',
+                                  'I think people are good at social distancing',
                                   'It was easy to find out how many were already in the store before i entered',
                               ]
                     }
@@ -144,8 +143,8 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     renderOnStep={3}
                     question={
                         language === 'Danish'
-                            ? 'Hvor mange gange handler du om ugen i gennemsnit?'
-                            : 'How often do you on average shop groceries per week?'
+                            ? 'Hvor ofte besøger du storcenteret hver måned?'
+                            : 'How often do you visit the mall each month?'
                     }
                 />
 
@@ -156,20 +155,20 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     renderOnStep={4}
                     question={
                         language === 'Danish'
-                            ? 'I hvilke områder var der flest mennesker?'
-                            : 'In which areas were there most people?'
+                            ? 'Hvad er vigtigst for dig?'
+                            : 'What is the most important to you?'
                     }
                     answersArray={
                         language === 'Danish'
                             ? [
-                                  'Vin og spiritus',
-                                  'Mejeri og kød',
-                                  'Frugt og grønt',
+                                  'Gode parkeringsmuligheder',
+                                  'Stort udvalg af specialbutikker',
+                                  'Specielle arrangementer i centeret',
                               ]
                             : [
-                                  'Wine and spirits',
-                                  'Dairy and meat',
-                                  'Fruit and vegetable',
+                                  'Good parking options',
+                                  'A large selection of stores',
+                                  'Special events in the mall',
                               ]
                     }
                 />
@@ -181,13 +180,13 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     renderOnStep={5}
                     question={
                         language === 'Danish'
-                            ? 'Har du oplevet at folk kommer for tæt på imens du handler?'
-                            : 'Have you experienced people coming too close to you while shopping?'
+                            ? 'Har du oplevet at folk kommer for tæt på imens du er i centeret?'
+                            : 'Have you experienced people coming too close to you while in the mall?'
                     }
                     answersArray={
                         language === 'Danish'
-                            ? ['Ja', 'Nej', 'Det er jeg ligeglad med']
-                            : ['Yes', 'No', "I don't care about that"]
+                            ? ['Ja', 'Nej', 'Det er ligegyldigt for mig']
+                            : ['Yes', 'No', 'I do not care about that']
                     }
                 />
 

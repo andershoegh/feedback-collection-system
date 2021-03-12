@@ -245,6 +245,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                         }`}
                                     >
                                         <input
+                                            id="slider"
                                             type="range"
                                             ref={sliderRef}
                                             min={rangeMin}
