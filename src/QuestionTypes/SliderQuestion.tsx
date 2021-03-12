@@ -1,4 +1,11 @@
-import React, { useRef, useState, useContext, useEffect } from 'react'
+import React, {
+    useRef,
+    useState,
+    useContext,
+    useEffect,
+    useCallback,
+    useMemo,
+} from 'react'
 import { Touchless, useCustomKeys } from 'touchless-navigation'
 import BackButton from '../BackButton'
 import NextButton from '../NextButton'
@@ -35,8 +42,14 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
     } = props
     const labelsRef = useRef<HTMLSpanElement>(null)
     const [selectedValue, setSelectedValue] = useState<number>(startValue)
-    const highlightedClasses = ['font-semibold', 'scale-150', 'text-blue-600']
+    const [usingCustomKeys, setUsingCustomKeys] = useState<boolean>(false)
+    const [thumbColorAnimation, setThumbColorAnimation] = useState<number>()
+    const highlightedClasses = useMemo(
+        () => ['font-semibold', 'scale-150', 'text-blue-600'],
+        []
+    )
     const { language } = useContext(LanguageContext)
+    const sliderRef = useRef<HTMLInputElement>(null)
     let baseStyleClasses = [
         'inline-block',
         'ease-in-out',
@@ -45,28 +58,33 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
         'scale-100',
     ]
 
-    const updateSelected = (value: number) => {
-        if (intervals && labelsRef.current) {
-            labelsRef.current.children[selectedValue].classList.remove(
-                ...highlightedClasses
-            )
-            labelsRef.current.children[value].classList.add(
-                ...highlightedClasses
-            )
-        } else if (labelsRef.current) {
-            let scaleFactorMin = (rangeMax - value) / (rangeMax - rangeMin) + 1
-            let scaleFactorMax = (value - rangeMin) / (rangeMax - rangeMin) + 1
+    const updateSelected = useCallback(
+        (value: number) => {
+            if (intervals && labelsRef.current) {
+                labelsRef.current.children[selectedValue].classList.remove(
+                    ...highlightedClasses
+                )
+                labelsRef.current.children[value].classList.add(
+                    ...highlightedClasses
+                )
+            } else if (labelsRef.current) {
+                let scaleFactorMin =
+                    (rangeMax - value) / (rangeMax - rangeMin) + 1
+                let scaleFactorMax =
+                    (value - rangeMin) / (rangeMax - rangeMin) + 1
 
-            labelsRef.current.children[0].setAttribute(
-                'style',
-                `transform: scale(${scaleFactorMin});`
-            )
-            labelsRef.current.children[1].setAttribute(
-                'style',
-                `transform: scale(${scaleFactorMax});`
-            )
-        }
-    }
+                labelsRef.current.children[0].setAttribute(
+                    'style',
+                    `transform: scale(${scaleFactorMin});`
+                )
+                labelsRef.current.children[1].setAttribute(
+                    'style',
+                    `transform: scale(${scaleFactorMax});`
+                )
+            }
+        },
+        [highlightedClasses, intervals, rangeMax, rangeMin, selectedValue]
+    )
 
     const setIntervalLabels = () => {
         if (intervals) {
@@ -105,14 +123,36 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
         }
     }
 
-    const [usingCustomKeys, setUsingCustomKeys] = useState(false)
-
     const { clear, initiate } = useCustomKeys({
         swipeLeft: 'a',
         swipeRight: 'd',
         swipeDown: 's',
         swipeUp: 'w',
     })
+
+    const handleTouchlessClick = (runAnimation: boolean) => {
+        if (runAnimation) {
+            let i = 0
+            setThumbColorAnimation(
+                window.setInterval(() => {
+                    if (i % 4 === 0) {
+                        document.documentElement.style.setProperty(
+                            '--thumb-color',
+                            'rgb(71, 126, 247)'
+                        )
+                    } else if (i % 4 === 1) {
+                        document.documentElement.style.setProperty(
+                            '--thumb-color',
+                            'rgb(37, 99, 235)'
+                        )
+                    }
+                    i++
+                }, 400)
+            )
+        } else {
+            clearInterval(thumbColorAnimation)
+        }
+    }
 
     useEffect(() => {
         if (usingCustomKeys) {
@@ -121,12 +161,12 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
             const handleSliderKeys = (event: KeyboardEvent) => {
                 switch (event.key) {
                     case 'a':
-                        setSelectedValue((oldValue) => oldValue - 10)
-                        updateSelected(selectedValue - 10)
+                        setSelectedValue((oldValue) => oldValue - 2.5)
+                        updateSelected(selectedValue - 2.5)
                         break
                     case 'd':
-                        setSelectedValue((oldValue) => oldValue + 10)
-                        updateSelected(selectedValue + 10)
+                        setSelectedValue((oldValue) => oldValue + 2.5)
+                        updateSelected(selectedValue + 2.5)
                         break
                     default:
                         break
@@ -170,11 +210,31 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                 </div>
                                 <div className={`${usingCustomKeys ? '' : ''}`}>
                                     <Touchless
+                                        startElement={true}
                                         onClick={() => {
-                                            if (usingCustomKeys === false) {
+                                            if (!usingCustomKeys) {
                                                 initiate()
+
+                                                if (sliderRef.current) {
+                                                    sliderRef.current.classList.remove(
+                                                        'slider'
+                                                    )
+                                                    sliderRef.current.classList.add(
+                                                        'slider-active'
+                                                    )
+                                                }
+                                                handleTouchlessClick(true)
                                             } else {
                                                 clear()
+                                                if (sliderRef.current) {
+                                                    sliderRef.current.classList.remove(
+                                                        'slider-active'
+                                                    )
+                                                    sliderRef.current.classList.add(
+                                                        'slider'
+                                                    )
+                                                }
+                                                handleTouchlessClick(false)
                                             }
                                             setUsingCustomKeys(
                                                 (prevValue) => !prevValue
@@ -186,6 +246,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                     >
                                         <input
                                             type="range"
+                                            ref={sliderRef}
                                             min={rangeMin}
                                             max={rangeMax}
                                             value={selectedValue}
