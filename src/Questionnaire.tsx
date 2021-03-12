@@ -5,7 +5,6 @@ import NumericalQuestion from './QuestionTypes/NumericalQuestion'
 import SingleChoiceListQuestion from './QuestionTypes/SingleChoiceListQuestion'
 import MultiChoiceListQuestion from './QuestionTypes/MultiChoiceListQuestion'
 import Progressbar from './Progressbar'
-// import TextQuestion from "./QuestionTypes/TextQuestion";
 import FinishedPage from './QuestionTypes/FinishedPage'
 import { LanguageContext, maxQuestions } from './QuestionSettings'
 import { useFirestore, fb } from './Firebase/firebase'
