@@ -170,6 +170,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                 </div>
                                 <div className={`${usingCustomKeys ? '' : ''}`}>
                                     <Touchless
+                                        startElement={true}
                                         onClick={() => {
                                             if (usingCustomKeys === false) {
                                                 initiate()
@@ -185,6 +186,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                         }`}
                                     >
                                         <input
+                                            id="slider"
                                             type="range"
                                             min={rangeMin}
                                             max={rangeMax}

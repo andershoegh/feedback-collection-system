@@ -88,6 +88,7 @@ const Checkbox: React.SFC<CheckboxProps> = ({ answer, updateAnswers }) => {
             className={`shadow-inactive rounded-xl pl-4 py-3 mb-5 flex place-items-center border-4 border-transparent ${
                 checked ? 'bg-blue-100' : ''
             }`}
+            startElement={true}
             onClick={() => {
                 setChecked(!checked)
                 updateAnswers(answer)
