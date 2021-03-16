@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React from 'react'
+import { Touchless } from 'touchless-navigation'
 import BackButton from '../BackButton'
-import { LanguageContext } from '../QuestionSettings'
 
 export interface FinishedPageProps {
     currentStep: number
@@ -12,36 +12,7 @@ export interface FinishedPageProps {
 }
 
 const FinishedPage: React.FC<FinishedPageProps> = (props) => {
-    const {
-        currentStep,
-        renderOnStep,
-        text,
-        subText,
-        goBackOneStep,
-        logAndReset,
-    } = props
-    const [timer, setTimer] = useState<number>(10)
-    const { language } = useContext(LanguageContext)
-
-    useEffect(() => {
-        let timeLeft = 10
-        setTimer(timeLeft)
-        let x = setInterval(() => {
-            if (currentStep === renderOnStep) {
-                setTimer(timeLeft)
-
-                if (timeLeft < 1) {
-                    clearInterval(x)
-                    logAndReset()
-                }
-                timeLeft--
-            }
-        }, 1000)
-
-        return () => {
-            clearInterval(x)
-        }
-    }, [currentStep, renderOnStep, logAndReset])
+    const { currentStep, renderOnStep, text, subText, goBackOneStep } = props
 
     return (
         <>
@@ -60,13 +31,15 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
                         <div className="font-normal text-gray-600 mt-2">
                             {subText}
                         </div>
-                    </div>
-                    <div className="text-sm font-light absolute bottom-10 right-0 left-0">
-                        🚀
-                        {language === 'Danish'
-                            ? 'Systemet starter forfra om: '
-                            : 'The system will restart in: '}{' '}
-                        {timer}
+                        <Touchless
+                            onClick={() =>
+                                (window.location.href =
+                                    'https://andershansen393483.typeform.com/to/DaDEYAf6')
+                            }
+                            className={`shadow-inactive py-6 px-32 text-3xl border-4 border-transparent rounded-xl m-4`}
+                        >
+                            Help give feedback
+                        </Touchless>
                     </div>
                 </div>
             )}

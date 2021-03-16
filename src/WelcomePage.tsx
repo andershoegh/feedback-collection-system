@@ -22,7 +22,7 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                                 <div className="h-12 w-10 place-items-center flex">
                                     <DKFlag />
                                 </div>
-                                <div className="text-2xl leading-10 font-normal mb-2">
+                                <div className="text-xl leading-10 font-normal mb-2">
                                     Prøv de nye kontaktløse skærme ved at
                                     udfylde et kort spørgeskema
                                 </div>
@@ -32,11 +32,11 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                                 </div>
                             </div>
 
-                            <div className="mb-10">
+                            <div className="mb-4">
                                 <div className="h-12 w-12 place-items-center flex">
                                     <GBFlag />
                                 </div>
-                                <div className="text-2xl leading-10 font-normal mb-2">
+                                <div className="text-xl leading-10 font-normal mb-2">
                                     Try the public display of the future while
                                     answering a short questionnaire
                                 </div>
@@ -45,6 +45,15 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                                     the instructions to get started
                                 </div>
                             </div>
+                        </div>
+                        <div className=" font-bold text-red-600 border-1 border-red-300">
+                            Remember this is a system test - the following
+                            questions are meant for another context. Do not
+                            worry about answering these questions correctly.
+                        </div>
+                        <div className="font-bold text-red-600 mt-2">
+                            Once you have scanned the QR code - do not use the
+                            keyboard or mouse.
                         </div>
                         <div>
                             <div
