@@ -46,10 +46,15 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
             if (newIndex < oldList.length && newIndex >= 0) {
                 // Saves the previous list order from listRef, item height plus margin, and animation duration in ms
                 const prevListArr = Array.from(listRef.current!.children)
+                const margin = window
+                    .getComputedStyle(listRef.current?.children[0]!)
+                    .marginBottom.slice(0, -2)
                 const itemHeight =
                     listRef.current!.children[0].getBoundingClientRect()
-                        .height + 20
+                        .height + parseInt(margin)
                 const animationDuration = 400
+
+                console.log(margin)
 
                 // Moves the active item up or down one position and updates the list
                 oldList.splice(newIndex, 0, oldList.splice(oldIndex, 1)[0])
@@ -172,7 +177,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                                     startElement === index
                                                 }
                                                 className={
-                                                    'shadow-inactive rounded-xl flex items-center  bg-white p-4 py-3 mb-5 w-full border-4 border-transparent'
+                                                    'shadow-inactive rounded-xl flex items-center bg-white p-4 py-3 mb-5 w-full border-4 border-transparent'
                                                 }
                                                 onClick={(e) => {
                                                     const target = e.target as HTMLDivElement
