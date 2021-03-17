@@ -57,13 +57,15 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                 // Loops through to animate position change
                 prevListArr.forEach((c, prevIndex) => {
                     const item = c as HTMLDivElement
-                    const newIndex = oldList.findIndex(
-                        (child) => child === item.innerText
-                    )
 
+                    const newIndex = oldList.findIndex((child) =>  {
+                        return child.trim() === item.innerText.trim()
+                    })
+        
                     if (newIndex !== prevIndex) {
+                        
                         // Sets the new index position as startElement and removes wiggle animation to handle position change animation
-                        if (activeItem?.innerHTML === item.innerHTML) {
+                        if (activeItem?.innerHTML.trim() === item.innerHTML.trim()) {
                             setStartElement(newIndex)
                             item.style.animation = ''
                         }
@@ -94,7 +96,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
         const handleKeyPress = (e: KeyboardEvent) => {
             if (currentStep === renderOnStep && activeItem) {
                 let activeItemIndex = list.findIndex(
-                    (item) => item === activeItem.innerText
+                    (item) => item.trim() === activeItem.innerText.trim()
                 )
 
                 switch (e.key) {
@@ -102,14 +104,14 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                         updateListOrder(
                             list,
                             activeItemIndex,
-                            activeItemIndex - 1
+                            (activeItemIndex - 1)
                         )
                         break
                     case 's':
                         updateListOrder(
                             list,
                             activeItemIndex,
-                            activeItemIndex + 1
+                            (activeItemIndex + 1)
                         )
                         break
                     case 'Enter':
@@ -146,7 +148,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                 {question}
                             </div>
                             <div className="font-normal text-gray-600 mt-2">
-                                {language === 'Danish'
+                                {language.trim() === 'Danish'.trim()
                                     ? 'Arrangér svarene i rækkefølge hvor 1 er størst'
                                     : 'Arrange the answers in order where 1 is greatest'}
                             </div>
@@ -181,6 +183,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                                             'wiggle 2s infinite'
                                                         customKeys.initiate()
                                                         setActiveItem(target)
+
                                                         setStartElement(index)
                                                     } else {
                                                         target.style.animation =
