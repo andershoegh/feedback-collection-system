@@ -19,7 +19,7 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
     return (
         <>
             {currentStep !== renderOnStep ? null : (
-                <div className="w-4/5 h-screen relative flex items-center">
+                <div className="w-4/5 h-screen relative flex items-center justify-center">
                     <div className="my-10">
                         <BackButton
                             currentStep={currentStep}

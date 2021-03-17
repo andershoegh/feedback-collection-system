@@ -102,7 +102,7 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
     return (
         <>
             {currentStep !== renderOnStep ? null : (
-                <div className="w-4/5 h-screen relative flex items-center">
+                <div className="w-4/5 h-screen relative flex items-center justify-center">
                     <BackButton
                         currentStep={currentStep}
                         onClick={() =>

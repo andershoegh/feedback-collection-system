@@ -28,7 +28,7 @@ const MultiChoiceListQuestion: React.SFC<MultiChoiceListQuestionProps> = ({
     return (
         <>
             {currentStep !== renderOnStep ? null : (
-                <div className="w-4/5 relative h-screen flex items-center">
+                <div className="w-4/5 relative h-screen flex items-center justify-center">
                     <BackButton
                         currentStep={currentStep}
                         onClick={() =>

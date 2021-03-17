@@ -24,13 +24,13 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
         handleChoice,
         goBackOneStep,
     } = props
-    const [list, setList] = useState<string[]>(answersArray)
-    const listRef = useRef<HTMLDivElement>(null)
-    const [activeItem, setActiveItem] = useState<HTMLDivElement | null>()
-    const [startElement, setStartElement] = useState<number>(0)
-    const { language } = useContext(LanguageContext)
-    const [animatingPosition, setAnimatingPosition] = useState(false)
-    const animationDuration = 400
+    const [list, setList] = useState<string[]>(answersArray);
+    const listRef = useRef<HTMLDivElement>(null);
+    const [activeItem, setActiveItem] = useState<HTMLDivElement | null>();
+    const [startElement, setStartElement] = useState<number>(0);
+    const { language } = useContext(LanguageContext);
+    const [animatingPosition, setAnimatingPosition] = useState(false);
+    const animationDuration = 400;
 
     const customKeys = useCustomKeys({
         swipeUp: 'w',
@@ -39,6 +39,11 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
         swipeRight: '',
     })
 
+    useEffect(()=>{
+        setList(answersArray);
+        // eslint-disable-next-line 
+    }, [ language ]);
+    
     useEffect(() => {
         const updateListOrder = (
             oldList: string[],
@@ -162,7 +167,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
     return (
         <>
             {currentStep !== renderOnStep ? null : (
-                <div className="w-4/5 h-screen relative flex items-center">
+                <div className="w-4/5 h-screen relative flex items-center justify-center">
                     <div>
                         <BackButton
                             currentStep={currentStep}
