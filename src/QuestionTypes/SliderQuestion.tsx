@@ -159,8 +159,6 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
     // handles input for changing slider value
     useEffect(() => {
         if (usingCustomKeys) {
-            console.log('Using custom keys')
-
             const handleSliderKeys = (event: KeyboardEvent) => {
                 switch (event.key) {
                     case 'a':
@@ -178,7 +176,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
             document.addEventListener('keydown', handleSliderKeys)
             return () => {
                 document.removeEventListener('keydown', handleSliderKeys)
-                console.log('Stopped using custom keys')
+                // STOPPED USING CUSTOM KEYS
             }
         }
     }, [usingCustomKeys, selectedValue, updateSelected])

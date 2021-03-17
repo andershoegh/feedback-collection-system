@@ -47,6 +47,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
         ) => {
             if (newIndex < oldList.length && newIndex >= 0) {
                 // Saves the previous list order from listRef, item height plus margin, and animation duration in ms
+                setAnimatingPosition(true)
                 const prevListArr = Array.from(listRef.current!.children)
                 const margin = window
                     .getComputedStyle(listRef.current?.children[0]!)
@@ -54,8 +55,6 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                 const itemHeight =
                     listRef.current!.children[0].getBoundingClientRect()
                         .height + parseInt(margin)
-
-                console.log(margin)
 
                 // Moves the active item up or down one position and updates the list
                 oldList.splice(newIndex, 0, oldList.splice(oldIndex, 1)[0])
@@ -96,8 +95,9 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
 
                 // Waits for re-render position change animation to finish and reapplies wiggle animation to the active item
                 setTimeout(() => {
+                    activeItem!.style.transition ='';
                     activeItem!.style.animation = 'wiggle 2s infinite'
-                }, 400)
+                }, animationDuration)
             }
         }
 
@@ -110,7 +110,6 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                 switch (e.key) {
                     case 'w':
                         if (!animatingPosition) {
-                            setAnimatingPosition(true)
                             updateListOrder(
                                 list,
                                 activeItemIndex,
@@ -120,12 +119,11 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                 setAnimatingPosition(false)
                             }, animationDuration)
                         } else {
-                            console.log('Still running animation')
+                            //ERROR TRYING TO MOVE BEFORE ANIIMATION
                         }
                         break
                     case 's':
                         if (!animatingPosition) {
-                            setAnimatingPosition(true)
                             updateListOrder(
                                 list,
                                 activeItemIndex,
@@ -135,7 +133,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                 setAnimatingPosition(false)
                             }, animationDuration)
                         } else {
-                            console.log('Still running animation')
+                            //ERROR TRYING TO MOVE BEFORE ANIIMATION
                         }
                         break
                     case 'Enter':
@@ -147,10 +145,10 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
             }
         }
 
-        document.addEventListener('keydown', handleKeyPress)
+        document.addEventListener('keydown', handleKeyPress);
 
         return () => {
-            document.removeEventListener('keydown', handleKeyPress)
+            document.removeEventListener('keydown', handleKeyPress);
         }
     }, [
         activeItem,
@@ -215,17 +213,15 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                                 onClick={(e) => {
                                                     const target = e.target as HTMLDivElement
                                                     if (activeItem !== target) {
-                                                        target.style.animation =
-                                                            'wiggle 2s infinite'
-                                                        customKeys.initiate()
+                                                        target.style.animation = 'wiggle 2s infinite';
+                                                        customKeys.initiate();
 
-                                                        setActiveItem(target)
-                                                        setStartElement(index)
+                                                        setActiveItem(target);
+                                                        setStartElement(index);
                                                     } else {
-                                                        target.style.animation =
-                                                            ''
-                                                        customKeys.clear()
-                                                        setActiveItem(null)
+                                                        target.style.animation = '';
+                                                        customKeys.clear();
+                                                        setActiveItem(null);
                                                     }
                                                 }}
                                             >

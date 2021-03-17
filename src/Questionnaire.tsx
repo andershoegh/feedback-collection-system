@@ -28,7 +28,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
         if (connected === true) {
             setCurrentStep(1)
         } else {
-            // console.log("Not connected"):
+            // *ERROR NOT CONNECTED*
         }
     }, [connected])
 

@@ -20,7 +20,7 @@ const SingleChoiceListQuestion: React.SFC<SingleChoiceListQuestionProps> = ({
     handleChoice,
     goBackOneStep,
 }) => {
-    //   console.log(answersArray);
+
     const { language } = useContext(LanguageContext)
 
     return (
