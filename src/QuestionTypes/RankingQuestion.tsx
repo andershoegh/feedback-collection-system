@@ -162,7 +162,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
     return (
         <>
             {currentStep !== renderOnStep ? null : (
-                <div className="w-4/5 h-screen relative">
+                <div className="w-4/5 h-screen relative flex items-center">
                     <div>
                         <BackButton
                             currentStep={currentStep}
@@ -172,7 +172,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                 }, 200)
                             }
                         />
-                        <div className="absolute top-32">
+                        <div className="">
                             <div className="text-3xl leading-10 font-medium">
                                 {question}
                             </div>

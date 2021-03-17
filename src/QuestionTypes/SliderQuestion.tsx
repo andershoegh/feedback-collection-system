@@ -184,13 +184,13 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
     return (
         <>
             {currentStep !== renderOnStep ? null : (
-                <div className="w-4/5 h-screen relative">
-                    <div>
+                <div className="w-4/5 h-screen relative flex items-center">
+                    <div className="w-full">
                         <BackButton
                             currentStep={currentStep}
                             onClick={() => goBackOneStep()}
                         />
-                        <div className="absolute top-32 w-full">
+                        <div className="w-full">
                             <div className="text-3xl leading-10 font-medium">
                                 {question}
                             </div>

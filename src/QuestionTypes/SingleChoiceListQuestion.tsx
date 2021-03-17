@@ -26,7 +26,7 @@ const SingleChoiceListQuestion: React.SFC<SingleChoiceListQuestionProps> = ({
     return (
         <>
             {currentStep !== renderOnStep ? null : (
-                <div className="w-4/5 relative h-screen">
+                <div className="w-4/5 relative h-screen flex items-center">
                     <BackButton
                         currentStep={currentStep}
                         onClick={() =>
@@ -35,8 +35,8 @@ const SingleChoiceListQuestion: React.SFC<SingleChoiceListQuestionProps> = ({
                             }, 200)
                         }
                     />
-                    <div className="absolute top-32">
-                        <div className="text-3xl leading-10 font-bold">
+                    <div className="">
+                        <div className="text-3xl leading-10 font-medium">
                             {question}
                         </div>
                         <div className="mt-2 text-gray-600">

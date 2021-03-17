@@ -102,7 +102,7 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
     return (
         <>
             {currentStep !== renderOnStep ? null : (
-                <div className="w-4/5 h-screen relative">
+                <div className="w-4/5 h-screen relative flex items-center">
                     <BackButton
                         currentStep={currentStep}
                         onClick={() =>
@@ -112,7 +112,7 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
                         }
                     />
 
-                    <div className="absolute top-32">
+                    <div className="">
                         <div className="text-3xl leading-10 font-medium">
                             {question}
                         </div>

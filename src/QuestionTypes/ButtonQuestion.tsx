@@ -22,22 +22,22 @@ const ButtonQuestion: React.SFC<{
     handleChoice,
     goBackOneStep,
 }) => {
-    const { language } = useContext(LanguageContext)
+    const { language } = useContext(LanguageContext);
     return (
         <>
             {currentStep !== renderOnStep ? null : (
-                <div className="w-4/5 h-screen relative">
+                <div className="w-4/5 h-screen relative flex items-center">
                     <div className="mb-10 mt-4">
                         <BackButton
                             currentStep={currentStep}
                             onClick={() =>
                                 setTimeout(() => {
-                                    goBackOneStep()
+                                    goBackOneStep();
                                 }, 200)
                             }
                         />
                     </div>
-                    <div className="absolute top-32">
+                    <div className="">
                         <div className="text-3xl leading-10 font-medium">
                             {question}
                         </div>
