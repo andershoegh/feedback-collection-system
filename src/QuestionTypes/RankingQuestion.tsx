@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState, useRef, useContext, useEffect } from 'react'
 import './RankingQuestion.css'
 import Arrows from '../Resources/ArrowsDownUp.png'
 import BackButton from '../BackButton'
@@ -10,7 +10,7 @@ export interface RankingQuestionProps {
     currentStep: number
     renderOnStep: number
     question: string
-    answersArray: string[]
+    answersArray: { answer: string; arrayPosition: number }[]
     handleChoice: (question: string, answer: string | number | string[]) => void
     goBackOneStep: () => void
 }
@@ -24,11 +24,12 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
         handleChoice,
         goBackOneStep,
     } = props
-    const [list, setList] = useState<string[]>(answersArray)
+    const [list, setList] = useState<string[]>([
+        ...answersArray.map((answer) => answer.answer),
+    ])
     const listRef = useRef<HTMLDivElement>(null)
-    const [activeItem, setActiveItem] = useState<HTMLDivElement | null>()
-    const [startElement, setStartElement] = useState<number>(0)
     const { language } = useContext(LanguageContext)
+    const [usingCustomKeys, setUsingCustomKeys] = useState<boolean>(false)
 
     const customKeys = useCustomKeys({
         swipeUp: 'w',
@@ -37,101 +38,32 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
         swipeRight: '',
     })
 
+    // handles input for changing ranking order
     useEffect(() => {
-        const updateListOrder = (
-            oldList: string[],
-            oldIndex: number,
-            newIndex: number
-        ) => {
-            if (newIndex < oldList.length && newIndex >= 0) {
-                // Saves the previous list order from listRef, item height plus margin, and animation duration in ms
-                const prevListArr = Array.from(listRef.current!.children)
-                const margin = window
-                    .getComputedStyle(listRef.current?.children[0]!)
-                    .marginBottom.slice(0, -2)
-                const itemHeight =
-                    listRef.current!.children[0].getBoundingClientRect()
-                        .height + parseInt(margin)
-                const animationDuration = 400
+        if (usingCustomKeys) {
+            console.log('Using custom keys')
 
-                console.log(margin)
-
-                // Moves the active item up or down one position and updates the list
-                oldList.splice(newIndex, 0, oldList.splice(oldIndex, 1)[0])
-
-                // Loops through to animate position change
-                prevListArr.forEach((c, prevIndex) => {
-                    const item = c as HTMLDivElement
-                    const newIndex = oldList.findIndex(
-                        (child) => child === item.innerText
-                    )
-
-                    if (newIndex !== prevIndex) {
-                        // Sets the new index position as startElement and removes wiggle animation to handle position change animation
-                        if (activeItem?.innerHTML === item.innerHTML) {
-                            setStartElement(newIndex)
-                            item.style.animation = ''
-                        }
-
-                        // If item moved, then places the item in its previous position before the browser draws the update
-                        requestAnimationFrame(() => {
-                            const yOffset =
-                                newIndex < prevIndex ? itemHeight : -itemHeight
-                            item.style.transform = `translate(0,${yOffset}px)`
-                            item.style.transition = 'transform 0s'
-
-                            // Then changes transform & transition that moves the item to its new position
-                            requestAnimationFrame(() => {
-                                item.style.transform = ''
-                                item.style.transition = `transform ${animationDuration}ms`
-                            })
-                        })
-                    }
-                })
-
-                // Waits for re-render position change animation to finish and reapplies wiggle animation to the active item
-                setTimeout(() => {
-                    activeItem!.style.animation = 'wiggle 2s infinite'
-                }, animationDuration)
-            }
-        }
-
-        const handleKeyPress = (e: KeyboardEvent) => {
-            if (currentStep === renderOnStep && activeItem) {
-                let activeItemIndex = list.findIndex(
-                    (item) => item === activeItem.innerText
-                )
-
-                switch (e.key) {
+            const handleSliderKeys = (event: KeyboardEvent) => {
+                switch (event.key) {
                     case 'w':
-                        updateListOrder(
-                            list,
-                            activeItemIndex,
-                            activeItemIndex - 1
-                        )
+                        console.log('w')
+
                         break
                     case 's':
-                        updateListOrder(
-                            list,
-                            activeItemIndex,
-                            activeItemIndex + 1
-                        )
+                        console.log('s')
+
                         break
-                    case 'Enter':
-                        if (activeItem === e.target) {
-                            activeItem.click()
-                        }
+                    default:
                         break
                 }
             }
+            document.addEventListener('keydown', handleSliderKeys)
+            return () => {
+                document.removeEventListener('keydown', handleSliderKeys)
+                console.log('Stopped using custom keys')
+            }
         }
-
-        document.addEventListener('keydown', handleKeyPress)
-
-        return () => {
-            document.removeEventListener('keydown', handleKeyPress)
-        }
-    }, [activeItem, list, setList, currentStep, renderOnStep])
+    }, [usingCustomKeys])
 
     return (
         <>
@@ -172,26 +104,19 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                     {list.map((item, index) => {
                                         return (
                                             <Touchless
-                                                key={item}
-                                                startElement={
-                                                    startElement === index
-                                                }
+                                                startElement={true}
                                                 className={
                                                     'shadow-inactive rounded-xl flex items-center bg-white p-4 py-3 mb-5 w-full border-4 border-transparent'
                                                 }
                                                 onClick={(e) => {
-                                                    const target = e.target as HTMLDivElement
-                                                    if (activeItem !== target) {
-                                                        target.style.animation =
-                                                            'wiggle 2s infinite'
+                                                    if (!usingCustomKeys) {
                                                         customKeys.initiate()
-                                                        setActiveItem(target)
-                                                        setStartElement(index)
+                                                        setUsingCustomKeys(true)
                                                     } else {
-                                                        target.style.animation =
-                                                            ''
                                                         customKeys.clear()
-                                                        setActiveItem(null)
+                                                        setUsingCustomKeys(
+                                                            false
+                                                        )
                                                     }
                                                 }}
                                             >
@@ -211,7 +136,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                             currentStep={currentStep}
                             onClick={() =>
                                 setTimeout(
-                                    () => handleChoice(question, list),
+                                    () => handleChoice(question, 'h'),
                                     200
                                 )
                             }

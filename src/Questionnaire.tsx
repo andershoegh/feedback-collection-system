@@ -146,14 +146,33 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     answersArray={
                         language === 'Danish'
                             ? [
-                                  'Gode parkeringsmuligheder',
-                                  'Stort udvalg af specialbutikker',
-                                  'Specielle arrangementer i centeret',
+                                  {
+                                      answer: 'Gode parkeringsmuligheder',
+                                      arrayPosition: 1,
+                                  },
+                                  {
+                                      answer: 'Stort udvalg af specialbutikker',
+                                      arrayPosition: 2,
+                                  },
+                                  {
+                                      answer:
+                                          'Specielle arrangementer i centeret',
+                                      arrayPosition: 3,
+                                  },
                               ]
                             : [
-                                  'Good parking options',
-                                  'A large selection of stores',
-                                  'Special events in the mall',
+                                  {
+                                      answer: 'Good parking options',
+                                      arrayPosition: 1,
+                                  },
+                                  {
+                                      answer: 'A large selection of stores',
+                                      arrayPosition: 2,
+                                  },
+                                  {
+                                      answer: 'Special events in the mall',
+                                      arrayPosition: 3,
+                                  },
                               ]
                     }
                 />
