@@ -1,17 +1,16 @@
-import React from 'react'
-import { MobileQR } from 'touchless-navigation'
-import DKFlag from './Resources/DKFlag'
-import GBFlag from './Resources/GBFlag'
+import React from 'react';
+import { MobileQR } from 'touchless-navigation';
+import DKFlag from './Resources/DKFlag';
+import GBFlag from './Resources/GBFlag';
 
 export interface WelcomePageProps {
-    currentStep: number
-    renderOnStep: number
-    startOnPhoneConnection: () => void
+    currentStep: number;
+    renderOnStep: number;
+    startOnPhoneConnection: () => void;
 }
 
 const WelcomePage: React.FC<WelcomePageProps> = (props) => {
-    const { currentStep, renderOnStep, startOnPhoneConnection } = props
-
+    const { currentStep, renderOnStep } = props;
     return (
         <>
             {currentStep !== renderOnStep ? null : (
@@ -27,8 +26,9 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                                     udfylde et kort spørgeskema
                                 </div>
                                 <div className="font-normal text-gray-600">
-                                    Scan QR koden med din telefon og følg
-                                    instruktionerne for at komme i gang
+                                    Scan QR koden med din telefon og åbn linket
+                                    for at begynde at styre siden med din
+                                    telefon.
                                 </div>
                             </div>
 
@@ -41,8 +41,9 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                                     answering a short questionnaire
                                 </div>
                                 <div className="font-normal text-gray-600">
-                                    Scan the QR code with your phone and follow
-                                    the instructions to get started
+                                    Scan the QR code with your phone and open
+                                    the link to start controlling the site with
+                                    your phone.
                                 </div>
                             </div>
                         </div>
@@ -57,7 +58,7 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                         </div>
                         <div>
                             <div
-                                onClick={startOnPhoneConnection}
+                                // onClick={startOnPhoneConnection}
                                 className={`${buttonStyle} w-72 h-72 text-center justify-center place-items-center flex mt-4`}
                             >
                                 <MobileQR />
@@ -67,10 +68,10 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                 </div>
             )}
         </>
-    )
-}
+    );
+};
 
-export default WelcomePage
+export default WelcomePage;
 
 const buttonStyle =
-    'shadow-inactive focus:shadow-focused focus:border-blue-500 border-4 border-transparent focus:outline-none rounded-xl active:scale-90 animate transition transform'
+    'shadow-inactive focus:shadow-focused focus:border-blue-500 border-4 border-transparent focus:outline-none rounded-xl active:scale-90 animate transition transform';
