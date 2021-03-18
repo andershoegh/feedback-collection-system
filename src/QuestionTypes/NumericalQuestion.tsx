@@ -1,21 +1,21 @@
-import { Backspace } from 'phosphor-react'
-import React, { useState, useContext } from 'react'
-import { Touchless } from 'touchless-navigation'
-import BackButton from '../BackButton'
-import NextButton from '../NextButton'
-import { LanguageContext } from '../QuestionSettings'
+import { Backspace } from 'phosphor-react';
+import React, { useState, useContext } from 'react';
+import { Touchless } from 'touchless-navigation';
+import BackButton from '../BackButton';
+import NextButton from '../NextButton';
+import { LanguageContext } from '../QuestionSettings';
 
 export interface NumericalQuestionProps {}
 
 const NumericalQuestion: React.SFC<{
-    currentStep: number
-    renderOnStep: number
-    question: string
-    handleChoice: (question: string, answer: string) => void
-    goBackOneStep: () => void
+    currentStep: number;
+    renderOnStep: number;
+    question: string;
+    handleChoice: (question: string, answer: string) => void;
+    goBackOneStep: () => void;
 }> = ({ currentStep, renderOnStep, question, handleChoice, goBackOneStep }) => {
-    const [amount, setAmount] = useState<string>('')
-    const { language } = useContext(LanguageContext)
+    const [amount, setAmount] = useState<string>('');
+    const { language } = useContext(LanguageContext);
 
     return (
         <>
@@ -25,7 +25,7 @@ const NumericalQuestion: React.SFC<{
                         currentStep={currentStep}
                         onClick={() =>
                             setTimeout(() => {
-                                goBackOneStep()
+                                goBackOneStep();
                             }, 200)
                         }
                     />
@@ -133,14 +133,14 @@ const NumericalQuestion: React.SFC<{
                         currentStep={currentStep}
                         onClick={() =>
                             setTimeout(() => {
-                                handleChoice(question, amount)
+                                handleChoice(question, amount);
                             }, 200)
                         }
                     />
                 </div>
             )}
         </>
-    )
-}
+    );
+};
 
-export default NumericalQuestion
+export default NumericalQuestion;

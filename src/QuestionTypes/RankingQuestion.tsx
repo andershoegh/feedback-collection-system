@@ -1,18 +1,21 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
-import './RankingQuestion.css'
-import Arrows from '../Resources/ArrowsDownUp.png'
-import BackButton from '../BackButton'
-import NextButton from '../NextButton'
-import { Touchless, useCustomKeys } from 'touchless-navigation'
-import { LanguageContext } from '../QuestionSettings'
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import './RankingQuestion.css';
+import Arrows from '../Resources/ArrowsDownUp.png';
+import BackButton from '../BackButton';
+import NextButton from '../NextButton';
+import { Touchless, useCustomKeys } from 'touchless-navigation';
+import { LanguageContext } from '../QuestionSettings';
 
 export interface RankingQuestionProps {
-    currentStep: number
-    renderOnStep: number
-    question: string
-    answersArray: string[]
-    handleChoice: (question: string, answer: string | number | string[]) => void
-    goBackOneStep: () => void
+    currentStep: number;
+    renderOnStep: number;
+    question: string;
+    answersArray: string[];
+    handleChoice: (
+        question: string,
+        answer: string | number | string[]
+    ) => void;
+    goBackOneStep: () => void;
 }
 
 const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
@@ -23,7 +26,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
         answersArray,
         handleChoice,
         goBackOneStep,
-    } = props
+    } = props;
     const [list, setList] = useState<string[]>(answersArray);
     const listRef = useRef<HTMLDivElement>(null);
     const [activeItem, setActiveItem] = useState<HTMLDivElement | null>();
@@ -37,13 +40,13 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
         swipeDown: 's',
         swipeLeft: '',
         swipeRight: '',
-    })
+    });
 
-    useEffect(()=>{
+    useEffect(() => {
         setList(answersArray);
-        // eslint-disable-next-line 
-    }, [ language ]);
-    
+        // eslint-disable-next-line
+    }, [language]);
+
     useEffect(() => {
         const updateListOrder = (
             oldList: string[],
@@ -52,25 +55,25 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
         ) => {
             if (newIndex < oldList.length && newIndex >= 0) {
                 // Saves the previous list order from listRef, item height plus margin, and animation duration in ms
-                setAnimatingPosition(true)
-                const prevListArr = Array.from(listRef.current!.children)
+                setAnimatingPosition(true);
+                const prevListArr = Array.from(listRef.current!.children);
                 const margin = window
                     .getComputedStyle(listRef.current?.children[0]!)
-                    .marginBottom.slice(0, -2)
+                    .marginBottom.slice(0, -2);
                 const itemHeight =
                     listRef.current!.children[0].getBoundingClientRect()
-                        .height + parseInt(margin)
+                        .height + parseInt(margin);
 
                 // Moves the active item up or down one position and updates the list
-                oldList.splice(newIndex, 0, oldList.splice(oldIndex, 1)[0])
+                oldList.splice(newIndex, 0, oldList.splice(oldIndex, 1)[0]);
 
                 // Loops through to animate position change
                 prevListArr.forEach((c, prevIndex) => {
-                    const item = c as HTMLDivElement
+                    const item = c as HTMLDivElement;
 
                     const newIndex = oldList.findIndex((child) => {
-                        return child.trim() === item.innerText.trim()
-                    })
+                        return child.trim() === item.innerText.trim();
+                    });
 
                     if (newIndex !== prevIndex) {
                         // Sets the new index position as startElement and removes wiggle animation to handle position change animation
@@ -78,39 +81,39 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                             activeItem?.innerHTML.trim() ===
                             item.innerHTML.trim()
                         ) {
-                            setStartElement(newIndex)
-                            item.style.animation = ''
+                            setStartElement(newIndex);
+                            item.style.animation = '';
                         }
 
                         // If item moved, then places the item in its previous position before the browser draws the update
                         requestAnimationFrame(() => {
                             const yOffset =
-                                newIndex < prevIndex ? itemHeight : -itemHeight
-                            item.style.transform = `translate(0,${yOffset}px)`
-                            item.style.transition = 'transform 0s'
+                                newIndex < prevIndex ? itemHeight : -itemHeight;
+                            item.style.transform = `translate(0,${yOffset}px)`;
+                            item.style.transition = 'transform 0s';
 
                             // Then changes transform & transition that moves the item to its new position
                             requestAnimationFrame(() => {
-                                item.style.transform = ''
-                                item.style.transition = `transform ${animationDuration}ms`
-                            })
-                        })
+                                item.style.transform = '';
+                                item.style.transition = `transform ${animationDuration}ms`;
+                            });
+                        });
                     }
-                })
+                });
 
                 // Waits for re-render position change animation to finish and reapplies wiggle animation to the active item
                 setTimeout(() => {
-                    activeItem!.style.transition ='';
-                    activeItem!.style.animation = 'wiggle 2s infinite'
-                }, animationDuration)
+                    activeItem!.style.transition = '';
+                    activeItem!.style.animation = 'wiggle 2s infinite';
+                }, animationDuration);
             }
-        }
+        };
 
         const handleKeyPress = (e: KeyboardEvent) => {
             if (currentStep === renderOnStep && activeItem) {
                 let activeItemIndex = list.findIndex(
                     (item) => item.trim() === activeItem.innerText.trim()
-                )
+                );
 
                 switch (e.key) {
                     case 'w':
@@ -119,42 +122,42 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                 list,
                                 activeItemIndex,
                                 activeItemIndex - 1
-                            )
+                            );
                             setTimeout(() => {
-                                setAnimatingPosition(false)
-                            }, animationDuration)
+                                setAnimatingPosition(false);
+                            }, animationDuration);
                         } else {
                             //ERROR TRYING TO MOVE BEFORE ANIIMATION
                         }
-                        break
+                        break;
                     case 's':
                         if (!animatingPosition) {
                             updateListOrder(
                                 list,
                                 activeItemIndex,
                                 activeItemIndex + 1
-                            )
+                            );
                             setTimeout(() => {
-                                setAnimatingPosition(false)
-                            }, animationDuration)
+                                setAnimatingPosition(false);
+                            }, animationDuration);
                         } else {
                             //ERROR TRYING TO MOVE BEFORE ANIIMATION
                         }
-                        break
+                        break;
                     case 'Enter':
                         if (activeItem === e.target) {
-                            activeItem.click()
+                            activeItem.click();
                         }
-                        break
+                        break;
                 }
             }
-        }
+        };
 
         document.addEventListener('keydown', handleKeyPress);
 
         return () => {
             document.removeEventListener('keydown', handleKeyPress);
-        }
+        };
     }, [
         activeItem,
         list,
@@ -162,7 +165,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
         currentStep,
         renderOnStep,
         animatingPosition,
-    ])
+    ]);
 
     return (
         <>
@@ -173,7 +176,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                             currentStep={currentStep}
                             onClick={() =>
                                 setTimeout(() => {
-                                    goBackOneStep()
+                                    goBackOneStep();
                                 }, 200)
                             }
                         />
@@ -181,17 +184,17 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                             <div className="text-3xl leading-10 font-medium">
                                 {question}
                             </div>
-                            <div className="font-normal text-gray-600 mt-2">
+                            <div className="font-normal text-gray-600 mt-2 mb-10">
                                 {language.trim() === 'Danish'.trim()
                                     ? 'Arrangér svarene i rækkefølge hvor 1 er vigtigst'
                                     : 'Arrange the answers in order where 1 is the most important'}
                             </div>
                             <div className="font-bold text-gray-600 mt-4">
                                 {language.trim() === 'Danish'.trim()
-                                    ? 'Tryk for at vælge. Tryk igen for at navigere videre.'
-                                    : 'Tap to choose. Tap again to navigate again.'}
+                                    ? 'Tryk for at justere rækkefølge. Tryk igen for at navigere videre.'
+                                    : 'Tap to adjust order. Tap again to navigate again.'}
                             </div>
-                            <div className="flex row-auto text-lg font-normal mt-10 w-full">
+                            <div className="flex row-auto text-lg font-normal mt-4 w-full">
                                 <div className="flex flex-col justify-between mr-6 py-5">
                                     {list.map((item, index) => {
                                         return (
@@ -201,7 +204,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                             >
                                                 {index + 1}
                                             </div>
-                                        )
+                                        );
                                     })}
                                 </div>
                                 <div ref={listRef} className="w-full">
@@ -216,15 +219,17 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                                     'shadow-inactive rounded-xl flex items-center bg-white p-4 py-3 mb-5 w-full border-4 border-transparent'
                                                 }
                                                 onClick={(e) => {
-                                                    const target = e.target as HTMLDivElement
+                                                    const target = e.target as HTMLDivElement;
                                                     if (activeItem !== target) {
-                                                        target.style.animation = 'wiggle 2s infinite';
+                                                        target.style.animation =
+                                                            'wiggle 2s infinite';
                                                         customKeys.initiate();
 
                                                         setActiveItem(target);
                                                         setStartElement(index);
                                                     } else {
-                                                        target.style.animation = '';
+                                                        target.style.animation =
+                                                            '';
                                                         customKeys.clear();
                                                         setActiveItem(null);
                                                     }
@@ -237,7 +242,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                                 />
                                                 <span>{item}</span>
                                             </Touchless>
-                                        )
+                                        );
                                     })}
                                 </div>
                             </div>
@@ -255,7 +260,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                 </div>
             )}
         </>
-    )
-}
+    );
+};
 
-export default RankingQuestion
+export default RankingQuestion;
