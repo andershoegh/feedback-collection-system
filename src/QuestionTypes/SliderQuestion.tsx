@@ -162,11 +162,11 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
             const handleSliderKeys = (event: KeyboardEvent) => {
                 switch (event.key) {
                     case 'a':
-                        setSelectedValue((oldValue) => oldValue - 2.5);
+                        setSelectedValue((oldValue) => oldValue - 10);
                         updateSelected(selectedValue - 2.5);
                         break;
                     case 'd':
-                        setSelectedValue((oldValue) => oldValue + 2.5);
+                        setSelectedValue((oldValue) => oldValue + 10);
                         updateSelected(selectedValue + 2.5);
                         break;
                     default:
