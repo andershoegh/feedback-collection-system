@@ -92,8 +92,8 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     secondButtonText={language === 'Danish' ? 'Nej' : 'No'}
                     question={
                         language === 'Danish'
-                            ? 'Bekymrer du dig over hvor tæt folk kommer på dig når du handler?'
-                            : 'Do you worry about how close people get to you while you are shopping?'
+                            ? 'Sprittede du dine hænder da du gik ind?'
+                            : 'Did you sanitize or wash your hands when you entered the building?'
                     }
                 />
 
@@ -104,20 +104,20 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     renderOnStep={2}
                     question={
                         language === 'Danish'
-                            ? 'Hvilke af følgende udsagn er du enig i?'
-                            : 'Which of the following statements do you agree with?'
+                            ? 'Hvilke af følgende situationer har du prøvet under en indkøbstur?'
+                            : 'Which of the following situations have you tried on a shopping trip?'
                     }
                     answersArray={
                         language === 'Danish'
                             ? [
-                                  'Jeg synes der er god plads i storcenteret',
-                                  'Jeg synes folk holder god afstand',
-                                  'Det er nemt at vide om der er for mange i én butik inden jeg går ind',
+                                  'En eller flere personer er kommet for tæt på mig',
+                                  'Jeg er blevet gjort opmmærksom på at holde mere afstand til andre',
+                                  'Jeg har set en eller flere personer glemme at spritte hænder ved indgangen',
                               ]
                             : [
-                                  'I think there is sufficient space in the mall',
-                                  'I think people are good at social distancing',
-                                  'It was easy to find out how many were already in the store before i entered',
+                                  'One or more people have gotten close to me',
+                                  'I have been asked to keep distance',
+                                  'I have seen one or more people forgetting to sanitize their hands',
                               ]
                     }
                 />
@@ -129,8 +129,8 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     renderOnStep={3}
                     question={
                         language === 'Danish'
-                            ? 'Hvor ofte besøger du storcenteret hver måned?'
-                            : 'How often do you visit the mall each month?'
+                            ? 'Hvor mange gange har du besøgt storcenteret den sidste måned?'
+                            : 'How many times have you visited the mall the last month?'
                     }
                 />
 
@@ -141,20 +141,20 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     renderOnStep={4}
                     question={
                         language === 'Danish'
-                            ? 'Hvad er vigtigst for dig?'
-                            : 'What is the most important to you?'
+                            ? 'Hvilke initiativer er vigtigst for at skabe tryghed for dig når du shopper?'
+                            : 'Which initiatives er most important to create security for you when you are shopping?'
                     }
                     answersArray={
                         language === 'Danish'
                             ? [
-                                  'Gode parkeringsmuligheder',
-                                  'Stort udvalg af specialbutikker',
-                                  'Specielle arrangementer i centeret',
+                                  'Mange steder at spritte hænder',
+                                  'Skiltning som hjælper med hvilken side af en gang man skal gå i',
+                                  'Personale som hjælper folk med at overholde COVID-19 retningslinjer',
                               ]
                             : [
-                                  'Good parking options',
-                                  'A large selection of stores',
-                                  'Special events in the mall',
+                                  'Many places to sanitize your hands',
+                                  'Signs to help with which side of a hallway you should walk on',
+                                  'Staff to help people to comply with COVID-19 guidelines',
                               ]
                     }
                 />
@@ -166,13 +166,23 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     renderOnStep={5}
                     question={
                         language === 'Danish'
-                            ? 'Har du oplevet at folk kommer for tæt på imens du er i centeret?'
-                            : 'Have you experienced people coming too close to you while in the mall?'
+                            ? 'Har du prøvet at bede andre om at holde bedre afstand?'
+                            : 'Have you tried asking others to keep a better social distance?'
                     }
                     answersArray={
                         language === 'Danish'
-                            ? ['Ja', 'Nej', 'Det er ligegyldigt for mig']
-                            : ['Yes', 'No', 'I do not care about that']
+                            ? [
+                                  'Ja',
+                                  'Nej',
+                                  'Det har jeg ikke haft behov for',
+                                  'Det har jeg ikke lyst til',
+                              ]
+                            : [
+                                  'Yes',
+                                  'No',
+                                  'I have not had the need to do it',
+                                  'I do not feel like doing that',
+                              ]
                     }
                 />
 
@@ -183,8 +193,8 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     renderOnStep={6}
                     question={
                         language === 'Danish'
-                            ? 'Hvor tilfreds var du med din shoppingtur i dag?'
-                            : 'How happy were you with your shopping trip today?'
+                            ? 'Hvor tilfreds har du været med andres overholdelse af COVID-19 retningslinjer under din shopping i dag?'
+                            : 'How satisfied have you been with others people compliance with COVID-19 guidelines during you shopping today??'
                     }
                     minLabel={'🙁'}
                     maxLabel={'😄'}
