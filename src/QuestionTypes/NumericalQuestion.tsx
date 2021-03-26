@@ -1,35 +1,35 @@
-import { Backspace } from 'phosphor-react'
-import React, { useState, useContext } from 'react'
-import { Touchless } from 'touchless-navigation'
-import BackButton from '../BackButton'
-import NextButton from '../NextButton'
-import { LanguageContext } from '../QuestionSettings'
+import { Backspace } from 'phosphor-react';
+import React, { useState, useContext } from 'react';
+import { Touchless } from 'touchless-navigation';
+import BackButton from '../BackButton';
+import NextButton from '../NextButton';
+import { LanguageContext } from '../QuestionSettings';
 
 export interface NumericalQuestionProps {}
 
 const NumericalQuestion: React.SFC<{
-    currentStep: number
-    renderOnStep: number
-    question: string
-    handleChoice: (question: string, answer: string) => void
-    goBackOneStep: () => void
+    currentStep: number;
+    renderOnStep: number;
+    question: string;
+    handleChoice: (question: string, answer: string) => void;
+    goBackOneStep: () => void;
 }> = ({ currentStep, renderOnStep, question, handleChoice, goBackOneStep }) => {
-    const [amount, setAmount] = useState<string>('')
-    const { language } = useContext(LanguageContext)
+    const [amount, setAmount] = useState<string>('');
+    const { language } = useContext(LanguageContext);
 
     return (
         <>
             {currentStep !== renderOnStep ? null : (
-                <div className="w-4/5 h-screen relative">
+                <div className="w-4/5 h-screen relative flex items-center justify-center">
                     <BackButton
                         currentStep={currentStep}
                         onClick={() =>
                             setTimeout(() => {
-                                goBackOneStep()
+                                goBackOneStep();
                             }, 200)
                         }
                     />
-                    <div className="absolute top-32">
+                    <div className="">
                         <div className="text-3xl leading-10 font-medium">
                             {question}
                         </div>
@@ -133,14 +133,14 @@ const NumericalQuestion: React.SFC<{
                         currentStep={currentStep}
                         onClick={() =>
                             setTimeout(() => {
-                                handleChoice(question, amount)
+                                handleChoice(question, amount);
                             }, 200)
                         }
                     />
                 </div>
             )}
         </>
-    )
-}
+    );
+};
 
-export default NumericalQuestion
+export default NumericalQuestion;

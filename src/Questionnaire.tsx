@@ -7,7 +7,6 @@ import MultiChoiceListQuestion from './QuestionTypes/MultiChoiceListQuestion'
 import Progressbar from './Progressbar'
 import FinishedPage from './QuestionTypes/FinishedPage'
 import { LanguageContext, maxQuestions } from './QuestionSettings'
-import { useFirestore, fb } from './Firebase/firebase'
 import WelcomePage from './WelcomePage'
 import ButtonQuestion from './QuestionTypes/ButtonQuestion'
 import SwitchLanguageButton from './SwitchLanguageButton'
@@ -29,11 +28,9 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
         if (connected === true) {
             setCurrentStep(1)
         } else {
-            // console.log("Not connected"):
+            // *ERROR NOT CONNECTED*
         }
     }, [connected])
-
-    const fs = useFirestore()
 
     useEffect(() => {
         goToStart.current()
@@ -56,21 +53,9 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
     // Handles full completion of the questionnaire and resetting for a new participant
     const logAndReset = () => {
         // Sends questionnaireAnswers to db and then resets
-        fs.collection('questionnaire')
-            .doc()
-            .set({
-                questionnaireAnswers,
-                created: fb.FieldValue.serverTimestamp(),
-            })
-            .then(() => console.log('Succesfully added answers to DB'))
-            .catch((err: string) =>
-                console.log('There was an error saving to firestore: ' + err)
-            )
-            .then(() => {
-                setCurrentStep(0)
-                window.location.reload()
-            })
-            .catch((err) => console.log(err))
+
+        setCurrentStep(0)
+        window.location.reload()
     }
 
     const handleGoingBackOneStep = () => {
@@ -231,8 +216,8 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                     }
                     subText={
                         language === 'Danish'
-                            ? 'Hvis du vil give os din feedback kan du gå til ....'
-                            : 'If you want to provide us with your feedback - please go to .....'
+                            ? 'Hjælp os ved at svare på nogle få spørgsmål - klik på linket herunder:'
+                            : 'Help us by answering a few questions - click the link below:'
                     }
                     goBackOneStep={handleGoingBackOneStep}
                     logAndReset={logAndReset}
