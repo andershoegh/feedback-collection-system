@@ -264,13 +264,23 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                         />
                                     </Touchless>
                                 </div>
-
                                 <span
                                     ref={labelsRef}
-                                    className="flex justify-between font-normal text-2xl mt-6 text-blue-500 mx-2"
+                                    className="flex justify-between font-normal text-4xl mt-6 px-6 text-blue-500 mx-2"
                                 >
                                     {setIntervalLabels()}
                                 </span>
+                                {language === 'Danish' ? (
+                                    <div className="flex  justify-between mt-3 font-medium text-gray-700">
+                                        <span>Meget utilfreds</span>
+                                        <span>Meget tilfreds</span>
+                                    </div>
+                                ) : (
+                                    <div className="flex  justify-between mt-3 font-medium text-gray-700">
+                                        <span>Very unsatisfied</span>
+                                        <span>Very satisfied</span>
+                                    </div>
+                                )}
                             </div>
                         </div>
 

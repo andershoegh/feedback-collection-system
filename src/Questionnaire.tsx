@@ -1,40 +1,41 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import SliderQuestion from './QuestionTypes/SliderQuestion'
-import RankingQuestion from './QuestionTypes/RankingQuestion'
-import NumericalQuestion from './QuestionTypes/NumericalQuestion'
-import SingleChoiceListQuestion from './QuestionTypes/SingleChoiceListQuestion'
-import MultiChoiceListQuestion from './QuestionTypes/MultiChoiceListQuestion'
-import Progressbar from './Progressbar'
-import FinishedPage from './QuestionTypes/FinishedPage'
-import { LanguageContext, maxQuestions } from './QuestionSettings'
-import WelcomePage from './WelcomePage'
-import ButtonQuestion from './QuestionTypes/ButtonQuestion'
-import SwitchLanguageButton from './SwitchLanguageButton'
-import { useConnectionChange, useGoToStartElement } from 'touchless-navigation'
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import SliderQuestion from './QuestionTypes/SliderQuestion';
+import RankingQuestion from './QuestionTypes/RankingQuestion';
+import NumericalQuestion from './QuestionTypes/NumericalQuestion';
+import SingleChoiceListQuestion from './QuestionTypes/SingleChoiceListQuestion';
+import MultiChoiceListQuestion from './QuestionTypes/MultiChoiceListQuestion';
+import Progressbar from './Progressbar';
+import FinishedPage from './QuestionTypes/FinishedPage';
+import { LanguageContext, maxQuestions } from './QuestionSettings';
+import WelcomePage from './WelcomePage';
+import ButtonQuestion from './QuestionTypes/ButtonQuestion';
+import SwitchLanguageButton from './SwitchLanguageButton';
+import { useConnectionChange, useGoToStartElement } from 'touchless-navigation';
 
 export interface QuestionnaireProps {}
 
 const Questionnaire: React.SFC<QuestionnaireProps> = () => {
-    const [currentStep, setCurrentStep] = useState<number>(0)
+    const [currentStep, setCurrentStep] = useState<number>(0);
     const [questionnaireAnswers, setQuestionnaireAnswers] = useState<
         { question: string; answer: string | number | string[] }[]
-    >([])
+    >([]);
 
-    const { language } = useContext(LanguageContext)
-    const connected = useConnectionChange()
-    const goToStart = useRef(useGoToStartElement())
+    const { language } = useContext(LanguageContext);
+    const connected = useConnectionChange();
+    const goToStart = useRef(useGoToStartElement());
 
     useEffect(() => {
         if (connected === true) {
-            setCurrentStep(1)
+            setCurrentStep(1);
         } else {
             // *ERROR NOT CONNECTED*
+            console.log('Error: Not connected');
         }
-    }, [connected])
+    }, [connected]);
 
     useEffect(() => {
-        goToStart.current()
-    }, [currentStep])
+        goToStart.current();
+    }, [currentStep]);
 
     // Handles each answer from a question and puts it into the questionnaireAnswers state
     // array and advances the questionnaire to the next question
@@ -42,32 +43,32 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
         question: string,
         answer: string | number | string[]
     ) => {
-        const newAnswer = { question, answer }
-        const newQuestionnaireEntry = [...questionnaireAnswers, newAnswer]
-        setQuestionnaireAnswers(newQuestionnaireEntry)
+        const newAnswer = { question, answer };
+        const newQuestionnaireEntry = [...questionnaireAnswers, newAnswer];
+        setQuestionnaireAnswers(newQuestionnaireEntry);
         if (currentStep < maxQuestions) {
-            setCurrentStep(currentStep + 1)
+            setCurrentStep(currentStep + 1);
         }
-    }
+    };
 
     // Handles full completion of the questionnaire and resetting for a new participant
     const logAndReset = () => {
         // Sends questionnaireAnswers to db and then resets
 
-        setCurrentStep(0)
-        window.location.reload()
-    }
+        setCurrentStep(0);
+        window.location.reload();
+    };
 
     const handleGoingBackOneStep = () => {
         // Remove latest entry in questionnaireanswers array
-        questionnaireAnswers.pop()
+        questionnaireAnswers.pop();
         // Set currentstep to previous step
-        setCurrentStep(currentStep - 1)
-    }
+        setCurrentStep(currentStep - 1);
+    };
 
     const startOnPhoneConnection = () => {
-        setCurrentStep(1)
-    }
+        setCurrentStep(1);
+    };
 
     return (
         <div className="w-full relative">
@@ -229,7 +230,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                 />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Questionnaire
+export default Questionnaire;
