@@ -12,9 +12,12 @@ import ButtonQuestion from './QuestionTypes/ButtonQuestion';
 import SwitchLanguageButton from './SwitchLanguageButton';
 import { useConnectionChange, useGoToStartElement } from 'touchless-navigation';
 
-export interface QuestionnaireProps {}
+export interface QuestionnaireProps {
+    setInteractionSelected: CallableFunction;
+}
 
-const Questionnaire: React.SFC<QuestionnaireProps> = () => {
+const Questionnaire: React.SFC<QuestionnaireProps> = (props) => {
+    const { setInteractionSelected } = props;
     const [currentStep, setCurrentStep] = useState<number>(0);
     const [questionnaireAnswers, setQuestionnaireAnswers] = useState<
         { question: string; answer: string | number | string[] }[]
@@ -27,11 +30,12 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
     useEffect(() => {
         if (connected === true) {
             setCurrentStep(1);
+            setInteractionSelected('mobile');
         } else {
             // *ERROR NOT CONNECTED*
             console.log('Error: Not connected');
         }
-    }, [connected]);
+    }, [connected, setInteractionSelected]);
 
     useEffect(() => {
         goToStart.current();
