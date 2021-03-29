@@ -117,13 +117,13 @@ const Questionnaire: React.SFC<QuestionnaireProps> = (props) => {
                                   'En eller flere personer er kommet for tæt på mig',
                                   'Jeg er blevet gjort opmmærksom på at holde mere afstand til andre',
                                   'Jeg har set en eller flere personer glemme at spritte hænder ved indgangen',
-                                  'Ingen af de ovenstående'
+                                  'Ingen af de ovenstående',
                               ]
                             : [
                                   'One or more people have gotten close to me',
                                   'I have been asked to keep distance',
                                   'I have seen one or more people forgetting to sanitize their hands',
-                                  'None of the above'
+                                  'None of the above',
                               ]
                     }
                 />
@@ -135,8 +135,8 @@ const Questionnaire: React.SFC<QuestionnaireProps> = (props) => {
                     renderOnStep={3}
                     question={
                         language === 'Danish'
-                            ? 'Hvor mange gange har du besøgt storcenteret den sidste måned?'
-                            : 'How many times have you visited the mall the last month?'
+                            ? 'Hvor mange andre personer handler du med i dag?'
+                            : 'How many other people are you shopping with today?'
                     }
                 />
 
