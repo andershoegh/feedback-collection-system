@@ -113,11 +113,13 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                                   'En eller flere personer er kommet for tæt på mig',
                                   'Jeg er blevet gjort opmmærksom på at holde mere afstand til andre',
                                   'Jeg har set en eller flere personer glemme at spritte hænder ved indgangen',
+                                  'Ingen af de ovenstående'
                               ]
                             : [
                                   'One or more people have gotten close to me',
                                   'I have been asked to keep distance',
                                   'I have seen one or more people forgetting to sanitize their hands',
+                                  'None of the above'
                               ]
                     }
                 />
