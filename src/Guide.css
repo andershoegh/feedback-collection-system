@@ -1,0 +1,170 @@
+:root {
+    --frame-color: rgb(1, 11, 25);
+    --screen-color: rgb(51, 65, 85);
+}
+
+/* 
+PHONE STYLING 
+ */
+
+.phone {
+    width: 90%;
+    height: 80%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    background: var(--screen-color);
+    border-style: solid;
+    border-color: var(--frame-color);
+    border-width: 10px 5px;
+    border-radius: 7%;
+    transform: translate(-60%);
+    overflow: hidden;
+}
+
+.phone::before {
+    content: '';
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    width: 80%;
+    height: 80%;
+    background: rgb(161, 171, 185);
+    border-radius: 4px;
+    transform: translate(-50%);
+}
+
+.phone::after {
+    content: '';
+    position: absolute;
+    top: -0.8rem;
+    left: 50%;
+    width: 30px;
+    height: 20px;
+    transform: translate(-50%);
+    border-radius: 20px;
+    background: var(--frame-color);
+}
+
+/* 
+DISPLAY STYLING 
+ */
+
+.display {
+    width: 100%;
+    height: 80%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    background: var(--screen-color);
+    border-style: solid;
+    border-color: var(--frame-color);
+    border-width: 10px 5px;
+    border-radius: 4px;
+    transform: translate(-50%);
+    overflow: hidden;
+}
+
+.display::before {
+    content: '';
+    width: 140%;
+    height: 100%;
+    background: rgba(145, 145, 145, 0.08);
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotateZ(-30deg) translate(-2rem, -10rem);
+}
+
+.display::after {
+    content: '';
+    width: 140%;
+    height: 2%;
+    background: rgba(145, 145, 145, 0.08);
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotateZ(-30deg) translate(-4rem, 1.2rem);
+}
+
+.display-tap {
+    transform: translate(-80%) rotateY(40deg) skewY(-20deg) scale(0.85);
+}
+
+.display-tap::after {
+    transform: rotateZ(-30deg) translate(-4rem, 2.7rem);
+}
+
+/* 
+ANIMATION 
+ */
+
+#mobile-swipe {
+    animation: swipeAnimation 8s infinite;
+}
+
+#mobile-tap {
+    animation: tapMobileAnimation 8s infinite;
+}
+
+#gesture-swipe {
+    animation: swipeAnimation 8s infinite;
+}
+
+#gesture-tap {
+    transform: scaleX(-1) rotateZ(90deg);
+    animation: tapGestureAnimation 8s infinite;
+}
+
+@keyframes swipeAnimation {
+    0% {
+        transform: translateX(0) scale(1);
+    }
+    5% {
+        transform: translateX(-0.6rem) translateY(-1rem) scale(0.9)
+            rotateZ(-15deg) rotateX(15deg);
+    }
+    12.5% {
+        transform: translateX(2rem) translateY(-1rem) scale(0.95) rotateZ(8deg)
+            rotateX(35deg);
+    }
+    20% {
+        transform: translateX(0) translateY(-1rem) scale(0.95) rotateZ(-5deg)
+            rotateX(35deg);
+    }
+    25% {
+        transform: translateX(0) translateY(-3rem) scale(0.95) rotateZ(-5deg)
+            rotateX(35deg);
+    }
+    35% {
+        transform: translateX(0) translateY(1rem) scale(0.95) rotateZ(-5deg)
+            rotateX(35deg);
+    }
+    45% {
+        transform: translateX(0) translateY(0) rotateZ(0deg) rotateX(0);
+    }
+}
+
+@keyframes tapMobileAnimation {
+    44% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-2rem) scale(0.9) rotateX(25deg);
+    }
+    60% {
+        transform: translateY(0) scale(1) rotateX(0);
+    }
+}
+
+@keyframes tapGestureAnimation {
+    44% {
+        transform: scaleX(-1) rotateZ(90deg) translateY(0);
+    }
+    50% {
+        transform: scaleX(-1) rotateZ(90deg) translateY(-2rem);
+    }
+    60% {
+        transform: scaleX(-1) rotateZ(90deg) translateY(0);
+    }
+}
