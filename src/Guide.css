@@ -53,6 +53,8 @@ DISPLAY STYLING
 .display {
     width: 100%;
     height: 80%;
+    max-width: 300px;
+    max-height: 240px;
     position: absolute;
     top: 0;
     left: 50%;
@@ -61,7 +63,7 @@ DISPLAY STYLING
     border-color: var(--frame-color);
     border-width: 10px 5px;
     border-radius: 4px;
-    transform: translate(-50%);
+    transform: translate(-80%) rotateY(40deg) skewY(-20deg);
     overflow: hidden;
 }
 
@@ -86,18 +88,22 @@ DISPLAY STYLING
     left: 0;
     transform: rotateZ(-30deg) translate(-4rem, 1.2rem);
 }
-
-.display-tap {
+/* .display-tap {
     transform: translate(-80%) rotateY(40deg) skewY(-20deg) scale(0.85);
 }
 
 .display-tap::after {
     transform: rotateZ(-30deg) translate(-4rem, 2.7rem);
-}
+} */
 
 /* 
 ANIMATION 
  */
+
+.hand {
+    max-width: 140px;
+    max-height: 180px;
+}
 
 #mobile-swipe {
     animation: swipeAnimation 8s infinite;
@@ -108,6 +114,7 @@ ANIMATION
 }
 
 #gesture-swipe {
+    transform: scaleX(-1) rotateZ(90deg);
     animation: swipeAnimation 8s infinite;
 }
 
@@ -116,32 +123,67 @@ ANIMATION
     animation: tapGestureAnimation 8s infinite;
 }
 
+.gesture-cursor {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+}
+.navigation-cursor {
+    animation: swipeCursorAnimation 8s infinite;
+}
+.tap-cursor {
+    box-shadow: inset 0 0 0 0 rgb(59, 130, 246);
+    animation: tapCursorAnimation 8s infinite;
+}
+
+/* matrix( scaleX(), skewY(), skewX(), scaleY(), translateX(), translateY() ) */
+
 @keyframes swipeAnimation {
     0% {
-        transform: translateX(0) scale(1);
+        transform: matrix(-1, 0, 0, 1, 0, 0) rotateZ(90deg);
     }
     5% {
-        transform: translateX(-0.6rem) translateY(-1rem) scale(0.9)
-            rotateZ(-15deg) rotateX(15deg);
+        transform: matrix(-1, 0, 0, 1, -10, -16) rotateZ(90deg);
     }
     12.5% {
-        transform: translateX(2rem) translateY(-1rem) scale(0.95) rotateZ(8deg)
-            rotateX(35deg);
+        transform: matrix(-0.9, 0, 0, 0.9, 0, -46) rotateZ(90deg);
     }
     20% {
-        transform: translateX(0) translateY(-1rem) scale(0.95) rotateZ(-5deg)
-            rotateX(35deg);
+        transform: matrix(-1, 0, 0, 1, -10, -16) rotateZ(90deg);
     }
     25% {
-        transform: translateX(0) translateY(-3rem) scale(0.95) rotateZ(-5deg)
-            rotateX(35deg);
+        transform: matrix(-1, 0, 0, 1, -10, -48) rotateZ(90deg);
     }
     35% {
-        transform: translateX(0) translateY(1rem) scale(0.95) rotateZ(-5deg)
-            rotateX(35deg);
+        transform: matrix(-1, 0, 0, 1, -10, 16) rotateZ(90deg);
     }
     45% {
-        transform: translateX(0) translateY(0) rotateZ(0deg) rotateX(0);
+        transform: matrix(-1, 0, 0, 1, 0, 0) rotateZ(90deg);
+    }
+}
+
+@keyframes swipeCursorAnimation {
+    0% {
+        transform: translate(0, 0);
+    }
+    5% {
+        transform: translate(-0.6rem, -1rem);
+    }
+    12.5% {
+        transform: translate(2rem, -1rem);
+    }
+    20% {
+        transform: translate(0, -1rem);
+    }
+    25% {
+        transform: translate(0, -3rem);
+    }
+    35% {
+        transform: translate(0, 1rem);
+    }
+    45% {
+        transform: translate(0, 0);
     }
 }
 
@@ -168,3 +210,52 @@ ANIMATION
         transform: scaleX(-1) rotateZ(90deg) translateY(0);
     }
 }
+
+@keyframes tapCursorAnimation {
+    44% {
+        box-shadow: inset 0 0 0 0 rgb(59, 130, 246);
+    }
+    48% {
+        transform: scale(1);
+        box-shadow: inset 0 0 0 20px rgb(59, 130, 246);
+        border-color: rgb(59, 130, 246);
+    }
+    50% {
+        transform: scale(0.9);
+        box-shadow: inset 0 0 0 20px rgb(88, 159, 255);
+        border-color: rgb(88, 159, 255);
+    }
+    52% {
+        transform: scale(1);
+        box-shadow: inset 0 0 0 20px rgb(59, 130, 246);
+        border-color: rgb(59, 130, 246);
+    }
+    60% {
+        transform: scale(1);
+        box-shadow: inset 0 0 0 0 rgb(59, 130, 246);
+    }
+}
+
+/* @keyframes swipeAnimation {
+    0% {
+        transform: translate(0, 0) scaleX(-1) rotateZ(90deg);
+    }
+    5% {
+        transform: translate(-0.6rem, -1rem) scaleX(-1) rotateZ(90deg);
+    }
+    12.5% {
+        transform: translate(2rem, -1rem) scaleX(-1) rotateZ(90deg);
+    }
+    20% {
+        transform: translate(0, -1rem) scaleX(-1) rotateZ(90deg);
+    }
+    25% {
+        transform: translate(0, -3rem) scaleX(-1) rotateZ(90deg);
+    }
+    35% {
+        transform: translate(0, 1rem) scaleX(-1) rotateZ(90deg);
+    }
+    45% {
+        transform: translate(0, 0) scaleX(-1) rotateZ(90deg);
+    }
+} */

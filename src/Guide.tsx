@@ -25,6 +25,7 @@ const Guide: React.SFC<GuideProps> = (props) => {
                             <div className="phone"></div>
                             <img
                                 src={handFill}
+                                className="hand"
                                 alt="mobile swipe tutorial"
                                 id="mobile-swipe"
                             />
@@ -41,6 +42,7 @@ const Guide: React.SFC<GuideProps> = (props) => {
                             <div className="phone"></div>
                             <img
                                 src={handFill}
+                                className="hand"
                                 alt="mobile tap tutorial"
                                 id="mobile-tap"
                             />
@@ -58,11 +60,13 @@ const Guide: React.SFC<GuideProps> = (props) => {
                 <>
                     {/* GESTURE SWIPE  */}
                     <div className="flex flex-col items-center mb-36">
-                        <div className="flex justify-center items-center relative h-64 w-3/5">
-                            <div className="display"></div>
+                        <div className="flex justify-end items-center relative h-64 w-3/5">
+                            <div className="display">
+                                <div className="gesture-cursor navigation-cursor w-8 h-8 border-blue-500 border-4"></div>
+                            </div>
                             <img
                                 src={handFill}
-                                className="w-2/5 pt-11"
+                                className="w-2/5 pt-11 hand"
                                 alt="gesture navigate tutorial"
                                 id="gesture-swipe"
                             />
@@ -75,11 +79,13 @@ const Guide: React.SFC<GuideProps> = (props) => {
                     </div>
                     {/* GESTURE TAP  */}
                     <div className="flex flex-col items-center">
-                        <div className="flex justify-end items-center relative h-72 w-3/5">
-                            <div className="display display-tap"></div>
+                        <div className="flex justify-end items-center relative h-64 w-3/5">
+                            <div className="display">
+                                <div className="gesture-cursor tap-cursor w-8 h-8 border-blue-500 border-4"></div>
+                            </div>
                             <img
                                 src={handFill}
-                                className="w-2/5"
+                                className="w-2/5 pt-11 hand"
                                 alt="gesture tap tutorial"
                                 id="gesture-tap"
                             />
