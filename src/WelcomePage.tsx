@@ -47,15 +47,7 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className=" font-bold text-red-600 border-1 border-red-300">
-                            Remember this is a system test - the following
-                            questions are meant for another context. Do not
-                            worry about answering these questions correctly.
-                        </div>
-                        <div className="font-bold text-red-600 mt-2">
-                            Once you have scanned the QR code - do not use the
-                            keyboard or mouse.
-                        </div>
+
                         <div>
                             <div
                                 // onClick={startOnPhoneConnection}
