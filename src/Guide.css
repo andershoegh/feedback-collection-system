@@ -147,16 +147,16 @@ ANIMATION
         transform: matrix(-1, 0, 0, 1, -10, -16) rotateZ(90deg);
     }
     12.5% {
-        transform: matrix(-0.9, 0, 0, 0.9, 0, -46) rotateZ(90deg);
+        transform: matrix(-0.8, -0.1, 0, 0.9, 0, -46) rotateZ(90deg);
     }
     20% {
         transform: matrix(-1, 0, 0, 1, -10, -16) rotateZ(90deg);
     }
     25% {
-        transform: matrix(-1, 0, 0, 1, -10, -48) rotateZ(90deg);
+        transform: matrix(-1, 0, 0, 1, -10, -48) rotateZ(80deg);
     }
     35% {
-        transform: matrix(-1, 0, 0, 1, -10, 16) rotateZ(90deg);
+        transform: matrix(-1, 0, 0, 1, -10, 16) rotateZ(95deg);
     }
     45% {
         transform: matrix(-1, 0, 0, 1, 0, 0) rotateZ(90deg);
@@ -235,27 +235,3 @@ ANIMATION
         box-shadow: inset 0 0 0 0 rgb(59, 130, 246);
     }
 }
-
-/* @keyframes swipeAnimation {
-    0% {
-        transform: translate(0, 0) scaleX(-1) rotateZ(90deg);
-    }
-    5% {
-        transform: translate(-0.6rem, -1rem) scaleX(-1) rotateZ(90deg);
-    }
-    12.5% {
-        transform: translate(2rem, -1rem) scaleX(-1) rotateZ(90deg);
-    }
-    20% {
-        transform: translate(0, -1rem) scaleX(-1) rotateZ(90deg);
-    }
-    25% {
-        transform: translate(0, -3rem) scaleX(-1) rotateZ(90deg);
-    }
-    35% {
-        transform: translate(0, 1rem) scaleX(-1) rotateZ(90deg);
-    }
-    45% {
-        transform: translate(0, 0) scaleX(-1) rotateZ(90deg);
-    }
-} */
