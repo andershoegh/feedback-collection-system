@@ -5,7 +5,7 @@
 
 /* 
 PHONE STYLING 
- */
+*/
 
 .phone {
     width: 90%;
@@ -48,7 +48,7 @@ PHONE STYLING
 
 /* 
 DISPLAY STYLING 
- */
+*/
 
 .display {
     width: 100%;
@@ -88,17 +88,10 @@ DISPLAY STYLING
     left: 0;
     transform: rotateZ(-30deg) translate(-4rem, 1.2rem);
 }
-/* .display-tap {
-    transform: translate(-80%) rotateY(40deg) skewY(-20deg) scale(0.85);
-}
-
-.display-tap::after {
-    transform: rotateZ(-30deg) translate(-4rem, 2.7rem);
-} */
 
 /* 
 ANIMATION 
- */
+*/
 
 .hand {
     max-width: 140px;
@@ -106,7 +99,7 @@ ANIMATION
 }
 
 #mobile-swipe {
-    animation: swipeAnimation 8s infinite;
+    animation: swipeMobileAnimation 8s infinite;
 }
 
 #mobile-tap {
@@ -115,7 +108,7 @@ ANIMATION
 
 #gesture-swipe {
     transform: scaleX(-1) rotateZ(90deg);
-    animation: swipeAnimation 8s infinite;
+    animation: swipeGestureAnimation 8s infinite;
 }
 
 #gesture-tap {
@@ -137,9 +130,41 @@ ANIMATION
     animation: tapCursorAnimation 8s infinite;
 }
 
-/* matrix( scaleX(), skewY(), skewX(), scaleY(), translateX(), translateY() ) */
+/* 
+SWIPE NAVIGATION ANIMATIONS
+*/
 
-@keyframes swipeAnimation {
+@keyframes swipeMobileAnimation {
+    0% {
+        transform: translateX(0) scale(1);
+    }
+    5% {
+        transform: translateX(-0.6rem) translateY(-1rem) scale(0.9)
+            rotateZ(-15deg) rotateX(15deg);
+    }
+    12.5% {
+        transform: translateX(2rem) translateY(-1rem) scale(0.95) rotateZ(8deg)
+            rotateX(35deg);
+    }
+    20% {
+        transform: translateX(0) translateY(-1rem) scale(0.95) rotateZ(-5deg)
+            rotateX(35deg);
+    }
+    25% {
+        transform: translateX(0) translateY(-3rem) scale(0.95) rotateZ(-5deg)
+            rotateX(35deg);
+    }
+    35% {
+        transform: translateX(0) translateY(1rem) scale(0.95) rotateZ(-5deg)
+            rotateX(35deg);
+    }
+    45% {
+        transform: translateX(0) translateY(0) rotateZ(0deg) rotateX(0);
+    }
+}
+
+@keyframes swipeGestureAnimation {
+    /* matrix( scaleX(), skewY(), skewX(), scaleY(), translateX(), translateY() ) */
     0% {
         transform: matrix(-1, 0, 0, 1, 0, 0) rotateZ(90deg);
     }
@@ -186,6 +211,10 @@ ANIMATION
         transform: translate(0, 0);
     }
 }
+
+/* 
+TAP ANIMATIONS
+*/
 
 @keyframes tapMobileAnimation {
     44% {
