@@ -1,17 +1,17 @@
-import { CheckSquare, Square } from 'phosphor-react'
-import React, { useState, useContext } from 'react'
-import { Touchless } from 'touchless-navigation'
-import BackButton from '../BackButton'
-import NextButton from '../NextButton'
-import { LanguageContext } from '../QuestionSettings'
+import { CheckSquare, Square } from 'phosphor-react';
+import React, { useState, useContext } from 'react';
+import { Touchless } from 'touchless-navigation';
+import BackButton from '../BackButton';
+import NextButton from '../NextButton';
+import { LanguageContext } from '../QuestionSettings';
 
 export interface MultiChoiceListQuestionProps {
-    currentStep: number
-    renderOnStep: number
-    question: string
-    answersArray: string[]
-    handleChoice: (question: string, answer: string[]) => void
-    goBackOneStep: () => void
+    currentStep: number;
+    renderOnStep: number;
+    question: string;
+    answersArray: string[];
+    handleChoice: (question: string, answer: string[]) => void;
+    goBackOneStep: () => void;
 }
 
 const MultiChoiceListQuestion: React.SFC<MultiChoiceListQuestionProps> = ({
@@ -22,8 +22,8 @@ const MultiChoiceListQuestion: React.SFC<MultiChoiceListQuestionProps> = ({
     handleChoice,
     goBackOneStep,
 }) => {
-    const [answers, setAnswers] = useState<string[]>([])
-    const { language } = useContext(LanguageContext)
+    const [answers, setAnswers] = useState<string[]>([]);
+    const { language } = useContext(LanguageContext);
 
     return (
         <>
@@ -33,21 +33,21 @@ const MultiChoiceListQuestion: React.SFC<MultiChoiceListQuestionProps> = ({
                         currentStep={currentStep}
                         onClick={() =>
                             setTimeout(() => {
-                                goBackOneStep()
+                                goBackOneStep();
                             }, 200)
                         }
                     />
 
                     <div className="">
-                        <div className="text-3xl leading-10 font-medium">
+                        <div className="text-5xl leading-10 font-medium">
                             {question}
                         </div>
-                        <div className="mt-2 text-gray-600">
+                        <div className="mt-6 text-2xl text-gray-600">
                             {language === 'Danish'
                                 ? 'Du kan vælge mere end ét svar'
                                 : 'You can choose more than one answer'}
                         </div>
-                        <ul className=" w-11/12 mt-10 text-lg font-normal">
+                        <ul className=" w-11/12 mt-10 text-2xl font-normal">
                             {answersArray.map((answer) => {
                                 return (
                                     <Checkbox
@@ -57,10 +57,10 @@ const MultiChoiceListQuestion: React.SFC<MultiChoiceListQuestionProps> = ({
                                             setAnswers((prev) => [
                                                 ...prev,
                                                 answer,
-                                            ])
+                                            ]);
                                         }}
                                     />
-                                )
+                                );
                             })}
                         </ul>
                     </div>
@@ -71,27 +71,27 @@ const MultiChoiceListQuestion: React.SFC<MultiChoiceListQuestionProps> = ({
                 </div>
             )}
         </>
-    )
-}
+    );
+};
 
-export default MultiChoiceListQuestion
+export default MultiChoiceListQuestion;
 
 export interface CheckboxProps {
-    answer: string
-    updateAnswers: (answer: string) => void
+    answer: string;
+    updateAnswers: (answer: string) => void;
 }
 
 const Checkbox: React.SFC<CheckboxProps> = ({ answer, updateAnswers }) => {
-    const [checked, setChecked] = useState(false)
+    const [checked, setChecked] = useState(false);
     return (
         <Touchless
-            className={`shadow-inactive rounded-xl pl-4 py-3 mb-5 flex place-items-center border-4 border-transparent ${
+            className={`shadow-inactive rounded-xl pl-4 py-6 mb-5 flex place-items-center border-4 border-transparent ${
                 checked ? 'bg-blue-100' : ''
             }`}
             startElement={true}
             onClick={() => {
-                setChecked(!checked)
-                updateAnswers(answer)
+                setChecked(!checked);
+                updateAnswers(answer);
             }}
         >
             {checked ? (
@@ -101,5 +101,5 @@ const Checkbox: React.SFC<CheckboxProps> = ({ answer, updateAnswers }) => {
             )}
             <li className="ml-4">{answer}</li>
         </Touchless>
-    )
-}
+    );
+};

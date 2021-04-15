@@ -1,18 +1,21 @@
-import React, { useContext } from 'react'
-import BackButton from '../BackButton'
-import { Touchless } from 'touchless-navigation'
-import { LanguageContext } from '../QuestionSettings'
+import React, { useContext } from 'react';
+import BackButton from '../BackButton';
+import { Touchless } from 'touchless-navigation';
+import { LanguageContext } from '../QuestionSettings';
 
 export interface ButtonQuestionProps {}
 
 const ButtonQuestion: React.SFC<{
-    currentStep: number
-    renderOnStep: number
-    question: string
-    firstButtonText: string
-    secondButtonText: string
-    goBackOneStep: () => void
-    handleChoice: (question: string, answer: string | number | string[]) => void
+    currentStep: number;
+    renderOnStep: number;
+    question: string;
+    firstButtonText: string;
+    secondButtonText: string;
+    goBackOneStep: () => void;
+    handleChoice: (
+        question: string,
+        answer: string | number | string[]
+    ) => void;
 }> = ({
     currentStep,
     renderOnStep,
@@ -38,10 +41,10 @@ const ButtonQuestion: React.SFC<{
                         />
                     </div>
                     <div className="">
-                        <div className="text-3xl leading-10 font-medium">
+                        <div className="text-5xl leading-10 font-medium">
                             {question}
                         </div>
-                        <div className="mt-2 text-gray-600">
+                        <div className="mt-6 text-2xl text-gray-600">
                             {language === 'Danish' ? 'Vælg én' : 'Choose one'}
                         </div>
                         <div className="flex justify-center mt-40">
@@ -49,10 +52,10 @@ const ButtonQuestion: React.SFC<{
                                 startElement={true}
                                 onClick={() =>
                                     setTimeout(() => {
-                                        handleChoice(question, firstButtonText)
+                                        handleChoice(question, firstButtonText);
                                     }, 200)
                                 }
-                                className={`shadow-inactive py-6 px-32 text-3xl border-4 border-transparent rounded-xl m-4`}
+                                className={`shadow-inactive py-8 px-40 text-4xl border-4 border-transparent rounded-xl m-4`}
                             >
                                 {firstButtonText}
                             </Touchless>
@@ -61,7 +64,7 @@ const ButtonQuestion: React.SFC<{
                                 onClick={() =>
                                     handleChoice(question, secondButtonText)
                                 }
-                                className={`shadow-inactive py-6 px-32 text-3xl border-4 border-transparent rounded-xl m-4`}
+                                className={`shadow-inactive py-8 px-40 text-4xl border-4 border-transparent rounded-xl m-4`}
                             >
                                 {secondButtonText}
                             </Touchless>
@@ -70,7 +73,7 @@ const ButtonQuestion: React.SFC<{
                 </div>
             )}
         </>
-    )
-}
+    );
+};
 
-export default ButtonQuestion
+export default ButtonQuestion;

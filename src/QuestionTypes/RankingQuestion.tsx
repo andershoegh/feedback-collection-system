@@ -181,21 +181,21 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                             }
                         />
                         <div className="">
-                            <div className="text-3xl leading-10 font-medium">
+                            <div className="text-5xl leading-10 font-medium">
                                 {question}
                             </div>
-                            <div className="font-normal text-gray-600 mt-2 mb-10">
+                            <div className="font-normal text-gray-600 text-2xl mt-6 mb-20">
                                 {language.trim() === 'Danish'.trim()
                                     ? 'Arrangér svarene i rækkefølge hvor 1 er vigtigst'
                                     : 'Arrange the answers in order where 1 is the most important'}
                             </div>
-                            <div className="font-bold text-gray-600 mt-4">
+                            <div className="font-bold text-xl text-gray-600 mt-4">
                                 {language.trim() === 'Danish'.trim()
                                     ? 'Tryk for at justere rækkefølge. Tryk igen for at navigere videre.'
                                     : 'Tap to adjust order. Tap again to navigate again.'}
                             </div>
-                            <div className="flex row-auto text-lg font-normal mt-4 w-full">
-                                <div className="flex flex-col justify-between mr-6 py-5">
+                            <div className="flex row-auto text-2xl font-normal mt-4 w-full">
+                                <div className="flex flex-col texl-xl justify-between mr-6 py-5">
                                     {list.map((item, index) => {
                                         return (
                                             <div
@@ -216,7 +216,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                                     startElement === index
                                                 }
                                                 className={
-                                                    'shadow-inactive rounded-xl flex items-center bg-white p-4 py-3 mb-5 w-full border-4 border-transparent'
+                                                    'shadow-inactive rounded-xl text-2xl flex items-center bg-white  pl-4 py-6  mb-5 w-full border-4 border-transparent'
                                                 }
                                                 onClick={(e) => {
                                                     const target = e.target as HTMLDivElement;

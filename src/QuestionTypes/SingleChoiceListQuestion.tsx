@@ -1,15 +1,15 @@
-import React, { useContext } from 'react'
-import { Touchless } from 'touchless-navigation'
-import BackButton from '../BackButton'
-import { LanguageContext } from '../QuestionSettings'
+import React, { useContext } from 'react';
+import { Touchless } from 'touchless-navigation';
+import BackButton from '../BackButton';
+import { LanguageContext } from '../QuestionSettings';
 
 export interface SingleChoiceListQuestionProps {
-    currentStep: number
-    renderOnStep: number
-    question: string
-    answersArray: string[]
-    handleChoice: (question: string, answer: string) => void
-    goBackOneStep: () => void
+    currentStep: number;
+    renderOnStep: number;
+    question: string;
+    answersArray: string[];
+    handleChoice: (question: string, answer: string) => void;
+    goBackOneStep: () => void;
 }
 
 const SingleChoiceListQuestion: React.SFC<SingleChoiceListQuestionProps> = ({
@@ -20,8 +20,7 @@ const SingleChoiceListQuestion: React.SFC<SingleChoiceListQuestionProps> = ({
     handleChoice,
     goBackOneStep,
 }) => {
-
-    const { language } = useContext(LanguageContext)
+    const { language } = useContext(LanguageContext);
 
     return (
         <>
@@ -31,40 +30,40 @@ const SingleChoiceListQuestion: React.SFC<SingleChoiceListQuestionProps> = ({
                         currentStep={currentStep}
                         onClick={() =>
                             setTimeout(() => {
-                                goBackOneStep()
+                                goBackOneStep();
                             }, 200)
                         }
                     />
                     <div className="">
-                        <div className="text-3xl leading-10 font-medium">
+                        <div className="text-5xl leading-10 font-medium">
                             {question}
                         </div>
-                        <div className="mt-2 text-gray-600">
+                        <div className="mt-6 text-2xl text-gray-600">
                             {language === 'Danish' ? 'Vælg én' : 'Choose one'}
                         </div>
-                        <ul className="w-4/5 mt-10 text-lg font-normal">
+                        <ul className="w-3/5 mt-10 text-lg font-normal">
                             {answersArray.map((answer, i) => {
                                 return (
                                     <Touchless
-                                        className={`shadow-inactive rounded-xl pl-4 py-3 mb-5 border-4 border-transparent`}
+                                        className={`shadow-inactive rounded-xl pl-4 py-6 mb-5 border-4 text-2xl border-transparent`}
                                         key={answer}
                                         startElement={i === 0}
                                         onClick={() =>
                                             setTimeout(() => {
-                                                handleChoice(question, answer)
+                                                handleChoice(question, answer);
                                             }, 200)
                                         }
                                     >
                                         {answer}
                                     </Touchless>
-                                )
+                                );
                             })}
                         </ul>
                     </div>
                 </div>
             )}
         </>
-    )
-}
+    );
+};
 
-export default SingleChoiceListQuestion
+export default SingleChoiceListQuestion;

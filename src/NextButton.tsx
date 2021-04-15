@@ -1,20 +1,20 @@
-import { ArrowRight } from 'phosphor-react'
-import React, { useContext } from 'react'
-import { Touchless } from 'touchless-navigation'
-import { LanguageContext, maxQuestions } from './QuestionSettings'
+import { ArrowRight } from 'phosphor-react';
+import React, { useContext } from 'react';
+import { Touchless } from 'touchless-navigation';
+import { LanguageContext, maxQuestions } from './QuestionSettings';
 
 export interface NextButtonProps {
-    onClick: () => void
-    currentStep: number
+    onClick: () => void;
+    currentStep: number;
 }
 
 const NextButton: React.SFC<NextButtonProps> = ({ onClick, currentStep }) => {
-    const { language } = useContext(LanguageContext)
+    const { language } = useContext(LanguageContext);
     return (
         <div className="absolute bottom-10 right-0">
             <Touchless
                 onClick={onClick}
-                className={`shadow-inactive rounded-xl flex px-6 py-2 text-xl place-items-center border-4 border-transparent`}
+                className={`shadow-inactive text-3xl rounded-xl px-20 py-8 flex place-items-center border-4 border-transparent`}
             >
                 {maxQuestions === currentStep
                     ? language === 'Danish'
@@ -24,10 +24,10 @@ const NextButton: React.SFC<NextButtonProps> = ({ onClick, currentStep }) => {
                     ? 'Næste'
                     : 'Next'}
 
-                <ArrowRight className="ml-2 text-2xl" />
+                <ArrowRight className="ml-6 text-4xl" />
             </Touchless>
         </div>
-    )
-}
+    );
+};
 
-export default NextButton
+export default NextButton;

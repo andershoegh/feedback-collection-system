@@ -191,16 +191,16 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                             onClick={() => goBackOneStep()}
                         />
                         <div className="w-full">
-                            <div className="text-3xl leading-10 font-medium">
+                            <div className="text-5xl leading-normal font-medium">
                                 {question}
                             </div>
-                            <div className="font-normal text-gray-600 mt-2">
+                            <div className="font-normal text-gray-600 text-2xl mt-6">
                                 {language === 'Danish'
                                     ? 'Swipe til det ønskede svar'
                                     : 'Swipe to your desired answer'}
                             </div>
                             <div className="justify-center mt-40">
-                                <div className="justify-center flex text-2xl mb-8 font-medium text-gray-800">
+                                <div className="justify-center flex text-4xl mb-8 font-medium text-gray-800">
                                     {!usingCustomKeys
                                         ? language === 'Danish'
                                             ? 'Tryk på slider for at justere'
@@ -266,17 +266,17 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                 </div>
                                 <span
                                     ref={labelsRef}
-                                    className="flex justify-between font-normal text-4xl mt-6 px-6 text-blue-500 mx-2"
+                                    className="flex justify-between font-normal text-4xl mt-6 px-10 text-blue-500 mx-2"
                                 >
                                     {setIntervalLabels()}
                                 </span>
                                 {language === 'Danish' ? (
-                                    <div className="flex  justify-between mt-3 font-medium text-gray-700">
+                                    <div className="flex  justify-between mt-3 text-xl font-medium text-gray-700">
                                         <span>Meget utilfreds</span>
                                         <span>Meget tilfreds</span>
                                     </div>
                                 ) : (
-                                    <div className="flex  justify-between mt-3 font-medium text-gray-700">
+                                    <div className="flex  justify-between mt-3 texl-xl font-medium text-gray-700">
                                         <span>Very unsatisfied</span>
                                         <span>Very satisfied</span>
                                     </div>

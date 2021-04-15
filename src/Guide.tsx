@@ -20,34 +20,40 @@ const Guide: React.SFC<GuideProps> = (props) => {
             return (
                 <>
                     {/* MOBILE SWIPE  */}
-                    <div className="flex items-center mb-36 ml-14">
-                        <div className="flex items-end relative h-72 w-36 mr-20">
+                    <div className="flex items-center justify-center mb-36 ml-14">
+                        <div
+                            style={{ height: '500px', width: '220px' }}
+                            className="flex items-end relative mr-20"
+                        >
                             <div className="phone"></div>
                             <img
                                 src={handFill}
-                                className="hand"
+                                className="hand mb-40 ml-5"
                                 alt="mobile swipe tutorial"
                                 id="mobile-swipe"
                             />
                         </div>
-                        <p>
+                        <p className="text-2xl">
                             {language === 'English'
                                 ? 'Swipe to navigate'
                                 : 'Swipe for at navigere'}
                         </p>
                     </div>
                     {/* MOBILE TAP  */}
-                    <div className="flex ml-14 items-center">
-                        <div className="flex items-end relative h-72 w-36 mr-20">
+                    <div className="flex  items-center justify-center">
+                        <div
+                            style={{ height: '500px', width: '220px' }}
+                            className="flex items-end relative mr-20"
+                        >
                             <div className="phone"></div>
                             <img
                                 src={handFill}
-                                className="hand"
+                                className="hand mb-40 ml-4"
                                 alt="mobile tap tutorial"
                                 id="mobile-tap"
                             />
                         </div>
-                        <p>
+                        <p className="text-2xl">
                             {language === 'English'
                                 ? 'Tap to select'
                                 : 'Tap for at vælge'}
@@ -59,10 +65,10 @@ const Guide: React.SFC<GuideProps> = (props) => {
             return (
                 <>
                     {/* GESTURE SWIPE  */}
-                    <div className="flex flex-col items-center mb-36">
+                    <div className="flex flex-col items-center mb-60">
                         <div className="flex justify-end items-center relative h-64 w-3/5">
                             <div className="display">
-                                <div className="gesture-cursor navigation-cursor w-8 h-8 border-blue-500 border-4"></div>
+                                <div className="gesture-cursor navigation-cursor w-12 h-12 border-blue-500 border-4"></div>
                             </div>
                             <img
                                 src={handFill}
@@ -71,10 +77,10 @@ const Guide: React.SFC<GuideProps> = (props) => {
                                 id="gesture-swipe"
                             />
                         </div>
-                        <p>
+                        <p className="mt-28 text-2xl">
                             {language === 'English'
                                 ? 'Move your hand to navigate'
-                                : 'Flyt din hånd for at navigere'}
+                                : 'Bevæg din hånd for at navigere'}
                         </p>
                     </div>
                     {/* GESTURE TAP  */}
@@ -90,10 +96,10 @@ const Guide: React.SFC<GuideProps> = (props) => {
                                 id="gesture-tap"
                             />
                         </div>
-                        <p>
+                        <p className="mt-28 text-2xl">
                             {language === 'English'
-                                ? 'Tap to select'
-                                : 'Tap for at vælge'}
+                                ? 'Tap forwards in the air to select'
+                                : 'Tryk frem i luften for at vælge'}
                         </p>
                     </div>
                 </>

@@ -1,19 +1,19 @@
-import React, { useContext } from 'react'
-import { Touchless } from 'touchless-navigation'
-import BackButton from '../BackButton'
-import { LanguageContext } from '../QuestionSettings'
+import React, { useContext } from 'react';
+import { Touchless } from 'touchless-navigation';
+import BackButton from '../BackButton';
+import { LanguageContext } from '../QuestionSettings';
 
 export interface FinishedPageProps {
-    currentStep: number
-    renderOnStep: number
-    text: string
-    subText: string
-    goBackOneStep: () => void
-    logAndReset: () => void
+    currentStep: number;
+    renderOnStep: number;
+    text: string;
+    subText: string;
+    goBackOneStep: () => void;
+    logAndReset: () => void;
 }
 
 const FinishedPage: React.FC<FinishedPageProps> = (props) => {
-    const { currentStep, renderOnStep, text, subText, goBackOneStep } = props
+    const { currentStep, renderOnStep, text, subText, goBackOneStep } = props;
     const { language } = useContext(LanguageContext);
 
     return (
@@ -27,10 +27,10 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
                         />
                     </div>
                     <div className="">
-                        <div className="text-3xl leading-10 font-medium">
+                        <div className="text-5xl leading-10 font-medium">
                             {text}
                         </div>
-                        <div className="font-normal text-gray-600 mt-2">
+                        <div className="font-normal text-gray-600 mt-6 text-2xl">
                             {subText}
                         </div>
                         <Touchless
@@ -41,18 +41,15 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
                             }
                             className={`shadow-inactive py-6 px-32 text-3xl border-4 border-transparent rounded-xl my-8`}
                         >
-                            {
-                                language.trim() ===   'Danish'.trim() 
-                                                    ? 'Hjælp os ved at give feedback'  
-                                                    : 'Help us by giving feedback'
-                            }
+                            {language.trim() === 'Danish'.trim()
+                                ? 'Hjælp os ved at give feedback'
+                                : 'Help us by giving feedback'}
                         </Touchless>
                     </div>
                 </div>
             )}
         </>
-    )
-}
+    );
+};
 
-export default FinishedPage
-
+export default FinishedPage;

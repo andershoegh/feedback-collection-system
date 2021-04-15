@@ -1,22 +1,22 @@
-import React, { useContext } from 'react'
-import { Touchless } from 'touchless-navigation'
-import { LanguageContext } from './QuestionSettings'
-import DKFlag from './Resources/DKFlag'
-import GBFlag from './Resources/GBFlag'
+import React, { useContext } from 'react';
+import { Touchless } from 'touchless-navigation';
+import { LanguageContext } from './QuestionSettings';
+import DKFlag from './Resources/DKFlag';
+import GBFlag from './Resources/GBFlag';
 
 export interface SwitchLanguageButtonProps {
-    renderOnStep: number
+    renderOnStep: number;
 }
 
 const SwitchLanguageButton: React.SFC<SwitchLanguageButtonProps> = ({
     renderOnStep,
 }) => {
-    const { language, setLanguage } = useContext(LanguageContext)
+    const { language, setLanguage } = useContext(LanguageContext);
     return (
         <>
             {renderOnStep === 1 ? (
                 <Touchless
-                    className={`shadow-inactive rounded-xl px-6 py-2 absolute top-10 left-10 border-4 border-transparent`}
+                    className={`shadow-inactive text-2xl rounded-xl px-20 py-8 absolute top-10 left-10 border-4 border-transparent`}
                     onClick={() =>
                         setLanguage(
                             language === 'Danish' ? 'English' : 'Danish'
@@ -25,7 +25,7 @@ const SwitchLanguageButton: React.SFC<SwitchLanguageButtonProps> = ({
                 >
                     {language === 'Danish' ? (
                         <div className="flex place-items-center">
-                            <div className="h-6 w-6 place-items-center flex mr-2">
+                            <div className="h-12 w-12 place-items-center flex mr-6">
                                 <GBFlag />
                             </div>
                             <span>Switch to English</span>
@@ -41,7 +41,7 @@ const SwitchLanguageButton: React.SFC<SwitchLanguageButtonProps> = ({
                 </Touchless>
             ) : null}
         </>
-    )
-}
+    );
+};
 
-export default SwitchLanguageButton
+export default SwitchLanguageButton;
