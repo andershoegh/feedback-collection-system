@@ -13,7 +13,7 @@ export interface FinishedPageProps {
 }
 
 const FinishedPage: React.FC<FinishedPageProps> = (props) => {
-    const { currentStep, renderOnStep, text, subText, goBackOneStep } = props;
+    const { currentStep, renderOnStep, text, subText, goBackOneStep, logAndReset } = props;
     const { language } = useContext(LanguageContext);
 
     return (
@@ -35,9 +35,9 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
                         </div>
                         <Touchless
                             startElement={true}
-                            onClick={() =>
-                                (window.location.href =
-                                    'https://andershansen393483.typeform.com/to/DaDEYAf6')
+                            onClick={logAndReset
+                                // (window.location.href =
+                                //     'https://andershansen393483.typeform.com/to/DaDEYAf6')
                             }
                             className={`shadow-inactive py-6 px-32 text-3xl border-4 border-transparent rounded-xl my-8`}
                         >

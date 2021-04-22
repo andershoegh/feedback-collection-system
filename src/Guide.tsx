@@ -16,7 +16,7 @@ const Guide: React.SFC<GuideProps> = (props) => {
 
     const setTutorialElements = useMemo(() => {
         if (interactionSelected === 'none') {
-        } else if (interactionSelected === 'mobile') {
+        } else if (interactionSelected.substr(0,5) === 'phone') {
             return (
                 <>
                     {/* MOBILE SWIPE  */}
@@ -61,7 +61,7 @@ const Guide: React.SFC<GuideProps> = (props) => {
                     </div>
                 </>
             );
-        } else if (interactionSelected === 'gesture') {
+        } else if (interactionSelected.substr(0,10) === 'leapMotion') {
             return (
                 <>
                     {/* GESTURE SWIPE  */}

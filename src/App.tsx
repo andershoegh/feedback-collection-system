@@ -27,8 +27,8 @@ const App = () => {
             <LanguageContextProvider>
                 <div className="flex font-body">
                     <button onClick={nextInteractionType}>TEST ME</button>
-                    <Guide />
-                    <Questionnaire showQR={showQR}/>
+                    <Guide interactionSelected={interactionType} />
+                    <Questionnaire showQR={showQR} nextInteractionType={nextInteractionType}/>
                 </div>
             </LanguageContextProvider>
         </TouchlessApp>

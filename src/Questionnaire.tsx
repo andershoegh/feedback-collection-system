@@ -14,10 +14,10 @@ import { useConnectionChange, useGoToStartElement } from 'touchless-navigation';
 
 export interface QuestionnaireProps {
     showQR: boolean
-    setInteractionSelected: CallableFunction;
+    nextInteractionType: CallableFunction;
 }
 
-const Questionnaire: React.SFC<QuestionnaireProps> = () => {
+const Questionnaire: React.SFC<QuestionnaireProps> = ({ showQR, nextInteractionType }) => {
     const [currentStep, setCurrentStep] = useState<number>(0)
     const [questionnaireAnswers, setQuestionnaireAnswers] = useState<
         { question: string; answer: string | number | string[] }[]
@@ -30,12 +30,11 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
     useEffect(() => {
         if (connected === true) {
             setCurrentStep(1);
-            setInteractionSelected('mobile');
         } else {
             // *ERROR NOT CONNECTED*
             console.error('Error: Not connected');
         }
-    }, [connected, setInteractionSelected]);
+    }, [connected]);
 
     useEffect(() => {
         goToStart.current();
@@ -58,9 +57,11 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
     // Handles full completion of the questionnaire and resetting for a new participant
     const logAndReset = () => {
         // Sends questionnaireAnswers to db and then resets
+        // * FUNCTIONAL CODE GOES HERE *
 
+        setQuestionnaireAnswers([]);
         setCurrentStep(0);
-        window.location.reload();
+        nextInteractionType();
     };
 
     const handleGoingBackOneStep = () => {

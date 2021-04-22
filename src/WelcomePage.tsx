@@ -51,7 +51,7 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                         </div>
 
                         <div>
-                            <div
+                            <Touchless
                                 onClick={startQuestionnaire}
                                 className={`${buttonStyle} w-80 h-80 text-center justify-center place-items-center flex mt-4`}
                             >
