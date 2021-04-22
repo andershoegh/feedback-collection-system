@@ -1,16 +1,18 @@
-import React from 'react';
-import { MobileQR } from 'touchless-navigation';
-import DKFlag from './Resources/DKFlag';
-import GBFlag from './Resources/GBFlag';
+import React from 'react'
+import { MobileQR, Touchless } from 'touchless-navigation'
+import DKFlag from './Resources/DKFlag'
+import GBFlag from './Resources/GBFlag'
 
 export interface WelcomePageProps {
-    currentStep: number;
-    renderOnStep: number;
-    startOnPhoneConnection: () => void;
+    currentStep: number
+    renderOnStep: number
+    startQuestionnaire: () => void
+    showQR: boolean
 }
 
 const WelcomePage: React.FC<WelcomePageProps> = (props) => {
-    const { currentStep, renderOnStep } = props;
+    const { currentStep, renderOnStep, startQuestionnaire, showQR } = props
+
     return (
         <>
             {currentStep !== renderOnStep ? null : (
@@ -57,12 +59,12 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                             keyboard or mouse.
                         </div>
                         <div>
-                            <div
-                                // onClick={startOnPhoneConnection}
+                            <Touchless
+                                onClick={startQuestionnaire}
                                 className={`${buttonStyle} w-72 h-72 text-center justify-center place-items-center flex mt-4`}
                             >
-                                <MobileQR />
-                            </div>
+                                {showQR ? <MobileQR logLink={true} /> : <div>TRYK HER FOR AT STARTE</div>}
+                            </Touchless>
                         </div>
                     </div>
                 </div>

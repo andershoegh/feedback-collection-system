@@ -12,9 +12,11 @@ import ButtonQuestion from './QuestionTypes/ButtonQuestion'
 import SwitchLanguageButton from './SwitchLanguageButton'
 import { useConnectionChange, useGoToStartElement } from 'touchless-navigation'
 
-export interface QuestionnaireProps {}
+export interface QuestionnaireProps {
+    showQR: boolean
+}
 
-const Questionnaire: React.SFC<QuestionnaireProps> = () => {
+const Questionnaire: React.SFC<QuestionnaireProps> = ({showQR}) => {
     const [currentStep, setCurrentStep] = useState<number>(0)
     const [questionnaireAnswers, setQuestionnaireAnswers] = useState<
         { question: string; answer: string | number | string[] }[]
@@ -28,7 +30,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
         if (connected === true) {
             setCurrentStep(1)
         } else {
-            // *ERROR NOT CONNECTED*
+            // *ERROR NOT CONNECTED* 
         }
     }, [connected])
 
@@ -65,7 +67,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
         setCurrentStep(currentStep - 1)
     }
 
-    const startOnPhoneConnection = () => {
+    const startQuestionnaire = () => {
         setCurrentStep(1)
     }
 
@@ -225,7 +227,8 @@ const Questionnaire: React.SFC<QuestionnaireProps> = () => {
                 <WelcomePage
                     currentStep={currentStep}
                     renderOnStep={0}
-                    startOnPhoneConnection={startOnPhoneConnection}
+                    startQuestionnaire={startQuestionnaire}
+                    showQR={showQR}
                 />
             </div>
         </div>
