@@ -3,7 +3,7 @@ import './RankingQuestion.css';
 import Arrows from '../Resources/ArrowsDownUp.png';
 import BackButton from '../BackButton';
 import NextButton from '../NextButton';
-import { Touchless, useCustomKeys } from 'touchless-navigation';
+import { Touchless } from 'touchless-navigation';
 import { LanguageContext } from '../QuestionSettings';
 
 export interface RankingQuestionProps {
@@ -30,142 +30,106 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
     const [list, setList] = useState<string[]>(answersArray);
     const listRef = useRef<HTMLDivElement>(null);
     const [activeItem, setActiveItem] = useState<HTMLDivElement | null>();
-    const [startElement, setStartElement] = useState<number>(0);
+    const [isOnThisPage, setIsOnThisPage] = useState(false);
     const { language } = useContext(LanguageContext);
-    const [animatingPosition, setAnimatingPosition] = useState(false);
-    const animationDuration = 400;
+    const animationDuration = 700;
 
-    const customKeys = useCustomKeys({
-        swipeUp: 'w',
-        swipeDown: 's',
-        swipeLeft: '',
-        swipeRight: '',
-    });
+    const updateListOrder = (currentItemIndex: number) => {
+        let activeItemIndex = list.findIndex(
+            (item) => item.trim() === activeItem?.innerText.trim()
+        );
 
+        if (currentItemIndex < list.length && currentItemIndex >= 0) {
+            // Saves the previous list order from listRef and item height plus margin
+            const oldListElement = Array.from(listRef.current!.children);
+            const margin = parseInt(
+                window
+                    .getComputedStyle(listRef.current?.children[0]!)
+                    .marginBottom.slice(0, -2)
+            );
+            const itemHeight =
+                listRef.current!.children[0].getBoundingClientRect().height +
+                margin;
+
+            // Swaps the position of the active item and the current item
+            let oldActiveIndex = list[activeItemIndex];
+
+            list[activeItemIndex] = list[currentItemIndex];
+            list[currentItemIndex] = oldActiveIndex;
+
+            // Loops through to animate position change
+            oldListElement.forEach((c, prevIndex) => {
+                if (
+                    prevIndex === activeItemIndex ||
+                    prevIndex === currentItemIndex
+                ) {
+                    const item = c as HTMLDivElement;
+
+                    // Calculates the offset to be applied for the animation
+                    const moveCurrentUp = activeItemIndex < currentItemIndex;
+                    const offsetDir = moveCurrentUp
+                        ? prevIndex === activeItemIndex
+                            ? -1
+                            : 1
+                        : prevIndex === activeItemIndex
+                        ? 1
+                        : -1;
+                    const indexDiff = Math.abs(
+                        activeItemIndex - currentItemIndex
+                    );
+                    const yOffset = itemHeight * indexDiff * offsetDir;
+
+                    // Clears the wiggle animation on the active item for smooth move animation
+                    if (prevIndex === activeItemIndex) {
+                        item.style.animation = '';
+                    }
+
+                    // Places the item in its previous position before the browser draws the update
+                    requestAnimationFrame(() => {
+                        item.style.transform = `translate(0,${yOffset}px)`;
+                        item.style.transition = 'transform 0s';
+
+                        // Then changes transform & transition to move the item to its new position
+                        requestAnimationFrame(() => {
+                            item.style.transform = '';
+                            item.style.transition = `transform ${animationDuration}ms`;
+                        });
+                    });
+                }
+            });
+
+            setActiveItem(null);
+        }
+    };
+
+    const handleItemClick = (target: HTMLDivElement, index: number) => {
+        if (!activeItem) {
+            target.style.animation = 'wiggle 2s infinite';
+            setActiveItem(target);
+        } else if (activeItem !== target) {
+            updateListOrder(index);
+        } else {
+            target.style.animation = '';
+            setActiveItem(null);
+        }
+    };
+
+    // Clears activeItem if navigating to another page
+    useEffect(() => {
+        if (currentStep === renderOnStep) {
+            setIsOnThisPage(true);
+        }
+        if (isOnThisPage && currentStep !== renderOnStep) {
+            setActiveItem(null);
+            setIsOnThisPage(false);
+        }
+    }, [currentStep, renderOnStep]);
+
+    // Sets list based on selected language
     useEffect(() => {
         setList(answersArray);
         // eslint-disable-next-line
     }, [language]);
-
-    useEffect(() => {
-        const updateListOrder = (
-            oldList: string[],
-            oldIndex: number,
-            newIndex: number
-        ) => {
-            if (newIndex < oldList.length && newIndex >= 0) {
-                // Saves the previous list order from listRef, item height plus margin, and animation duration in ms
-                setAnimatingPosition(true);
-                const prevListArr = Array.from(listRef.current!.children);
-                const margin = window
-                    .getComputedStyle(listRef.current?.children[0]!)
-                    .marginBottom.slice(0, -2);
-                const itemHeight =
-                    listRef.current!.children[0].getBoundingClientRect()
-                        .height + parseInt(margin);
-
-                // Moves the active item up or down one position and updates the list
-                oldList.splice(newIndex, 0, oldList.splice(oldIndex, 1)[0]);
-
-                // Loops through to animate position change
-                prevListArr.forEach((c, prevIndex) => {
-                    const item = c as HTMLDivElement;
-
-                    const newIndex = oldList.findIndex((child) => {
-                        return child.trim() === item.innerText.trim();
-                    });
-
-                    if (newIndex !== prevIndex) {
-                        // Sets the new index position as startElement and removes wiggle animation to handle position change animation
-                        if (
-                            activeItem?.innerHTML.trim() ===
-                            item.innerHTML.trim()
-                        ) {
-                            setStartElement(newIndex);
-                            item.style.animation = '';
-                        }
-
-                        // If item moved, then places the item in its previous position before the browser draws the update
-                        requestAnimationFrame(() => {
-                            const yOffset =
-                                newIndex < prevIndex ? itemHeight : -itemHeight;
-                            item.style.transform = `translate(0,${yOffset}px)`;
-                            item.style.transition = 'transform 0s';
-
-                            // Then changes transform & transition that moves the item to its new position
-                            requestAnimationFrame(() => {
-                                item.style.transform = '';
-                                item.style.transition = `transform ${animationDuration}ms`;
-                            });
-                        });
-                    }
-                });
-
-                // Waits for re-render position change animation to finish and reapplies wiggle animation to the active item
-                setTimeout(() => {
-                    activeItem!.style.transition = '';
-                    activeItem!.style.animation = 'wiggle 2s infinite';
-                }, animationDuration);
-            }
-        };
-
-        const handleKeyPress = (e: KeyboardEvent) => {
-            if (currentStep === renderOnStep && activeItem) {
-                let activeItemIndex = list.findIndex(
-                    (item) => item.trim() === activeItem.innerText.trim()
-                );
-
-                switch (e.key) {
-                    case 'w':
-                        if (!animatingPosition) {
-                            updateListOrder(
-                                list,
-                                activeItemIndex,
-                                activeItemIndex - 1
-                            );
-                            setTimeout(() => {
-                                setAnimatingPosition(false);
-                            }, animationDuration);
-                        } else {
-                            //ERROR TRYING TO MOVE BEFORE ANIIMATION
-                        }
-                        break;
-                    case 's':
-                        if (!animatingPosition) {
-                            updateListOrder(
-                                list,
-                                activeItemIndex,
-                                activeItemIndex + 1
-                            );
-                            setTimeout(() => {
-                                setAnimatingPosition(false);
-                            }, animationDuration);
-                        } else {
-                            //ERROR TRYING TO MOVE BEFORE ANIIMATION
-                        }
-                        break;
-                    case 'Enter':
-                        if (activeItem === e.target) {
-                            activeItem.click();
-                        }
-                        break;
-                }
-            }
-        };
-
-        document.addEventListener('keydown', handleKeyPress);
-
-        return () => {
-            document.removeEventListener('keydown', handleKeyPress);
-        };
-    }, [
-        activeItem,
-        list,
-        setList,
-        currentStep,
-        renderOnStep,
-        animatingPosition,
-    ]);
 
     return (
         <>
@@ -195,7 +159,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                     : 'Tap to adjust order. Tap again to navigate again.'}
                             </div>
                             <div className="flex row-auto text-2xl font-normal mt-4 w-full">
-                                <div className="flex flex-col texl-xl justify-between mr-6 py-5">
+                                <div className="flex flex-col text-xl justify-between mr-6 py-5">
                                     {list.map((item, index) => {
                                         return (
                                             <div
@@ -212,27 +176,16 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                         return (
                                             <Touchless
                                                 key={item}
-                                                startElement={
-                                                    startElement === index
-                                                }
+                                                startElement={0 === index}
                                                 className={
-                                                    'shadow-inactive rounded-xl text-2xl flex items-center bg-white  pl-4 py-6  mb-5 w-full border-4 border-transparent'
+                                                    'shadow-inactive rounded-xl text-2xl flex items-center bg-white p-4 py-3 mb-5 w-full border-4 border-transparent'
                                                 }
                                                 onClick={(e) => {
                                                     const target = e.target as HTMLDivElement;
-                                                    if (activeItem !== target) {
-                                                        target.style.animation =
-                                                            'wiggle 2s infinite';
-                                                        customKeys.initiate();
-
-                                                        setActiveItem(target);
-                                                        setStartElement(index);
-                                                    } else {
-                                                        target.style.animation =
-                                                            '';
-                                                        customKeys.clear();
-                                                        setActiveItem(null);
-                                                    }
+                                                    handleItemClick(
+                                                        target,
+                                                        index
+                                                    );
                                                 }}
                                             >
                                                 <img
