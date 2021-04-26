@@ -123,6 +123,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
             setActiveItem(null);
             setIsOnThisPage(false);
         }
+        // eslint-disable-next-line
     }, [currentStep, renderOnStep]);
 
     // Sets list based on selected language

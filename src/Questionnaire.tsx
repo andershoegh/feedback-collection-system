@@ -13,15 +13,30 @@ import SwitchLanguageButton from './SwitchLanguageButton';
 import { useConnectionChange, useGoToStartElement } from 'touchless-navigation';
 
 export interface QuestionnaireProps {
-    showQR: boolean
+    showQR: boolean;
+    interactionType: string;
     nextInteractionType: CallableFunction;
 }
 
-const Questionnaire: React.SFC<QuestionnaireProps> = ({ showQR, nextInteractionType }) => {
-    const [currentStep, setCurrentStep] = useState<number>(0)
+const Questionnaire: React.SFC<QuestionnaireProps> = ({
+    showQR,
+    interactionType,
+    nextInteractionType,
+}) => {
+    const [currentStep, setCurrentStep] = useState<number>(0);
     const [questionnaireAnswers, setQuestionnaireAnswers] = useState<
         { question: string; answer: string | number | string[] }[]
     >([]);
+    const interactionCTAText = {
+        da:
+            interactionType.substr(0, 5) === 'phone'
+                ? 'klik på linket'
+                : 'scan QR koden',
+        en:
+            interactionType.substr(0, 5) === 'phone'
+                ? 'click the link'
+                : 'scan the QR code',
+    };
 
     const { language } = useContext(LanguageContext);
     const connected = useConnectionChange();
@@ -72,8 +87,8 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({ showQR, nextInteractionT
     };
 
     const startQuestionnaire = () => {
-        setCurrentStep(1)
-    }
+        setCurrentStep(1);
+    };
 
     return (
         <div className="w-full relative">
@@ -234,10 +249,11 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({ showQR, nextInteractionT
                     }
                     subText={
                         language === 'Danish'
-                            ? 'Hjælp os ved at svare på nogle få spørgsmål - klik på linket herunder:'
-                            : 'Help us by answering a few questions - click the link below:'
+                            ? `Hjælp os ved at svare på nogle få spørgsmål om din oplevelse med at styre denne kontaktløse skærm - ${interactionCTAText.da} herunder`
+                            : `Help us by answering a few questions about your experience controlling this touchless display - ${interactionCTAText.en} below`
                     }
                     goBackOneStep={handleGoingBackOneStep}
+                    interactionType={interactionType}
                     logAndReset={logAndReset}
                 />
                 <WelcomePage
