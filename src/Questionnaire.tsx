@@ -11,13 +11,15 @@ import WelcomePage from './WelcomePage';
 import ButtonQuestion from './QuestionTypes/ButtonQuestion';
 import SwitchLanguageButton from './SwitchLanguageButton';
 import { useConnectionChange, useGoToStartElement } from 'touchless-navigation';
+import { InteractionType } from './App';
 
 export interface QuestionnaireProps {
     showQR: boolean
     nextInteractionType: CallableFunction;
+    interactionType: InteractionType;
 }
 
-const Questionnaire: React.SFC<QuestionnaireProps> = ({ showQR, nextInteractionType }) => {
+const Questionnaire: React.SFC<QuestionnaireProps> = ({ showQR, nextInteractionType, interactionType }) => {
     const [currentStep, setCurrentStep] = useState<number>(0)
     const [questionnaireAnswers, setQuestionnaireAnswers] = useState<
         { question: string; answer: string | number | string[] }[]
@@ -80,23 +82,20 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({ showQR, nextInteractionT
             <Progressbar maxSteps={maxQuestions} currentStep={currentStep} />
 
             <SwitchLanguageButton
-                renderOnStep={
-                    currentStep
-                } /* needs a way of setting const in QuestionSettings to english */
+                renderOnStep = { currentStep } /* needs a way of setting const in QuestionSettings to english */
             />
 
             <div className="h-screen flex justify-center items-center">
                 {/* Demo data  */}
 
                 <ButtonQuestion
-                    currentStep={currentStep}
-                    goBackOneStep={handleGoingBackOneStep}
-                    handleChoice={handleAnswer}
-                    renderOnStep={1}
-                    firstButtonText={language === 'Danish' ? 'Ja' : 'Yes'}
-                    secondButtonText={language === 'Danish' ? 'Nej' : 'No'}
-                    question={
-                        language === 'Danish'
+                    currentStep={ currentStep }
+                    goBackOneStep={ handleGoingBackOneStep }
+                    handleChoice={ handleAnswer }
+                    renderOnStep={ 1 }
+                    firstButtonText={ language === 'Danish' ? 'Ja' : 'Yes' }
+                    secondButtonText={ language === 'Danish' ? 'Nej' : 'No' }
+                    question={ language === 'Danish'
                             ? 'Sprittede du dine hænder da du gik ind?'
                             : 'Did you sanitize or wash your hands when you entered the building?'
                     }
@@ -208,6 +207,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({ showQR, nextInteractionT
                     rangeMax={100}
                     rangeMin={0}
                     startValue={50}
+                    interactionType={interactionType}
                 />
 
                 {/* <TextQuestion

@@ -7,6 +7,7 @@ import React, {
     useMemo,
 } from 'react';
 import { Touchless, useCustomKeys } from 'touchless-navigation';
+import { InteractionType, hasCursor} from '../App';
 import BackButton from '../BackButton';
 import NextButton from '../NextButton';
 import { LanguageContext } from '../QuestionSettings';
@@ -24,6 +25,7 @@ export interface SliderQuestionProps {
     maxLabel?: string;
     handleChoice: (question: string, answer: string) => void;
     goBackOneStep: () => void;
+    interactionType: InteractionType;
 }
 
 const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
@@ -39,6 +41,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
         maxLabel,
         handleChoice,
         goBackOneStep,
+        interactionType
     } = props;
     const labelsRef = useRef<HTMLSpanElement>(null);
     const [selectedValue, setSelectedValue] = useState<number>(startValue);
@@ -63,7 +66,8 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
         'transition',
         'scale-100',
     ];
-
+    const usingCursor = useMemo(()=> hasCursor.has(interactionType), [interactionType]);
+    
     const updateSelected = useCallback(
         (value: number) => {
             if (intervals && labelsRef.current) {
@@ -212,8 +216,25 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                 <div className={`${usingCustomKeys ? '' : ''}`}>
                                     <Touchless
                                         startElement={true}
-                                        onClick={() => {
-                                            if (!usingCustomKeys) {
+                                        onClick={(e) => {
+                                            console.log(e)
+                                            if(usingCursor && !e.isTrusted){
+                                                const cursor = document.querySelector('.cursor')?.getBoundingClientRect();
+                                                const slider = sliderRef.current?.getBoundingClientRect();
+                                              
+                                                if(slider && cursor){
+                                                    const cursorPos = (cursor.x + cursor.width/2) - slider.left;
+                                                    const percent = Math.round((cursorPos/slider.width) * rangeMax);
+                                                    const newSelected = percent > rangeMax ? 
+                                                                        rangeMax 
+                                                                    :   percent < rangeMin ? 
+                                                                        rangeMin 
+                                                                    :   percent;
+
+                                                    setSelectedValue(newSelected);
+                                                    updateSelected(newSelected)
+                                                }
+                                            } else if (!usingCustomKeys) {
                                                 initiate();
 
                                                 if (sliderRef.current) {
@@ -237,9 +258,12 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                                 }
                                                 handleTouchlessClick(false);
                                             }
-                                            setUsingCustomKeys(
+                                            if(!usingCursor && !e.isTrusted){
+                                               setUsingCustomKeys(
                                                 (prevValue) => !prevValue
-                                            );
+                                                ); 
+                                            }
+                                            
                                         }}
                                         className={`shadow-inactive rounded-xl border-4 border-transparent py-4 px-2 ${
                                             usingCustomKeys ? '' : ''
@@ -253,17 +277,23 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                             max={rangeMax}
                                             value={selectedValue}
                                             step={intervals}
-                                            onChange={(e) =>
+                                            onClick={(e)=>{
+                                                console.log('input Range onclick ', e)
+                                            }}
+                                            onChange={(e) =>{
+                                                console.log('input range onchange', e.target.value);
+                                                setSelectedValue(parseInt(e.target.value));
                                                 updateSelected(
                                                     parseInt(e.target.value)
                                                 )
-                                            }
+                                            }}
                                             className={`shadow-inactive overflow-hidden h-5 outline-none block w-full slider ${
                                                 usingCustomKeys ? '' : ''
                                             }`}
                                         />
                                     </Touchless>
                                 </div>
+
                                 <span
                                     ref={labelsRef}
                                     className="flex justify-between font-normal text-4xl mt-6 px-10 text-blue-500 mx-2"
