@@ -12,11 +12,13 @@ import ButtonQuestion from './QuestionTypes/ButtonQuestion';
 import SwitchLanguageButton from './SwitchLanguageButton';
 import { useFirestore, fb } from './firebase';
 import { useConnectionChange, useGoToStartElement } from 'touchless-navigation';
+import { InteractionType } from './App';
 
 export interface QuestionnaireProps {
     showQR: boolean;
     interactionType: string;
     nextInteractionType: CallableFunction;
+    interactionType: InteractionType;
 }
 
 const Questionnaire: React.SFC<QuestionnaireProps> = ({
@@ -106,23 +108,20 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({
             <Progressbar maxSteps={maxQuestions} currentStep={currentStep} />
 
             <SwitchLanguageButton
-                renderOnStep={
-                    currentStep
-                } /* needs a way of setting const in QuestionSettings to english */
+                renderOnStep = { currentStep } /* needs a way of setting const in QuestionSettings to english */
             />
 
             <div className="h-screen flex justify-center items-center">
                 {/* Demo data  */}
 
                 <ButtonQuestion
-                    currentStep={currentStep}
-                    goBackOneStep={handleGoingBackOneStep}
-                    handleChoice={handleAnswer}
-                    renderOnStep={1}
-                    firstButtonText={language === 'Danish' ? 'Ja' : 'Yes'}
-                    secondButtonText={language === 'Danish' ? 'Nej' : 'No'}
-                    question={
-                        language === 'Danish'
+                    currentStep={ currentStep }
+                    goBackOneStep={ handleGoingBackOneStep }
+                    handleChoice={ handleAnswer }
+                    renderOnStep={ 1 }
+                    firstButtonText={ language === 'Danish' ? 'Ja' : 'Yes' }
+                    secondButtonText={ language === 'Danish' ? 'Nej' : 'No' }
+                    question={ language === 'Danish'
                             ? 'Sprittede du dine hænder da du gik ind?'
                             : 'Did you sanitize or wash your hands when you entered the building?'
                     }
@@ -234,6 +233,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({
                     rangeMax={100}
                     rangeMin={0}
                     startValue={50}
+                    interactionType={interactionType}
                 />
 
                 {/* <TextQuestion
