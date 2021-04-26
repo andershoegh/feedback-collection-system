@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
-import { Touchless } from 'touchless-navigation';
+import React, { useContext, useState, useEffect, useRef } from 'react';
+import { Touchless, useRedirectPhone } from 'touchless-navigation';
 import BackButton from '../BackButton';
 import { LanguageContext } from '../QuestionSettings';
+import surveyQR from '../Resources/surveyQR.gif';
 
 export interface FinishedPageProps {
     currentStep: number;
@@ -9,12 +10,49 @@ export interface FinishedPageProps {
     text: string;
     subText: string;
     goBackOneStep: () => void;
+    interactionType: string;
     logAndReset: () => void;
 }
 
 const FinishedPage: React.FC<FinishedPageProps> = (props) => {
-    const { currentStep, renderOnStep, text, subText, goBackOneStep, logAndReset } = props;
+    const {
+        currentStep,
+        renderOnStep,
+        text,
+        subText,
+        goBackOneStep,
+        interactionType,
+        logAndReset,
+    } = props;
     const { language } = useContext(LanguageContext);
+    const redirectPhone = useRedirectPhone();
+    const RESET_DELAY = 30 * 1000;
+    let resetInterval = useRef<ReturnType<typeof setInterval>>();
+    const [countdown, setCountdown] = useState<number>(RESET_DELAY);
+    const isUsingPhone = interactionType.substr(0, 5) === 'phone';
+
+    useEffect(() => {
+        if (currentStep === renderOnStep) {
+            let timeLeft = RESET_DELAY / 1000;
+            setCountdown(timeLeft);
+            resetInterval.current = setInterval(() => {
+                setCountdown(timeLeft);
+
+                if (timeLeft < 1) {
+                    clearInterval(resetInterval.current!);
+                    logAndReset();
+                }
+
+                timeLeft--;
+            }, 1000);
+        } else {
+            clearInterval(resetInterval.current!);
+        }
+
+        return () => {
+            clearInterval(resetInterval.current!);
+        };
+    }, [currentStep, renderOnStep, RESET_DELAY, logAndReset]);
 
     return (
         <>
@@ -30,21 +68,36 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
                         <div className="text-5xl leading-10 font-medium">
                             {text}
                         </div>
-                        <div className="font-normal text-gray-600 mt-6 text-2xl">
+                        <div className="font-normal text-gray-600 mt-6 text-2xl w-3/4">
                             {subText}
                         </div>
-                        <Touchless
-                            startElement={true}
-                            onClick={logAndReset
-                                // (window.location.href =
-                                //     'https://andershansen393483.typeform.com/to/DaDEYAf6')
-                            }
-                            className={`shadow-inactive py-6 px-32 text-3xl border-4 border-transparent rounded-xl my-8`}
-                        >
-                            {language.trim() === 'Danish'.trim()
-                                ? 'Hjælp os ved at give feedback'
-                                : 'Help us by giving feedback'}
-                        </Touchless>
+                        {isUsingPhone ? (
+                            <Touchless
+                                startElement={true}
+                                onClick={() => {
+                                    redirectPhone(
+                                        'https://www.survey-xact.dk/LinkCollector?key=JF64NTP2L19P'
+                                    );
+                                    logAndReset();
+                                }}
+                                className={`shadow-inactive py-6 px-32 text-3xl max-w-2xl border-4 border-transparent rounded-xl my-8`}
+                            >
+                                {language.trim() === 'Danish'.trim()
+                                    ? 'Hjælp os ved at give feedback'
+                                    : 'Help us by giving feedback'}
+                            </Touchless>
+                        ) : (
+                            <Touchless
+                                className={`shadow-inactive w-1/3 p-0.5 text-3xl border-4 border-transparent rounded-xl my-8`}
+                            >
+                                <img src={surveyQR} alt="survey QR code" />
+                            </Touchless>
+                        )}
+                    </div>
+                    <div className="absolute bottom-10 right-0 left-0">
+                        {language.trim() === 'Danish'.trim()
+                            ? `Gør klar til en ny besvarelse om ${countdown}`
+                            : `Getting ready for another reply in ${countdown}`}
                     </div>
                 </div>
             )}
