@@ -4,13 +4,16 @@ import Guide from './Guide'
 import Questionnaire from './Questionnaire'
 import { TouchlessApp } from 'touchless-navigation'
 import LanguageContextProvider from './QuestionSettings'
-const interactionTypes: readonly ('phoneHighlight' | 'phoneCursor' | 'leapMotion' | 'leapMotionPinch')[] = Object.freeze([
+export type InteractionType = 'phoneHighlight' | 'phoneCursor' | 'leapMotion' | 'leapMotionPinch';
+export const interactionTypes: readonly (InteractionType)[] = Object.freeze([
     'phoneHighlight',
     'phoneCursor',
     'leapMotion',
     'leapMotionPinch'
 ]);
+
 const containsQRCode = new Set(['phoneHighlight', 'phoneCursor']);
+export const hasCursor = new Set(['leapMotion', 'phoneCursor', 'leapMotionPinch']);
 
 const App = () => {
     const [interactionTypeIndex, setInteractionTypeIndex] = useState(0)
@@ -28,7 +31,7 @@ const App = () => {
                 <div className="flex font-body">
                     <button onClick={nextInteractionType}>TEST ME</button>
                     <Guide interactionSelected={interactionType} />
-                    <Questionnaire showQR={showQR} nextInteractionType={nextInteractionType}/>
+                    <Questionnaire showQR={showQR} nextInteractionType={nextInteractionType} interactionType={interactionType}/>
                 </div>
             </LanguageContextProvider>
         </TouchlessApp>
