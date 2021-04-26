@@ -16,7 +16,6 @@ import { InteractionType } from './App';
 
 export interface QuestionnaireProps {
     showQR: boolean;
-    interactionType: string;
     nextInteractionType: CallableFunction;
     interactionType: InteractionType;
 }
@@ -108,20 +107,23 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({
             <Progressbar maxSteps={maxQuestions} currentStep={currentStep} />
 
             <SwitchLanguageButton
-                renderOnStep = { currentStep } /* needs a way of setting const in QuestionSettings to english */
+                renderOnStep={
+                    currentStep
+                } /* needs a way of setting const in QuestionSettings to english */
             />
 
             <div className="h-screen flex justify-center items-center">
                 {/* Demo data  */}
 
                 <ButtonQuestion
-                    currentStep={ currentStep }
-                    goBackOneStep={ handleGoingBackOneStep }
-                    handleChoice={ handleAnswer }
-                    renderOnStep={ 1 }
-                    firstButtonText={ language === 'Danish' ? 'Ja' : 'Yes' }
-                    secondButtonText={ language === 'Danish' ? 'Nej' : 'No' }
-                    question={ language === 'Danish'
+                    currentStep={currentStep}
+                    goBackOneStep={handleGoingBackOneStep}
+                    handleChoice={handleAnswer}
+                    renderOnStep={1}
+                    firstButtonText={language === 'Danish' ? 'Ja' : 'Yes'}
+                    secondButtonText={language === 'Danish' ? 'Nej' : 'No'}
+                    question={
+                        language === 'Danish'
                             ? 'Sprittede du dine hænder da du gik ind?'
                             : 'Did you sanitize or wash your hands when you entered the building?'
                     }

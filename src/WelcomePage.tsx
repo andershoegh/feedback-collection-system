@@ -1,17 +1,17 @@
-import React from 'react'
-import { MobileQR, Touchless } from 'touchless-navigation'
-import DKFlag from './Resources/DKFlag'
-import GBFlag from './Resources/GBFlag'
+import React from 'react';
+import { MobileQR, Touchless } from 'touchless-navigation';
+import DKFlag from './Resources/DKFlag';
+import GBFlag from './Resources/GBFlag';
 
 export interface WelcomePageProps {
-    currentStep: number
-    renderOnStep: number
-    startQuestionnaire: () => void
-    showQR: boolean
+    currentStep: number;
+    renderOnStep: number;
+    startQuestionnaire: () => void;
+    showQR: boolean;
 }
 
 const WelcomePage: React.FC<WelcomePageProps> = (props) => {
-    const { currentStep, renderOnStep, startQuestionnaire, showQR } = props
+    const { currentStep, renderOnStep, startQuestionnaire, showQR } = props;
 
     return (
         <>
@@ -55,8 +55,25 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                                 onClick={startQuestionnaire}
                                 className={`${buttonStyle} w-80 h-80 text-center justify-center place-items-center flex mt-4`}
                             >
-                                {showQR ? <MobileQR logLink={true} /> : <h2>TRYK HER FOR AT STARTE</h2>}
+                                {showQR ? (
+                                    <MobileQR logLink={true} />
+                                ) : (
+                                    <h2>TRYK HER FOR AT STARTE</h2>
+                                )}
                             </Touchless>
+                        </div>
+
+                        <div className="mt-40 text-gray-600 ">
+                            <div className="mb-2">
+                                Det er et krav at udfylde spørgeskemaet efter
+                                brug af systemet for at kunne deltage i
+                                konkurrencen om gavekortet.
+                            </div>
+                            <div>
+                                It is a requirement to fill out the
+                                questionnaire after using the system to be able
+                                to participate in the gift card competition.
+                            </div>
                         </div>
                     </div>
                 </div>
