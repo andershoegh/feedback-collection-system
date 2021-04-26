@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
-import './App.css'
-import Guide from './Guide'
-import Questionnaire from './Questionnaire'
-import { TouchlessApp } from 'touchless-navigation'
-import LanguageContextProvider from './QuestionSettings'
-export type InteractionType = 'phoneHighlight' | 'phoneCursor' | 'leapMotion' | 'leapMotionPinch';
-export const interactionTypes: readonly (InteractionType)[] = Object.freeze([
+import React, { useState } from 'react';
+import './App.css';
+import Guide from './Guide';
+import Questionnaire from './Questionnaire';
+import { TouchlessApp } from 'touchless-navigation';
+import LanguageContextProvider from './QuestionSettings';
+export type InteractionType =
+    | 'phoneHighlight'
+    | 'phoneCursor'
+    | 'leapMotion'
+    | 'leapMotionPinch';
+export const interactionTypes: readonly InteractionType[] = Object.freeze([
     'phoneHighlight',
     'phoneCursor',
     'leapMotion',
@@ -13,7 +17,11 @@ export const interactionTypes: readonly (InteractionType)[] = Object.freeze([
 ]);
 
 const containsQRCode = new Set(['phoneHighlight', 'phoneCursor']);
-export const hasCursor = new Set(['leapMotion', 'phoneCursor', 'leapMotionPinch']);
+export const hasCursor = new Set([
+    'leapMotion',
+    'phoneCursor',
+    'leapMotionPinch',
+]);
 
 const App = () => {
     const [interactionTypeIndex, setInteractionTypeIndex] = useState(0);
@@ -30,7 +38,7 @@ const App = () => {
         <TouchlessApp secondaryThreshold={50} interactionType={interactionType}>
             <LanguageContextProvider>
                 <div className="flex font-body">
-                    <button onClick={nextInteractionType}>TEST ME</button>
+                    {/* <button onClick={nextInteractionType}>TEST ME</button> */}
                     <Guide interactionSelected={interactionType} />
                     <Questionnaire
                         showQR={showQR}
