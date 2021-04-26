@@ -10,6 +10,7 @@ import { LanguageContext, maxQuestions } from './QuestionSettings';
 import WelcomePage from './WelcomePage';
 import ButtonQuestion from './QuestionTypes/ButtonQuestion';
 import SwitchLanguageButton from './SwitchLanguageButton';
+import { useFirestore, fb } from './firebase';
 import { useConnectionChange, useGoToStartElement } from 'touchless-navigation';
 
 export interface QuestionnaireProps {
@@ -27,6 +28,10 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({
     const [questionnaireAnswers, setQuestionnaireAnswers] = useState<
         { question: string; answer: string | number | string[] }[]
     >([]);
+    const { language } = useContext(LanguageContext);
+    const fs = useFirestore();
+    const connected = useConnectionChange();
+    const goToStart = useRef(useGoToStartElement());
     const interactionCTAText = {
         da:
             interactionType.substr(0, 5) === 'phone'
@@ -37,10 +42,6 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({
                 ? 'click the link'
                 : 'scan the QR code',
     };
-
-    const { language } = useContext(LanguageContext);
-    const connected = useConnectionChange();
-    const goToStart = useRef(useGoToStartElement());
 
     useEffect(() => {
         if (connected === true) {
@@ -72,7 +73,17 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({
     // Handles full completion of the questionnaire and resetting for a new participant
     const logAndReset = () => {
         // Sends questionnaireAnswers to db and then resets
-        // * FUNCTIONAL CODE GOES HERE *
+        const answers = [...questionnaireAnswers];
+        fs.collection('questionnaire')
+            .doc()
+            .set({
+                answers,
+                created: fb.FieldValue.serverTimestamp(),
+            })
+            .then(() => console.log('Successfully added ansers to DB'))
+            .catch((err: string) =>
+                console.log('There was an error saving to firestore: ' + err)
+            );
 
         setQuestionnaireAnswers([]);
         setCurrentStep(0);
