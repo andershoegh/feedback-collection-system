@@ -5,6 +5,8 @@ import BackButton from '../BackButton';
 import NextButton from '../NextButton';
 import { LanguageContext } from '../QuestionSettings';
 
+const concatAmount = (oldAmount: string, newAmount: string) => oldAmount.trim() === '0'.trim() ? newAmount : oldAmount.concat(newAmount);
+
 export interface NumericalQuestionProps {}
 
 const NumericalQuestion: React.SFC<{
@@ -16,7 +18,7 @@ const NumericalQuestion: React.SFC<{
 }> = ({ currentStep, renderOnStep, question, handleChoice, goBackOneStep }) => {
     const [amount, setAmount] = useState<string>('');
     const { language } = useContext(LanguageContext);
-
+    
     return (
         <>
             {currentStep !== renderOnStep ? null : (
@@ -40,12 +42,26 @@ const NumericalQuestion: React.SFC<{
                         </div>
                         <div className="flex justify-center mt-8 font-medium text-8xl text-blue-600">
                             <span className="">
-                                {amount === '0' ? '' : amount}{' '}
+                                {amount}
                             </span>
                             <span className="animate-pulse font-light">|</span>
                         </div>
                         <div className="grid-cols-3  grid w-96 gap-3 mt-20 justify-items-center mx-auto text-4xl font-medium">
-                            <Touchless
+                            {[...Array(10)].map((el, index)=>{
+                                const i = index === 9 ? 0 : index + 1;
+                                return (
+                                    <Touchless
+                                        startElement={i===1}
+                                        onClick={() => setAmount(concatAmount(amount, i.toString()))}
+                                        className={`shadow-inactive rounded-xl px-12 py-8 border-4 border-transparent`}
+                                        key={index}
+                                    >
+                                        {i}
+                                    </Touchless>
+                                )
+                            }
+                            )}
+                            {/* <Touchless
                                 startElement={true}
                                 onClick={() => setAmount(amount + '1')}
                                 className={`shadow-inactive rounded-xl px-12 py-8 border-4 border-transparent`}
@@ -114,7 +130,7 @@ const NumericalQuestion: React.SFC<{
                                 className={`shadow-inactive rounded-xl px-12 py-8 border-4 border-transparent`}
                             >
                                 0
-                            </Touchless>
+                            </Touchless> */}
 
                             <Touchless
                                 onClick={() =>

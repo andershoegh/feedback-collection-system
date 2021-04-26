@@ -16,8 +16,7 @@ import { InteractionType } from './App';
 
 export interface QuestionnaireProps {
     showQR: boolean;
-    interactionType: string;
-    nextInteractionType: CallableFunction;
+    nextInteractionType: ()=>void;
     interactionType: InteractionType;
 }
 

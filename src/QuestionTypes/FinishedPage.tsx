@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Touchless, useRedirectPhone } from 'touchless-navigation';
+import { InteractionType } from '../App';
 import BackButton from '../BackButton';
 import { LanguageContext } from '../QuestionSettings';
 import surveyQR from '../Resources/surveyQR.gif';
@@ -10,7 +11,7 @@ export interface FinishedPageProps {
     text: string;
     subText: string;
     goBackOneStep: () => void;
-    interactionType: string;
+    interactionType: InteractionType;
     logAndReset: () => void;
 }
 
