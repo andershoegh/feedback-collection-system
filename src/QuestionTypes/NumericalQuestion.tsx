@@ -125,7 +125,7 @@ const NumericalQuestion: React.SFC<{
                                 className={`shadow-inactive rounded-xl px-20 py-3 border-4 border-transparent col-span-2 flex items-center font-normal text-3xl`}
                             >
                                 <Backspace className="mr-2" />
-                                {language === 'Danish' ? 'Slet' : 'Delete'}
+                                {language === 'Danish' ? 'Slet' : 'Del'}
                             </Touchless>
                         </div>
                     </div>
