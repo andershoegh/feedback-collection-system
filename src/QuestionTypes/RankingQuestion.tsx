@@ -156,11 +156,11 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                             </div>
                             <div className="font-bold text-xl text-gray-600 mt-4">
                                 {language.trim() === 'Danish'.trim()
-                                    ? 'Tryk for at justere rækkefølge. Tryk igen for at navigere videre.'
-                                    : 'Tap to adjust order. Tap again to navigate again.'}
+                                    ? 'Tryk på to af svarene for at bytte deres plads.'
+                                    : 'Tap two of the answers to switch their placement'}
                             </div>
                             <div className="flex row-auto text-2xl font-normal mt-4 w-full">
-                                <div className="flex flex-col text-xl justify-between mr-6 py-5">
+                                <div className="flex flex-col text-xl justify-between mr-6 py-7">
                                     {list.map((item, index) => {
                                         return (
                                             <div
@@ -179,7 +179,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                                 key={item}
                                                 startElement={0 === index}
                                                 className={
-                                                    'shadow-inactive rounded-xl text-2xl flex items-center bg-white p-4 py-3 mb-5 w-full border-4 border-transparent'
+                                                    'shadow-inactive rounded-xl text-2xl flex items-center bg-white p-4 py-6 mb-5 w-full border-4 border-transparent'
                                                 }
                                                 onClick={(e) => {
                                                     const target = e.target as HTMLDivElement;
