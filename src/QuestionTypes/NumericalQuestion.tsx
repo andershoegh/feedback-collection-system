@@ -6,6 +6,7 @@ import NextButton from '../NextButton';
 import { LanguageContext } from '../QuestionSettings';
 
 const concatAmount = (oldAmount: string, newAmount: string) => oldAmount.trim() === '0'.trim() ? newAmount : oldAmount.concat(newAmount);
+const numbersArray: readonly number[]  = Object.freeze([1,2,3,4,5,6,7,8,9,0]);
 
 export interface NumericalQuestionProps {}
 
@@ -18,11 +19,19 @@ const NumericalQuestion: React.SFC<{
 }> = ({ currentStep, renderOnStep, question, handleChoice, goBackOneStep }) => {
     const [amount, setAmount] = useState<string>('');
     const { language } = useContext(LanguageContext);
-    
+    const buttonGenerator = (i: number) => (<Touchless
+        startElement={i===1}
+        onClick={() => setAmount(concatAmount(amount, i.toString()))}
+        className={`shadow-inactive rounded-xl text-center px-10 py-8 border-4 border-transparent w-full h-full number-${i}`}
+        key={i+'key'}
+        
+    >
+        {i}
+    </Touchless>)
     return (
         <>
             {currentStep !== renderOnStep ? null : (
-                <div className="w-4/5 h-screen relative flex items-center justify-center">
+                <div className="w-4/5 h-screen relative flex items-center justify-center ">
                     <BackButton
                         currentStep={currentStep}
                         onClick={() =>
@@ -46,101 +55,20 @@ const NumericalQuestion: React.SFC<{
                             </span>
                             <span className="animate-pulse font-light">|</span>
                         </div>
+                        
                         <div className="grid-cols-3  grid w-96 gap-3 mt-20 justify-items-center mx-auto text-4xl font-medium">
-                            {[...Array(10)].map((el, index)=>{
-                                const i = index === 9 ? 0 : index + 1;
-                                return (
-                                    <Touchless
-                                        startElement={i===1}
-                                        onClick={() => setAmount(concatAmount(amount, i.toString()))}
-                                        className={`shadow-inactive rounded-xl px-12 py-8 border-4 border-transparent`}
-                                        key={index}
-                                    >
-                                        {i}
-                                    </Touchless>
-                                )
-                            }
-                            )}
-                            {/* <Touchless
-                                startElement={true}
-                                onClick={() => setAmount(amount + '1')}
-                                className={`shadow-inactive rounded-xl px-12 py-8 border-4 border-transparent`}
-                            >
-                                1
-                            </Touchless>
+
+                            { numbersArray.map((num)=> buttonGenerator(num) ) }
 
                             <Touchless
-                                onClick={() => setAmount(amount + '2')}
-                                className={`shadow-inactive rounded-xl px-12 py-8 border-4 border-transparent`}
-                            >
-                                2
-                            </Touchless>
-
-                            <Touchless
-                                onClick={() => setAmount(amount + '3')}
-                                className={`shadow-inactive rounded-xl px-12 py-8 border-4 border-transparent`}
-                            >
-                                3
-                            </Touchless>
-
-                            <Touchless
-                                onClick={() => setAmount(amount + '4')}
-                                className={`shadow-inactive rounded-xl px-12 py-8 border-4 border-transparent`}
-                            >
-                                4
-                            </Touchless>
-
-                            <Touchless
-                                onClick={() => setAmount(amount + '5')}
-                                className={`shadow-inactive rounded-xl px-12 py-8 border-4 border-transparent`}
-                            >
-                                5
-                            </Touchless>
-
-                            <Touchless
-                                onClick={() => setAmount(amount + '6')}
-                                className={`shadow-inactive rounded-xl px-12 py-8 border-4 border-transparent`}
-                            >
-                                6
-                            </Touchless>
-
-                            <Touchless
-                                onClick={() => setAmount(amount + '7')}
-                                className={`shadow-inactive rounded-xl px-12 py-8 border-4 border-transparent`}
-                            >
-                                7
-                            </Touchless>
-
-                            <Touchless
-                                onClick={() => setAmount(amount + '8')}
-                                className={`shadow-inactive rounded-xl px-12 py-8 border-4 border-transparent`}
-                            >
-                                8
-                            </Touchless>
-
-                            <Touchless
-                                onClick={() => setAmount(amount + '9')}
-                                className={`shadow-inactive rounded-xl px-12 py-8 border-4 border-transparent`}
-                            >
-                                9
-                            </Touchless>
-
-                            <Touchless
-                                onClick={() => setAmount(amount + '0')}
-                                className={`shadow-inactive rounded-xl px-12 py-8 border-4 border-transparent`}
-                            >
-                                0
-                            </Touchless> */}
-
-                            <Touchless
-                                onClick={() =>
+                                onClick={() =>{
                                     setAmount(
                                         amount.substring(0, amount.length - 1)
-                                    )
+                                    )}
                                 }
-                                className={`shadow-inactive rounded-xl px-20 py-3 border-4 border-transparent col-span-2 flex items-center font-normal text-3xl`}
+                                className={`shadow-inactive rounded-xl px-10 h-full w-full mx-auto border-4 border-transparent col-span-2 flex items-center font-normal text-3xl number-del`}
                             >
-                                <Backspace className="mr-2" />
+                                <Backspace className="mr-3" />
                                 {language === 'Danish' ? 'Slet' : 'Delete'}
                             </Touchless>
                         </div>
