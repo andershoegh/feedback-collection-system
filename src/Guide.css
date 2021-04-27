@@ -10,6 +10,8 @@ PHONE STYLING
 .phone {
     width: 90%;
     height: 80%;
+    max-width: 150px;
+    max-height: 300px;
     position: absolute;
     top: 0;
     left: 50%;
