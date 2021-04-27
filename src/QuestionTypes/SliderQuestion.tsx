@@ -192,7 +192,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                     <div className="w-full">
                         <BackButton
                             currentStep={currentStep}
-                            onClick={() => goBackOneStep()}
+                            onClick={goBackOneStep}
                         />
                         <div className="w-full">
                             <div className="text-5xl leading-normal font-medium">
@@ -317,12 +317,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                         <NextButton
                             currentStep={currentStep}
                             onClick={() =>
-                                setTimeout(() => {
-                                    handleChoice(
-                                        question,
-                                        selectedValue.toString()
-                                    );
-                                }, 200)
+                                handleChoice(question, selectedValue.toString())
                             }
                         />
                     </div>

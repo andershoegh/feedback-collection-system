@@ -1,7 +1,12 @@
 import { ArrowRight } from 'phosphor-react';
 import React, { useContext } from 'react';
 import { Touchless } from 'touchless-navigation';
-import { LanguageContext, maxQuestions } from './QuestionSettings';
+import {
+    LanguageContext,
+    maxQuestions,
+    buttonStyle,
+    animateClick,
+} from './QuestionSettings';
 
 export interface NextButtonProps {
     onClick: () => void;
@@ -13,8 +18,11 @@ const NextButton: React.SFC<NextButtonProps> = ({ onClick, currentStep }) => {
     return (
         <div className="absolute bottom-10 right-0">
             <Touchless
-                onClick={onClick}
-                className={`shadow-inactive text-3xl rounded-xl px-20 py-8 flex place-items-center border-4 border-transparent`}
+                onClick={(e) => {
+                    animateClick(e);
+                    setTimeout(() => onClick(), 200);
+                }}
+                className={`${buttonStyle} shadow-inactive text-3xl rounded-xl px-20 py-8 flex place-items-center border-4 border-transparent `}
             >
                 {maxQuestions === currentStep
                     ? language === 'Danish'

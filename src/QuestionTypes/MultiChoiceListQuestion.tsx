@@ -3,7 +3,7 @@ import React, { useState, useContext } from 'react';
 import { Touchless } from 'touchless-navigation';
 import BackButton from '../BackButton';
 import NextButton from '../NextButton';
-import { LanguageContext } from '../QuestionSettings';
+import { animateClick, LanguageContext } from '../QuestionSettings';
 
 export interface MultiChoiceListQuestionProps {
     currentStep: number;
@@ -31,11 +31,7 @@ const MultiChoiceListQuestion: React.SFC<MultiChoiceListQuestionProps> = ({
                 <div className="w-4/5 relative h-screen flex items-center justify-center">
                     <BackButton
                         currentStep={currentStep}
-                        onClick={() =>
-                            setTimeout(() => {
-                                goBackOneStep();
-                            }, 200)
-                        }
+                        onClick={goBackOneStep}
                     />
 
                     <div className="">
@@ -89,7 +85,8 @@ const Checkbox: React.SFC<CheckboxProps> = ({ answer, updateAnswers }) => {
                 checked ? 'bg-blue-100' : ''
             }`}
             startElement={true}
-            onClick={() => {
+            onClick={(e) => {
+                animateClick(e);
                 setChecked(!checked);
                 updateAnswers(answer);
             }}

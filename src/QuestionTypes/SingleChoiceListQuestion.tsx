@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Touchless } from 'touchless-navigation';
 import BackButton from '../BackButton';
-import { LanguageContext } from '../QuestionSettings';
+import { animateClick, LanguageContext } from '../QuestionSettings';
 
 export interface SingleChoiceListQuestionProps {
     currentStep: number;
@@ -28,11 +28,7 @@ const SingleChoiceListQuestion: React.SFC<SingleChoiceListQuestionProps> = ({
                 <div className="w-4/5 relative h-screen flex items-center justify-center">
                     <BackButton
                         currentStep={currentStep}
-                        onClick={() =>
-                            setTimeout(() => {
-                                goBackOneStep();
-                            }, 200)
-                        }
+                        onClick={goBackOneStep}
                     />
                     <div className="">
                         <div className="text-5xl leading-10 font-medium">
@@ -48,11 +44,17 @@ const SingleChoiceListQuestion: React.SFC<SingleChoiceListQuestionProps> = ({
                                         className={`shadow-inactive rounded-xl pl-4 py-6 mb-5 border-4 text-2xl border-transparent`}
                                         key={answer}
                                         startElement={i === 0}
-                                        onClick={() =>
-                                            setTimeout(() => {
-                                                handleChoice(question, answer);
-                                            }, 200)
-                                        }
+                                        onClick={(e) => {
+                                            animateClick(e);
+                                            setTimeout(
+                                                () =>
+                                                    handleChoice(
+                                                        question,
+                                                        answer
+                                                    ),
+                                                200
+                                            );
+                                        }}
                                     >
                                         {answer}
                                     </Touchless>

@@ -1,7 +1,11 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { Touchless, useRedirectPhone } from 'touchless-navigation';
+import {
+    Touchless,
+    useRedirectPhone,
+    useNewSession,
+} from 'touchless-navigation';
 import BackButton from '../BackButton';
-import { LanguageContext } from '../QuestionSettings';
+import { LanguageContext, animateClick } from '../QuestionSettings';
 import surveyQR from '../Resources/surveyQR.gif';
 
 export interface FinishedPageProps {
@@ -26,6 +30,7 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
     } = props;
     const { language } = useContext(LanguageContext);
     const redirectPhone = useRedirectPhone();
+    const newSession = useNewSession();
     const RESET_DELAY = 30 * 1000;
     let resetInterval = useRef<ReturnType<typeof setInterval>>();
     const [countdown, setCountdown] = useState<number>(RESET_DELAY);
@@ -61,7 +66,7 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
                     <div className="my-10">
                         <BackButton
                             currentStep={currentStep}
-                            onClick={() => goBackOneStep()}
+                            onClick={goBackOneStep}
                         />
                     </div>
                     <div className="">
@@ -74,11 +79,13 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
                         {isUsingPhone ? (
                             <Touchless
                                 startElement={true}
-                                onClick={() => {
+                                onClick={(e) => {
+                                    animateClick(e);
                                     redirectPhone(
                                         'https://www.survey-xact.dk/LinkCollector?key=JF64NTP2L19P'
                                     );
-                                    logAndReset();
+                                    newSession();
+                                    setTimeout(() => logAndReset(), 200);
                                 }}
                                 className={`shadow-inactive py-6 px-32 text-3xl max-w-2xl border-4 border-transparent rounded-xl my-8`}
                             >

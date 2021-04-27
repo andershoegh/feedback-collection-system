@@ -4,19 +4,22 @@ import React, {
     useRef,
     useState,
     useContext,
-} from 'react'
-import { Touchless } from 'touchless-navigation'
-import BackButton from '../BackButton'
-import NextButton from '../NextButton'
-import { LanguageContext } from '../QuestionSettings'
-import './TextQuestion.css'
+} from 'react';
+import { Touchless } from 'touchless-navigation';
+import BackButton from '../BackButton';
+import NextButton from '../NextButton';
+import { LanguageContext } from '../QuestionSettings';
+import './TextQuestion.css';
 
 export interface TextQuestionProps {
-    currentStep: number
-    renderOnStep: number
-    question: string
-    handleChoice: (question: string, answer: string | number | string[]) => void
-    goBackOneStep: () => void
+    currentStep: number;
+    renderOnStep: number;
+    question: string;
+    handleChoice: (
+        question: string,
+        answer: string | number | string[]
+    ) => void;
+    goBackOneStep: () => void;
 }
 
 const TextQuestion: React.FC<TextQuestionProps> = (props) => {
@@ -26,30 +29,30 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
         question,
         handleChoice,
         goBackOneStep,
-    } = props
-    const [answer] = useState<string>('text answer from the phone')
+    } = props;
+    const [answer] = useState<string>('text answer from the phone');
     const [getAnswerText, setGetAnswerText] = useState(
         'Waiting for an answer from your phone'
-    )
-    const [redoAnswer, setRedoAnswer] = useState(false)
-    const dotsRef = useRef<HTMLDivElement>(null)
-    const { language } = useContext(LanguageContext)
+    );
+    const [redoAnswer, setRedoAnswer] = useState(false);
+    const dotsRef = useRef<HTMLDivElement>(null);
+    const { language } = useContext(LanguageContext);
 
     const playAnimation = useCallback(() => {
         const answerReceived = () => {
             if (dotsRef.current) {
                 dotsRef.current.childNodes.forEach((child, index) => {
-                    const c = child as HTMLDivElement
+                    const c = child as HTMLDivElement;
 
                     // Setting check animations
                     if (c.classList.contains('dot')) {
-                        const dotAnimationDuration = ['.5s', '1.4s', '.5s']
-                        const delay = index === 2 ? '.3s' : '0s'
-                        c.style.animation = `completeDot${index} ${dotAnimationDuration[index]} ${delay} forwards`
+                        const dotAnimationDuration = ['.5s', '1.4s', '.5s'];
+                        const delay = index === 2 ? '.3s' : '0s';
+                        c.style.animation = `completeDot${index} ${dotAnimationDuration[index]} ${delay} forwards`;
                     } else {
-                        c.style.display = 'inline'
+                        c.style.display = 'inline';
                     }
-                })
+                });
             }
 
             // Setting the correct display message and showing the redo-button
@@ -61,21 +64,21 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
                             : 'Answer received!'
                     ),
                 1300
-            )
-            setTimeout(() => setRedoAnswer(true), 1700)
-        }
+            );
+            setTimeout(() => setRedoAnswer(true), 1700);
+        };
 
         if (dotsRef.current) {
             dotsRef.current.childNodes.forEach((child, index) => {
-                const c = child as HTMLDivElement
+                const c = child as HTMLDivElement;
 
                 // Setting waiting animation on each dot and hiding the checkmark
                 if (c.classList.contains('dot')) {
-                    c.style.animation = `dotTyping 2s infinite ${index * 0.1}s`
+                    c.style.animation = `dotTyping 2s infinite ${index * 0.1}s`;
                 } else {
-                    c.style.display = 'none'
+                    c.style.display = 'none';
                 }
-            })
+            });
         }
 
         // Setting the correct display message and hiding the redo-button
@@ -83,21 +86,21 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
             language === 'Danish'
                 ? 'Venter på et svar fra din telefon'
                 : 'Waiting for an answer from your phone'
-        )
-        setRedoAnswer(false)
+        );
+        setRedoAnswer(false);
 
         // Auto-runs the answerReceived after 5s - for testing
         setTimeout(() => {
-            answerReceived()
-        }, 5000)
-    }, [language])
+            answerReceived();
+        }, 5000);
+    }, [language]);
 
     // useEffect for running the animation on page load
     useEffect(() => {
         if (currentStep === renderOnStep) {
-            playAnimation()
+            playAnimation();
         }
-    }, [currentStep, renderOnStep, playAnimation])
+    }, [currentStep, renderOnStep, playAnimation]);
 
     return (
         <>
@@ -105,11 +108,7 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
                 <div className="w-4/5 h-screen relative flex items-center justify-center">
                     <BackButton
                         currentStep={currentStep}
-                        onClick={() =>
-                            setTimeout(() => {
-                                goBackOneStep()
-                            }, 200)
-                        }
+                        onClick={goBackOneStep}
                     />
 
                     <div className="">
@@ -148,18 +147,14 @@ const TextQuestion: React.FC<TextQuestionProps> = (props) => {
                     </div>
                     <NextButton
                         onClick={() =>
-                            answer
-                                ? setTimeout(() => {
-                                      handleChoice(question, answer)
-                                  }, 200)
-                                : null
+                            answer ? handleChoice(question, answer) : null
                         }
                         currentStep={currentStep}
                     />
                 </div>
             )}
         </>
-    )
-}
+    );
+};
 
-export default TextQuestion
+export default TextQuestion;

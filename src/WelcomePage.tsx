@@ -1,5 +1,6 @@
 import React from 'react';
 import { MobileQR, Touchless } from 'touchless-navigation';
+import { buttonStyle } from './QuestionSettings';
 import DKFlag from './Resources/DKFlag';
 import GBFlag from './Resources/GBFlag';
 
@@ -83,6 +84,3 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
 };
 
 export default WelcomePage;
-
-const buttonStyle =
-    'shadow-inactive focus:shadow-focused focus:border-blue-500 border-4 border-transparent focus:outline-none rounded-xl active:scale-90 animate transition transform';

@@ -139,11 +139,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                     <div>
                         <BackButton
                             currentStep={currentStep}
-                            onClick={() =>
-                                setTimeout(() => {
-                                    goBackOneStep();
-                                }, 200)
-                            }
+                            onClick={goBackOneStep}
                         />
                         <div className="">
                             <div className="text-5xl leading-10 font-medium">
@@ -203,12 +199,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                         </div>
                         <NextButton
                             currentStep={currentStep}
-                            onClick={() =>
-                                setTimeout(
-                                    () => handleChoice(question, list),
-                                    200
-                                )
-                            }
+                            onClick={() => handleChoice(question, list)}
                         />
                     </div>
                 </div>
