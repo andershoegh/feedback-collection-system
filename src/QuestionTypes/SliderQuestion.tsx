@@ -185,6 +185,16 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
         }
     }, [usingCustomKeys, selectedValue, updateSelected]);
 
+    useEffect(() => {
+        setSelectedValue(oldSelected => {
+            return oldSelected > 100 ? 
+                   100 
+                :  oldSelected < 0 ? 
+                   0 
+                :  oldSelected;
+        })
+    }, [selectedValue])
+
     return (
         <>
             {currentStep !== renderOnStep ? null : (

@@ -4,6 +4,7 @@ import {
     useRedirectPhone,
     useNewSession,
 } from 'touchless-navigation';
+import { InteractionType } from '../App';
 import BackButton from '../BackButton';
 import { LanguageContext, animateClick } from '../QuestionSettings';
 import surveyQR from '../Resources/surveyQR.gif';
@@ -14,7 +15,7 @@ export interface FinishedPageProps {
     text: string;
     subText: string;
     goBackOneStep: () => void;
-    interactionType: string;
+    interactionType: InteractionType;
     logAndReset: () => void;
 }
 
