@@ -80,14 +80,20 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({
                 answers,
                 created: fb.FieldValue.serverTimestamp(),
             })
-            .then(() => console.log('Successfully added ansers to DB'))
+            .then(() => {
+                console.log('Successfully added answers to DB');
+            })
             .catch((err: string) =>
                 console.log('There was an error saving to firestore: ' + err)
-            );
-
-        setQuestionnaireAnswers([]);
-        setCurrentStep(0);
-        nextInteractionType();
+            )
+            .then(() => {
+                // Resets the questionnaire for the next user and changes to the next interaction type
+                setQuestionnaireAnswers([]);
+                nextInteractionType();
+                setTimeout(() => {
+                    setCurrentStep(0);
+                }, 1000);
+            });
     };
 
     const handleGoingBackOneStep = () => {

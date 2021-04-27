@@ -10,11 +10,11 @@
   transition-duration: 150ms;
   box-shadow: 0px 20px 40px 0px rgba(18, 127, 191, 0.2); */
 @layer components {
-  .active {
-    @apply shadow-focused border-4 border-blue-500 border-opacity-100 rounded-xl !important;
-  }
-  .back-btn.active {
-  }
+    .active {
+        @apply shadow-focused border-4 border-blue-500 border-opacity-100 rounded-xl !important;
+    }
+    .back-btn.active {
+    }
 }
 /* } */
 /* focus:shadow-focused focus:outline-none focus:border-4 focus:border-blue-500 focus:border-opacity-100 py-6 px-32 text-3xl rounded-xl m-4"; */

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import BackButton from '../BackButton';
 import { Touchless } from 'touchless-navigation';
-import { LanguageContext } from '../QuestionSettings';
+import { animateClick, LanguageContext } from '../QuestionSettings';
 
 export interface ButtonQuestionProps {}
 
@@ -33,11 +33,7 @@ const ButtonQuestion: React.SFC<{
                     <div className="mb-10 mt-4">
                         <BackButton
                             currentStep={currentStep}
-                            onClick={() =>
-                                setTimeout(() => {
-                                    goBackOneStep();
-                                }, 200)
-                            }
+                            onClick={goBackOneStep}
                         />
                     </div>
                     <div className="">
@@ -50,20 +46,34 @@ const ButtonQuestion: React.SFC<{
                         <div className="flex justify-center mt-40">
                             <Touchless
                                 startElement={true}
-                                onClick={() =>
-                                    setTimeout(() => {
-                                        handleChoice(question, firstButtonText);
-                                    }, 200)
-                                }
+                                onClick={(e) => {
+                                    animateClick(e);
+                                    setTimeout(
+                                        () =>
+                                            handleChoice(
+                                                question,
+                                                firstButtonText
+                                            ),
+                                        200
+                                    );
+                                }}
                                 className={`shadow-inactive py-8 px-40 text-4xl border-4 border-transparent rounded-xl m-4`}
                             >
                                 {firstButtonText}
                             </Touchless>
 
                             <Touchless
-                                onClick={() =>
-                                    handleChoice(question, secondButtonText)
-                                }
+                                onClick={(e) => {
+                                    animateClick(e);
+                                    setTimeout(
+                                        () =>
+                                            handleChoice(
+                                                question,
+                                                secondButtonText
+                                            ),
+                                        200
+                                    );
+                                }}
                                 className={`shadow-inactive py-8 px-40 text-4xl border-4 border-transparent rounded-xl m-4`}
                             >
                                 {secondButtonText}

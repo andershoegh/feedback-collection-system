@@ -1,7 +1,7 @@
 import { ArrowBendUpLeft } from 'phosphor-react';
 import React, { useContext } from 'react';
 import { Touchless } from 'touchless-navigation';
-import { LanguageContext } from './QuestionSettings';
+import { LanguageContext, animateClick } from './QuestionSettings';
 
 export interface BackButtonProps {
     onClick: () => void;
@@ -14,7 +14,10 @@ const BackButton: React.SFC<BackButtonProps> = ({ onClick, currentStep }) => {
         <div className="absolute top-10 left-0">
             {currentStep !== 1 ? (
                 <Touchless
-                    onClick={onClick}
+                    onClick={(e) => {
+                        animateClick(e);
+                        setTimeout(() => onClick(), 200);
+                    }}
                     className={`shadow-inactive text-3xl rounded-xl px-20 py-8 flex place-items-center border-4 border-transparent`}
                 >
                     <ArrowBendUpLeft className="mr-6 text-4xl" />{' '}
