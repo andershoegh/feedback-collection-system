@@ -115,7 +115,6 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({
         if (connected === true && !inProgress) {
             // Starts the questionnaire on connection
             setCurrentStep(1);
-            setInProgress(true);
         } else if (connected === false && inProgress) {
             // Handles dropped connection to phone while in progress
 
@@ -158,6 +157,11 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({
 
     useEffect(() => {
         goToStart.current();
+        if (currentStep === maxQuestions || currentStep === 0) {
+            setInProgress(false);
+        } else {
+            setInProgress(true);
+        }
     }, [currentStep]);
 
     // Handles each answer from a question and puts it into the questionnaireAnswers state

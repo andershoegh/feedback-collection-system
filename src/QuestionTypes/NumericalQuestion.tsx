@@ -3,10 +3,22 @@ import React, { useState, useContext } from 'react';
 import { Touchless } from 'touchless-navigation';
 import BackButton from '../BackButton';
 import NextButton from '../NextButton';
-import { LanguageContext } from '../QuestionSettings';
+import { LanguageContext, animateClick } from '../QuestionSettings';
 
-const concatAmount = (oldAmount: string, newAmount: string) => oldAmount.trim() === '0'.trim() ? newAmount : oldAmount.concat(newAmount);
-const numbersArray: readonly number[]  = Object.freeze([1,2,3,4,5,6,7,8,9,0]);
+const concatAmount = (oldAmount: string, newAmount: string) =>
+    oldAmount.trim() === '0'.trim() ? newAmount : oldAmount.concat(newAmount);
+const numbersArray: readonly number[] = Object.freeze([
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    0,
+]);
 
 export interface NumericalQuestionProps {}
 
@@ -19,15 +31,19 @@ const NumericalQuestion: React.SFC<{
 }> = ({ currentStep, renderOnStep, question, handleChoice, goBackOneStep }) => {
     const [amount, setAmount] = useState<string>('');
     const { language } = useContext(LanguageContext);
-    const buttonGenerator = (i: number) => (<Touchless
-        startElement={i===1}
-        onClick={() => setAmount(concatAmount(amount, i.toString()))}
-        className={`shadow-inactive rounded-xl text-center px-10 py-8 border-4 border-transparent w-full h-full number-${i}`}
-        key={i+'key'}
-        
-    >
-        {i}
-    </Touchless>)
+    const buttonGenerator = (i: number) => (
+        <Touchless
+            startElement={i === 1}
+            onClick={(e) => {
+                animateClick(e);
+                setAmount(concatAmount(amount, i.toString()));
+            }}
+            className={`shadow-inactive rounded-xl text-center px-10 py-8 border-4 border-transparent w-full h-full number-${i}`}
+            key={i + 'key'}
+        >
+            {i}
+        </Touchless>
+    );
     return (
         <>
             {currentStep !== renderOnStep ? null : (
@@ -46,22 +62,20 @@ const NumericalQuestion: React.SFC<{
                                 : 'Input amount'}
                         </div>
                         <div className="flex justify-center mt-8 font-medium text-8xl text-blue-600">
-                            <span className="">
-                                {amount}
-                            </span>
+                            <span className="">{amount}</span>
                             <span className="animate-pulse font-light">|</span>
                         </div>
-                        
-                        <div className="grid-cols-3  grid w-96 gap-3 mt-20 justify-items-center mx-auto text-4xl font-medium">
 
-                            { numbersArray.map((num)=> buttonGenerator(num) ) }
+                        <div className="grid-cols-3  grid w-96 gap-3 mt-20 justify-items-center mx-auto text-4xl font-medium">
+                            {numbersArray.map((num) => buttonGenerator(num))}
 
                             <Touchless
-                                onClick={() =>{
+                                onClick={(e) => {
+                                    animateClick(e);
                                     setAmount(
                                         amount.substring(0, amount.length - 1)
-                                    )}
-                                }
+                                    );
+                                }}
                                 className={`shadow-inactive rounded-xl px-10 h-full w-full mx-auto border-4 border-transparent col-span-2 flex items-center font-normal text-3xl number-del`}
                             >
                                 <Backspace className="mr-3" />
