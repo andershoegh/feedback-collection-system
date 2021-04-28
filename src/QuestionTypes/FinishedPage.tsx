@@ -7,7 +7,9 @@ import {
 import { InteractionType } from '../App';
 import BackButton from '../BackButton';
 import { LanguageContext, animateClick } from '../QuestionSettings';
-import surveyQR from '../Resources/surveyQR.gif';
+import PhoneHighlightQR from '../Resources/PhoneHighlight.gif';
+import PhoneFreeCursorQR from '../Resources/PhoneFreeCursor.gif';
+import LeapMotionQR from '../Resources/LeapMotion.gif';
 
 export interface FinishedPageProps {
     currentStep: number;
@@ -32,10 +34,26 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
     const { language } = useContext(LanguageContext);
     const redirectPhone = useRedirectPhone();
     const newSession = useNewSession();
-    const RESET_DELAY = 30 * 1000;
+    const RESET_DELAY = 90 * 1000;
     let resetInterval = useRef<ReturnType<typeof setInterval>>();
     const [countdown, setCountdown] = useState<number>(RESET_DELAY);
     const isUsingPhone = interactionType.substr(0, 5) === 'phone';
+
+    const getRedirectLink = () => {
+        let link = '';
+        if (interactionType === 'leapMotion') {
+            link = 'https://www.survey-xact.dk/LinkCollector?key=8MY9KEZ5SP3P';
+        }
+        if (interactionType === 'phoneCursor') {
+            link = 'https://www.survey-xact.dk/LinkCollector?key=M8N9VXRPJPCJ';
+        }
+        if (interactionType === 'phoneHighlight') {
+            link = 'https://www.survey-xact.dk/LinkCollector?key=JF64NTP2L19P';
+        }
+
+        return link;
+    };
+    const REDIRECT_LINK = getRedirectLink();
 
     useEffect(() => {
         if (currentStep === renderOnStep) {
@@ -48,7 +66,6 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
                     clearInterval(resetInterval.current!);
                     logAndReset();
                 }
-
                 timeLeft--;
             }, 1000);
         } else {
@@ -82,9 +99,7 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
                                 startElement={true}
                                 onClick={(e) => {
                                     animateClick(e);
-                                    redirectPhone(
-                                        'https://www.survey-xact.dk/LinkCollector?key=JF64NTP2L19P'
-                                    );
+                                    redirectPhone(REDIRECT_LINK);
                                     newSession();
                                     setTimeout(() => logAndReset(), 200);
                                 }}
@@ -98,14 +113,31 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
                             <Touchless
                                 className={`shadow-inactive w-1/3 p-0.5 text-3xl border-4 border-transparent rounded-xl my-8`}
                             >
-                                <img src={surveyQR} alt="survey QR code" />
+                                {interactionType === 'leapMotion' ? (
+                                    <img
+                                        src={LeapMotionQR}
+                                        alt="Leap Motion Survey QR"
+                                    />
+                                ) : null}
+                                {interactionType === 'phoneCursor' ? (
+                                    <img
+                                        src={PhoneFreeCursorQR}
+                                        alt="Phone Free Survey QR"
+                                    />
+                                ) : null}
+                                {interactionType === 'phoneHighlight' ? (
+                                    <img
+                                        src={PhoneHighlightQR}
+                                        alt="Phone Highlight Survey QR"
+                                    />
+                                ) : null}
                             </Touchless>
                         )}
                     </div>
                     <div className="absolute bottom-10 right-0 left-0">
                         {language.trim() === 'Danish'.trim()
-                            ? `Gør klar til en ny besvarelse om ${countdown}`
-                            : `Getting ready for another reply in ${countdown}`}
+                            ? `Gør klar til en ny besvarelse om ${countdown} sekunder`
+                            : `Getting ready for another reply in ${countdown} seconds`}
                     </div>
                 </div>
             )}

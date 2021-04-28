@@ -20,7 +20,7 @@ import { InteractionType } from './App';
 
 export interface QuestionnaireProps {
     showQR: boolean;
-    nextInteractionType: ()=>void;
+    nextInteractionType: () => void;
     interactionType: InteractionType;
 }
 
@@ -43,15 +43,16 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({
     const connected = useConnectionChange();
     const goToStart = useRef(useGoToStartElement());
     const newSession = useNewSession();
+
     const interactionCTAText = {
         da:
             interactionType.substr(0, 5) === 'phone'
                 ? 'klik på linket'
-                : 'scan QR koden',
+                : 'åbn din kamera app og scan QR koden',
         en:
             interactionType.substr(0, 5) === 'phone'
                 ? 'click the link'
-                : 'scan the QR code',
+                : 'open your camera app and scan the QR code',
     };
 
     const animateModal = (show: boolean) => {

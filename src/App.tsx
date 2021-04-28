@@ -31,7 +31,7 @@ const App = () => {
             interactionTypeIndex >= maxIndex ? 0 : interactionTypeIndex + 1;
         setInteractionTypeIndex(i);
     };
-    const interactionType = 'phoneCursor';
+    const interactionType = 'leapMotion';
     // interactionTypes[interactionTypeIndex];
     const showQR = containsQRCode.has(interactionType);
 

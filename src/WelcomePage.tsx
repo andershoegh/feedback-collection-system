@@ -1,8 +1,6 @@
 import React from 'react';
 import { MobileQR, Touchless } from 'touchless-navigation';
 import { buttonStyle } from './QuestionSettings';
-import DKFlag from './Resources/DKFlag';
-import GBFlag from './Resources/GBFlag';
 
 export interface WelcomePageProps {
     currentStep: number;
@@ -79,7 +77,7 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                                     <MobileQR logLink={true} />
                                 ) : (
                                     <div className="font-bold text-blue-500 text-xl">
-                                        Click me to start
+                                        Klik her for at starte
                                     </div>
                                 )}
                             </Touchless>
