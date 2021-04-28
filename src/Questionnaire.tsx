@@ -414,8 +414,8 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({
                         }
                         subText={
                             language === 'Danish'
-                                ? `Hjælp os ved at svare på nogle få spørgsmål om din oplevelse med at styre denne kontaktløse skærm - ${interactionCTAText.da} herunder`
-                                : `Help us by answering a few questions about your experience controlling this touchless display - ${interactionCTAText.en} below`
+                                ? `Hjælp os ved at svare på nogle få spørgsmål om din oplevelse med at styre denne kontaktløse skærm og deltag i konkurrencen om et gavekort på 500KR - ${interactionCTAText.da} herunder`
+                                : `Help us by answering a few questions about your experience controlling this touchless display and participate in the competition for a 500KR gift card - ${interactionCTAText.en} below`
                         }
                         goBackOneStep={handleGoingBackOneStep}
                         interactionType={interactionType}

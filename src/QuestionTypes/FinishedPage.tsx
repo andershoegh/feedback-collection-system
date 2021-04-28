@@ -116,7 +116,7 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
                         <div className="text-5xl leading-10 font-medium">
                             {text}
                         </div>
-                        <div className="font-normal text-gray-600 mt-6 text-2xl w-3/4">
+                        <div className="font-normal text-gray-600 mt-6 text-3xl w-3/4 pb-10">
                             {subText}
                         </div>
                         {isUsingPhone ? (
