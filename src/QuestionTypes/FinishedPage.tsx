@@ -77,10 +77,37 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
         };
     }, [currentStep, renderOnStep, RESET_DELAY, logAndReset]);
 
+    const redirectClick = (e: React.MouseEvent<HTMLDivElement | MouseEvent, MouseEvent>) => {
+        const modal: HTMLDivElement | null = document.querySelector('#modal');
+        animateClick(e);
+        redirectPhone(
+            'https://www.survey-xact.dk/LinkCollector?key=JF64NTP2L19P'
+        );
+
+        setTimeout(()=> 
+        modal?.animate({
+            transform: ['translateY(0)', 'translateY(-120%)'],
+            opacity: ['0', '1'],
+        }, {
+            fill: 'forwards',
+            easing: 'ease-in-out',
+            duration: 350,
+        }), 400
+        )
+
+        setTimeout(() => {
+            newSession();
+            logAndReset();
+        }, 6500);
+    }
+
     return (
         <>
             {currentStep !== renderOnStep ? null : (
-                <div className="w-4/5 h-screen relative flex items-center justify-center">
+                <div className="w-4/5 h-screen relative flex items-center justify-center overflow-hidden">
+                    <div id='modal' className='absolute top-full left-0 z-10 shadow-inactive py-14 px-12 text-3xl text-center rounded-xl bg-green-400'>
+                        <span className='pr-8'>✓</span> Spørgeskemaet er nu klar på din telefon
+                    </div>
                     <div className="my-10">
                         <BackButton
                             currentStep={currentStep}
@@ -98,10 +125,7 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
                             <Touchless
                                 startElement={true}
                                 onClick={(e) => {
-                                    animateClick(e);
-                                    redirectPhone(REDIRECT_LINK);
-                                    newSession();
-                                    setTimeout(() => logAndReset(), 200);
+                                    redirectClick(e);
                                 }}
                                 className={`shadow-inactive py-6 px-32 text-3xl max-w-2xl border-4 border-transparent rounded-xl my-8`}
                             >
