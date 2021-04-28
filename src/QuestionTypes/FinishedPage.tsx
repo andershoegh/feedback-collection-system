@@ -34,7 +34,7 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
     const { language } = useContext(LanguageContext);
     const redirectPhone = useRedirectPhone();
     const newSession = useNewSession();
-    const RESET_DELAY = 90 * 1000;
+    const RESET_DELAY = 60 * 1000;
     let resetInterval = useRef<ReturnType<typeof setInterval>>();
     const [countdown, setCountdown] = useState<number>(RESET_DELAY);
     const isUsingPhone = interactionType.substr(0, 5) === 'phone';

@@ -12,8 +12,7 @@ export type InteractionType =
 export const interactionTypes: readonly InteractionType[] = Object.freeze([
     'phoneHighlight',
     'phoneCursor',
-    'leapMotion',
-    'leapMotionPinch',
+    'leapMotion'
 ]);
 
 const containsQRCode = new Set(['phoneHighlight', 'phoneCursor']);
@@ -31,8 +30,7 @@ const App = () => {
             interactionTypeIndex >= maxIndex ? 0 : interactionTypeIndex + 1;
         setInteractionTypeIndex(i);
     };
-    const interactionType = 'phoneHighlight';
-    // interactionTypes[interactionTypeIndex];
+    const interactionType = interactionTypes[interactionTypeIndex];
     const showQR = containsQRCode.has(interactionType);
 
     return (
