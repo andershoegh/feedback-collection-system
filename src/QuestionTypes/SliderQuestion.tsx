@@ -7,7 +7,7 @@ import React, {
     useMemo,
 } from 'react';
 import { Touchless, useCustomKeys } from 'touchless-navigation';
-import { InteractionType, hasCursor} from '../App';
+import { InteractionType, hasCursor } from '../App';
 import BackButton from '../BackButton';
 import NextButton from '../NextButton';
 import { LanguageContext } from '../QuestionSettings';
@@ -41,7 +41,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
         maxLabel,
         handleChoice,
         goBackOneStep,
-        interactionType
+        interactionType,
     } = props;
     const labelsRef = useRef<HTMLSpanElement>(null);
     const [selectedValue, setSelectedValue] = useState<number>(startValue);
@@ -66,8 +66,10 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
         'transition',
         'scale-100',
     ];
-    const usingCursor = useMemo(()=> hasCursor.has(interactionType), [interactionType]);
-    
+    const usingCursor = useMemo(() => hasCursor.has(interactionType), [
+        interactionType,
+    ]);
+
     const updateSelected = useCallback(
         (value: number) => {
             if (intervals && labelsRef.current) {
@@ -186,14 +188,10 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
     }, [usingCustomKeys, selectedValue, updateSelected]);
 
     useEffect(() => {
-        setSelectedValue(oldSelected => {
-            return oldSelected > 100 ? 
-                   100 
-                :  oldSelected < 0 ? 
-                   0 
-                :  oldSelected;
-        })
-    }, [selectedValue])
+        setSelectedValue((oldSelected) => {
+            return oldSelected > 100 ? 100 : oldSelected < 0 ? 0 : oldSelected;
+        });
+    }, [selectedValue]);
 
     return (
         <>
@@ -231,18 +229,28 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                             if(usingCursor && !e.isTrusted){
                                                 const cursor = document.querySelector('.cursor')?.getBoundingClientRect();
                                                 const slider = sliderRef.current?.getBoundingClientRect();
-                                              
-                                                if(slider && cursor){
-                                                    const cursorPos = (cursor.x + cursor.width/2) - slider.left;
-                                                    const percent = Math.round((cursorPos/slider.width) * rangeMax);
-                                                    const newSelected = percent > rangeMax ? 
-                                                                        rangeMax 
-                                                                    :   percent < rangeMin ? 
-                                                                        rangeMin 
-                                                                    :   percent;
 
-                                                    setSelectedValue(newSelected);
-                                                    updateSelected(newSelected)
+                                                if (slider && cursor) {
+                                                    const cursorPos =
+                                                        cursor.x +
+                                                        cursor.width / 2 -
+                                                        slider.left;
+                                                    const percent = Math.round(
+                                                        (cursorPos /
+                                                            slider.width) *
+                                                            rangeMax
+                                                    );
+                                                    const newSelected =
+                                                        percent > rangeMax
+                                                            ? rangeMax
+                                                            : percent < rangeMin
+                                                            ? rangeMin
+                                                            : percent;
+
+                                                    setSelectedValue(
+                                                        newSelected
+                                                    );
+                                                    updateSelected(newSelected);
                                                 }
                                             } else if (!usingCustomKeys) {
                                                 initiate();
@@ -269,12 +277,11 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                                 }
                                                 handleTouchlessClick(false);
                                             }
-                                            if(!usingCursor && !e.isTrusted){
-                                               setUsingCustomKeys(
-                                                (prevValue) => !prevValue
-                                                ); 
+                                            if (!usingCursor && !e.isTrusted) {
+                                                setUsingCustomKeys(
+                                                    (prevValue) => !prevValue
+                                                );
                                             }
-                                            
                                         }}
                                         className={`shadow-inactive rounded-xl border-4 border-transparent py-4 px-2 ${
                                             usingCustomKeys ? '' : ''
@@ -288,15 +295,23 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                             max={rangeMax}
                                             value={selectedValue}
                                             step={intervals}
-                                            onClick={(e)=>{
-                                                console.log('input Range onclick ', e)
+                                            onClick={(e) => {
+                                                console.log(
+                                                    'input Range onclick ',
+                                                    e
+                                                );
                                             }}
-                                            onChange={(e) =>{
-                                                console.log('input range onchange', e.target.value);
-                                                setSelectedValue(parseInt(e.target.value));
+                                            onChange={(e) => {
+                                                console.log(
+                                                    'input range onchange',
+                                                    e.target.value
+                                                );
+                                                setSelectedValue(
+                                                    parseInt(e.target.value)
+                                                );
                                                 updateSelected(
                                                     parseInt(e.target.value)
-                                                )
+                                                );
                                             }}
                                             className={`shadow-inactive overflow-hidden h-5 outline-none block w-full slider ${
                                                 usingCustomKeys ? '' : ''
@@ -324,14 +339,13 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                 )}
                             </div>
                         </div>
-
-                        <NextButton
-                            currentStep={currentStep}
-                            onClick={() =>
-                                handleChoice(question, selectedValue.toString())
-                            }
-                        />
                     </div>
+                    <NextButton
+                        currentStep={currentStep}
+                        onClick={() =>
+                            handleChoice(question, selectedValue.toString())
+                        }
+                    />
                 </div>
             )}
         </>
