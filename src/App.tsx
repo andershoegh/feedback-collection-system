@@ -31,14 +31,20 @@ const App = () => {
             interactionTypeIndex >= maxIndex ? 0 : interactionTypeIndex + 1;
         setInteractionTypeIndex(i);
     };
-    const interactionType = interactionTypes[interactionTypeIndex];
+    const interactionType = 'leapMotion';
+    // interactionTypes[interactionTypeIndex];
     const showQR = containsQRCode.has(interactionType);
 
     return (
         <TouchlessApp
             secondaryThreshold={50}
+            topOffset={1350}
+            clickLength={50}
+            pinchOrGrab={'pinch'}
+            strengthBeforeClickReset={0.7}
+            strengthToClick={0.9}
             interactionType={interactionType}
-            topOffset={2500}
+            disableLock={true}
         >
             <LanguageContextProvider>
                 <div className="flex font-body">
