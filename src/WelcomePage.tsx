@@ -29,9 +29,9 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                                     udfylde et kort spørgeskema
                                 </div>
                                 <div className="font-normal text-xl text-gray-600">
-                                    Scan QR koden med din telefon og åbn linket
-                                    for at begynde at styre siden med din
-                                    telefon.
+                                    {showQR
+                                        ? `Scan QR koden med din telefon og åbn linket for at begynde at styre siden med din telefon.`
+                                        : `Placér din hånd foran skærmen og "tryk" på knappen herunder for at begynde at styre siden kontaktløst. Følg anvisningerne til venstre for mere hjælp.`}
                                 </div>
                             </div>
 
@@ -44,9 +44,9 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                                     answering a short questionnaire
                                 </div>
                                 <div className="font-normal text-xl text-gray-600">
-                                    Scan the QR code with your phone and open
-                                    the link to start controlling the site with
-                                    your phone.
+                                    {showQR
+                                        ? `Scan the QR code with your phone and open the link to start controlling the site with your phone.`
+                                        : `Place your hand in front of the screen and "press" the button below to start controlling the site. Follow the instructions on the left for more help.`}
                                 </div>
                             </div>
                         </div>
@@ -56,10 +56,12 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                                 onClick={startQuestionnaire}
                                 className={`${buttonStyle} w-80 h-80 text-center justify-center place-items-center flex mt-4`}
                             >
-                                {showQR ? (
+                                {!showQR ? (
                                     <MobileQR logLink={true} />
                                 ) : (
-                                    <h2>TRYK HER FOR AT STARTE</h2>
+                                    <h2 className="text-xl font-black">
+                                        TRYK HER FOR AT STARTE
+                                    </h2>
                                 )}
                             </Touchless>
                         </div>
