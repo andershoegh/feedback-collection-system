@@ -11,7 +11,7 @@ export interface BackButtonProps {
 const BackButton: React.SFC<BackButtonProps> = ({ onClick, currentStep }) => {
     const { language } = useContext(LanguageContext);
     return (
-        <div className="absolute top-10 left-0">
+        <div className="absolute top-40 left-0">
             {currentStep !== 1 ? (
                 <Touchless
                     onClick={(e) => {

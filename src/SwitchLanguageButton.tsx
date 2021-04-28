@@ -16,7 +16,7 @@ const SwitchLanguageButton: React.SFC<SwitchLanguageButtonProps> = ({
         <>
             {renderOnStep === 1 ? (
                 <Touchless
-                    className={`shadow-inactive text-2xl rounded-xl px-20 py-8 absolute top-10 left-10 border-4 border-transparent`}
+                    className={`shadow-inactive text-2xl rounded-xl px-20 py-8 absolute top-40 left-20 border-4 border-transparent`}
                     onClick={(e) => {
                         animateClick(e);
                         setLanguage(
@@ -33,7 +33,7 @@ const SwitchLanguageButton: React.SFC<SwitchLanguageButtonProps> = ({
                         </div>
                     ) : (
                         <div className="flex place-items-center">
-                            <div className="h-5 w-5 place-items-center flex mr-2">
+                            <div className="h-12 w-12 place-items-center flex mr-6">
                                 <DKFlag />
                             </div>
                             <span>Skift til dansk</span>

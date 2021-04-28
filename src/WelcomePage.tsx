@@ -17,39 +17,58 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
     return (
         <>
             {currentStep !== renderOnStep ? null : (
-                <div className="h-screen w-2/3 flex place-items-center">
+                <div className="h-screen w-full ml-32 flex place-items-center">
                     <div>
                         <div className="">
-                            <div className="mb-10">
-                                <div className="place-items-center flex w-20 h-20 mb-2">
+                            {/* <div className="mb-10 flex place-items-center">
+                                <div className="place-items-center flex w-20 h-20 mb-2 mr-5">
                                     <DKFlag />
                                 </div>
-                                <div className="text-4xl leading-10 font-normal mb-4">
-                                    Prøv de nye kontaktløse skærme ved at
-                                    udfylde et kort spørgeskema
-                                </div>
-                                <div className="font-normal text-xl text-gray-600">
-                                    Scan QR koden med din telefon og åbn linket
-                                    for at begynde at styre siden med din
-                                    telefon.
+                                <div>
+                                    <div className="text-3xl leading-10 font-normal mb-4">
+                                        Prøv de nye kontaktløse skærme ved at
+                                        udfylde et kort spørgeskema
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="mb-40">
-                                <div className="place-items-center flex w-20 h-20 mb-2">
+                            <div className="mb-10 flex place-items-center">
+                                <div className="place-items-center flex w-20 h-20 mb-2 mr-5">
                                     <GBFlag />
                                 </div>
-                                <div className="text-4xl leading-10 font-normal mb-4">
-                                    Try the public display of the future while
-                                    answering a short questionnaire
+                                <div>
+                                    <div className="text-3xl leading-10 font-normal mb-4">
+                                        Try the public display of the future
+                                        while answering a short questionnaire
+                                    </div>
                                 </div>
-                                <div className="font-normal text-xl text-gray-600">
-                                    Scan the QR code with your phone and open
-                                    the link to start controlling the site with
-                                    your phone.
+                            </div> */}
+                        </div>
+
+                        {showQR ? (
+                            <div className="text-gray-900 mb-20">
+                                <div className="text-3xl ">
+                                    Scan QR koden med din telefons kamera app
+                                    for at starte den kontaktløse skærm
+                                </div>
+                                <div className="text-xl mt-4">
+                                    Scan the QR code with your phones camera app
+                                    to start the touchless display
                                 </div>
                             </div>
-                        </div>
+                        ) : (
+                            <div className="text-gray-900 mb-20">
+                                <div className="text-3xl ">
+                                    Hold hånden op foran skærmen - klik på
+                                    firkanten ved at føre fingeren frem
+                                </div>
+                                <div className="text-xl mt-4">
+                                    Hold your hand up in front of the screen -
+                                    click the square by moving your finger
+                                    forward
+                                </div>
+                            </div>
+                        )}
 
                         <div>
                             <Touchless
@@ -59,7 +78,9 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                                 {showQR ? (
                                     <MobileQR logLink={true} />
                                 ) : (
-                                    <h2>TRYK HER FOR AT STARTE</h2>
+                                    <div className="font-bold text-blue-500 text-xl">
+                                        Click me to start
+                                    </div>
                                 )}
                             </Touchless>
                         </div>
