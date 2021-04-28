@@ -113,7 +113,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({
     // Handles connection and phone disconnection
     useEffect(() => {
         if (connected && !inProgress) {
-            // Starts the questionnaire on connection
+            // Starts the questionnaire on connectio
             setCurrentStep(1);
         } else if (!connected && inProgress) {
             // Handles dropped connection to phone while in progress
@@ -156,8 +156,18 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({
     }, [connected]);
 
     useEffect(() => {
+        const cursor: HTMLDivElement | null = document.querySelector('.cursor');
         goToStart.current();
-        if (currentStep === maxQuestions || currentStep === 0) {
+        if (currentStep === 0) {
+            setInProgress(false);
+            if (cursor) {
+                cursor.style.display = 'none';
+            }
+        } else if (currentStep === 1) {
+            if (cursor) {
+                cursor.style.display = 'block';
+            }
+        } else if (currentStep === maxQuestions) {
             setInProgress(false);
         } else {
             setInProgress(true);
