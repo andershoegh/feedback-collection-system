@@ -88,7 +88,7 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
         <>
             {currentStep !== renderOnStep ? null : (
                 <div className="w-4/5 h-screen relative flex items-center justify-center overflow-hidden">
-                    <div id='modal' className='absolute top-full right-5 shadow-inactive py-14 px-12 text-3xl text-center rounded-xl bg-green-400'>
+                    <div id='modal' className='absolute top-full left-0 z-10 shadow-inactive py-14 px-12 text-3xl text-center rounded-xl bg-green-400'>
                         <span className='pr-8'>✓</span> Spørgeskemaet er nu klar på din telefon
                     </div>
                     <div className="my-10">
