@@ -150,7 +150,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                     ? 'Arrangér svarene i rækkefølge hvor 1 er vigtigst'
                                     : 'Arrange the answers in order where 1 is the most important'}
                             </div>
-                            <div className="font-bold text-xl text-gray-600 mt-4">
+                            <div className="justify-center flex text-4xl mb-8 font-medium text-gray-800 mt-14">
                                 {language.trim() === 'Danish'.trim()
                                     ? 'Tryk på to af svarene for at bytte deres plads.'
                                     : 'Tap two of the answers to switch their placement'}
@@ -161,7 +161,7 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                         return (
                                             <div
                                                 key={index}
-                                                className="mb-5 text-blue-500"
+                                                className="mb-5 text-3xl text-blue-500"
                                             >
                                                 {index + 1}
                                             </div>
