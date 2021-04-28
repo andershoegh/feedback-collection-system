@@ -75,7 +75,7 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                                 onClick={startQuestionnaire}
                                 className={`${buttonStyle} w-80 h-80 text-center justify-center place-items-center flex mt-4`}
                             >
-                                {!showQR ? (
+                                {showQR ? (
                                     <MobileQR logLink={true} />
                                 ) : (
                                     <div className="font-bold text-blue-500 text-xl">

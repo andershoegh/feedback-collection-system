@@ -46,7 +46,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({
     const interactionCTAText = {
         da:
             interactionType.substr(0, 5) === 'phone'
-                ? 'klik på linket'
+                ? 'klik på knappen'
                 : 'scan QR koden',
         en:
             interactionType.substr(0, 5) === 'phone'
