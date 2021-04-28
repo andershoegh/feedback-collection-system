@@ -207,19 +207,27 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                 {question}
                             </div>
                             <div className="font-normal text-gray-600 text-2xl mt-6">
-                                {language === 'Danish'
+                                {!usingCursor ? language === 'Danish'
                                     ? 'Swipe til det ønskede svar'
-                                    : 'Swipe to your desired answer'}
+                                    : 'Swipe to your desired answer'
+                                    :''
+                                }
                             </div>
                             <div className="justify-center mt-40">
                                 <div className="justify-center flex text-4xl mb-8 font-medium text-gray-800">
-                                    {!usingCustomKeys
-                                        ? language === 'Danish'
-                                            ? 'Tryk på slider for at justere'
-                                            : 'Tap the slider to choose'
-                                        : language === 'English'
-                                        ? 'Slide to the left and the right - tap when you have chosen'
-                                        : 'Træk til højre og venstre - tryk for at afslutte justering'}
+                                    {usingCustomKeys
+                                        ? 
+                                            (language === 'Danish' ? 
+                                                'Træk til højre og venstre - tryk for at afslutte justering'
+                                            :   'Slide to the left and the right - tap when you have chosen')
+                                        :   usingCursor ? 
+                                                (language === 'Danish' ? 
+                                                'Vælg på baren'
+                                            :   'Select on the bar')
+                                            :   (language === 'Danish' ? 
+                                                'Tryk på slider for at justere'
+                                            :   'Tap the slider to choose')
+                                    }
                                 </div>
                                 <div className={`${usingCustomKeys ? '' : ''}`}>
                                     <Touchless
