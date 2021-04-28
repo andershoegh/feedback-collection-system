@@ -112,10 +112,10 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({
 
     // Handles connection and phone disconnection
     useEffect(() => {
-        if (connected === true && !inProgress) {
+        if (connected && !inProgress) {
             // Starts the questionnaire on connection
             setCurrentStep(1);
-        } else if (connected === false && inProgress) {
+        } else if (!connected && inProgress) {
             // Handles dropped connection to phone while in progress
 
             // Show modal
@@ -139,7 +139,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({
                 setDisconnectResetTimer(time);
                 time--;
             }, 1000);
-        } else if (connected === true && inProgress) {
+        } else if (connected && inProgress) {
             // Handles phone reconnect while in progress
 
             // Remove modal
@@ -197,6 +197,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({
             .then(() => {
                 // Resets the questionnaire for the next user and changes to the next interaction type
                 setQuestionnaireAnswers([]);
+                newSession();
                 nextInteractionType();
                 setInProgress(false);
                 setTimeout(() => {

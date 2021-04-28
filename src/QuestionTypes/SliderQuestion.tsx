@@ -227,7 +227,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                     <Touchless
                                         startElement={true}
                                         onClick={(e) => {
-                                            console.log(e)
+                                            console.log(e, usingCustomKeys)
                                             if(usingCursor && !e.isTrusted){
                                                 const cursor = document.querySelector('.cursor')?.getBoundingClientRect();
                                                 const slider = sliderRef.current?.getBoundingClientRect();
@@ -257,6 +257,7 @@ const SliderQuestion: React.FC<SliderQuestionProps> = (props) => {
                                                 }
                                                 handleTouchlessClick(true);
                                             } else {
+                                                console.log(clear);
                                                 clear();
                                                 if (sliderRef.current) {
                                                     sliderRef.current.classList.remove(
