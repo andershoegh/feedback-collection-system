@@ -16,7 +16,7 @@ export interface NextButtonProps {
 const NextButton: React.SFC<NextButtonProps> = ({ onClick, currentStep }) => {
     const { language } = useContext(LanguageContext);
     return (
-        <div className="absolute bottom-10 right-0">
+        <div className="absolute bottom-16 ">
             <Touchless
                 onClick={(e) => {
                     animateClick(e);

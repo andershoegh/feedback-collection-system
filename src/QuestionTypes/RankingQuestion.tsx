@@ -197,11 +197,11 @@ const RankingQuestion: React.FC<RankingQuestionProps> = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <NextButton
-                            currentStep={currentStep}
-                            onClick={() => handleChoice(question, list)}
-                        />
                     </div>
+                    <NextButton
+                        currentStep={currentStep}
+                        onClick={() => handleChoice(question, list)}
+                    />
                 </div>
             )}
         </>

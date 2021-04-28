@@ -35,7 +35,11 @@ const App = () => {
     const showQR = containsQRCode.has(interactionType);
 
     return (
-        <TouchlessApp secondaryThreshold={50} interactionType={interactionType}>
+        <TouchlessApp
+            secondaryThreshold={50}
+            interactionType={interactionType}
+            topOffset={2500}
+        >
             <LanguageContextProvider>
                 <div className="flex font-body">
                     {/* <button onClick={nextInteractionType}>TEST ME</button> */}
