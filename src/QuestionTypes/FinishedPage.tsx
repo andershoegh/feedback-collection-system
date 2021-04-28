@@ -80,9 +80,7 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
     const redirectClick = (e: React.MouseEvent<HTMLDivElement | MouseEvent, MouseEvent>) => {
         const modal: HTMLDivElement | null = document.querySelector('#modal');
         animateClick(e);
-        redirectPhone(
-            'https://www.survey-xact.dk/LinkCollector?key=JF64NTP2L19P'
-        );
+        redirectPhone(REDIRECT_LINK);
 
         setTimeout(()=> 
         modal?.animate({
