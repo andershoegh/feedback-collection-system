@@ -77,34 +77,45 @@ const FinishedPage: React.FC<FinishedPageProps> = (props) => {
         };
     }, [currentStep, renderOnStep, RESET_DELAY, logAndReset]);
 
-    const redirectClick = (e: React.MouseEvent<HTMLDivElement | MouseEvent, MouseEvent>) => {
+    const redirectClick = (
+        e: React.MouseEvent<HTMLDivElement | MouseEvent, MouseEvent>
+    ) => {
         const modal: HTMLDivElement | null = document.querySelector('#modal');
         animateClick(e);
         redirectPhone(REDIRECT_LINK);
 
-        setTimeout(()=> 
-        modal?.animate({
-            transform: ['translateY(0)', 'translateY(-120%)'],
-            opacity: ['0', '1'],
-        }, {
-            fill: 'forwards',
-            easing: 'ease-in-out',
-            duration: 350,
-        }), 400
-        )
+        setTimeout(
+            () =>
+                modal?.animate(
+                    {
+                        transform: ['translateY(0)', 'translateY(-200%)'],
+                        opacity: ['0', '1'],
+                    },
+                    {
+                        fill: 'forwards',
+                        easing: 'ease-in-out',
+                        duration: 350,
+                    }
+                ),
+            400
+        );
 
         setTimeout(() => {
             newSession();
             logAndReset();
         }, 6500);
-    }
+    };
 
     return (
         <>
             {currentStep !== renderOnStep ? null : (
                 <div className="w-4/5 h-screen relative flex items-center justify-center overflow-hidden">
-                    <div id='modal' className='absolute top-full left-0 z-10 shadow-inactive py-14 px-12 text-3xl text-center rounded-xl bg-green-400'>
-                        <span className='pr-8'>✓</span> Spørgeskemaet er nu klar på din telefon
+                    <div
+                        id="modal"
+                        className="absolute top-full left-0 z-10 shadow-inactive py-14 px-12 text-3xl text-center rounded-xl bg-green-400"
+                    >
+                        <span className="pr-8">✓</span> Spørgeskemaet er nu klar
+                        på din telefon
                     </div>
                     <div className="my-10">
                         <BackButton

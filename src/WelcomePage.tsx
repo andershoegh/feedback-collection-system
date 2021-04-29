@@ -42,6 +42,9 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                                 </div>
                             </div> */}
                         </div>
+                        <div className="text-7xl mb-40 text-blue-700">
+                            Vind 500KR gavekort til Aalborg Storcenter!
+                        </div>
 
                         {showQR ? (
                             <div className="text-gray-900 mb-20">
