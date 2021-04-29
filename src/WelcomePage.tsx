@@ -45,22 +45,22 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
 
                         {showQR ? (
                             <div className="text-gray-900 mb-20">
-                                <div className="text-3xl ">
+                                <div className="text-5xl ">
                                     Scan QR koden med din telefons kamera app
                                     for at starte den kontaktløse skærm
                                 </div>
-                                <div className="text-xl mt-4">
+                                <div className="text-2xl mt-4">
                                     Scan the QR code with your phones camera app
                                     to start the touchless display
                                 </div>
                             </div>
                         ) : (
                             <div className="text-gray-900 mb-20">
-                                <div className="text-3xl ">
+                                <div className="text-5xl ">
                                     Hold hånden op foran skærmen - klik på
                                     firkanten ved at føre fingeren frem
                                 </div>
-                                <div className="text-xl mt-4">
+                                <div className="text-3xl mt-4">
                                     Hold your hand up in front of the screen -
                                     click the square by moving your finger
                                     forward
@@ -83,7 +83,7 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                             </Touchless>
                         </div>
 
-                        <div className="mt-40 text-gray-600 ">
+                        <div className="mt-40 text-gray-600 text-2xl">
                             <div className="mb-2">
                                 Det er et krav at udfylde spørgeskemaet efter
                                 brug af systemet for at kunne deltage i

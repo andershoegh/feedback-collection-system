@@ -295,7 +295,7 @@ const Questionnaire: React.SFC<QuestionnaireProps> = ({
                             language === 'Danish'
                                 ? [
                                       'En eller flere personer er kommet for tæt på mig',
-                                      'Jeg er blevet gjort opmmærksom på at holde mere afstand til andre',
+                                      'Jeg er blevet gjort opmærksom på at holde mere afstand til andre',
                                       'Jeg har set en eller flere personer glemme at spritte hænder ved indgangen',
                                       'Ingen af de ovenstående',
                                   ]
