@@ -43,7 +43,7 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                             </div> */}
                         </div>
                         <div className="text-7xl mb-40 text-blue-700">
-                            Vind 500KR gavekort til Aalborg Storcenter!
+                            Prøv en Corona sikker skærm og deltag i konkurrencen
                         </div>
 
                         {showQR ? (
