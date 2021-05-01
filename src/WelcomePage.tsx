@@ -1,6 +1,7 @@
 import React from 'react';
 import { MobileQR, Touchless } from 'touchless-navigation';
 import { buttonStyle } from './QuestionSettings';
+import aauLogo from './Resources/aau.png';
 
 export interface WelcomePageProps {
     currentStep: number;
@@ -15,7 +16,7 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
     return (
         <>
             {currentStep !== renderOnStep ? null : (
-                <div className="h-screen w-full ml-32 flex place-items-center">
+                <div className="h-screen relative w-full ml-32 flex place-items-center">
                     <div>
                         <div className="">
                             {/* <div className="mb-10 flex place-items-center">
@@ -84,6 +85,14 @@ const WelcomePage: React.FC<WelcomePageProps> = (props) => {
                                     </div>
                                 )}
                             </Touchless>
+                        </div>
+
+                        <div className="absolute right-40 bottom-40">
+                            <img
+                                style={{ transform: 'scale(2)' }}
+                                src={aauLogo}
+                                alt="aau logo"
+                            />
                         </div>
 
                         <div className="mt-40 text-gray-600 text-2xl">

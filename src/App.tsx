@@ -10,9 +10,9 @@ export type InteractionType =
     | 'leapMotion'
     | 'leapMotionPinch';
 export const interactionTypes: readonly InteractionType[] = Object.freeze([
-    'phoneHighlight',
     'phoneCursor',
-    'leapMotion'
+    'leapMotion',
+    'phoneHighlight',
 ]);
 
 const containsQRCode = new Set(['phoneHighlight', 'phoneCursor']);
